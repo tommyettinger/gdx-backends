@@ -17,7 +17,6 @@ classes/
 .gwt/
 gwt-unitCache/
 war/
-gen/
 gen-external-apklibs/
 armeabi/
 armeabi-v7a/
@@ -33,7 +32,6 @@ Release/
 x64/
 x86/
 x86_64/
-robovm-build/
 ipch/
 /dist
 
