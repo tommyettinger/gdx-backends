@@ -1,0 +1,57 @@
+apply from: "gradle/dependencies.gradle"
+
+allprojects{
+    group = 'com.badlogicgames.gdx'
+    version = '1.910.2'
+
+    buildscript {
+        repositories {
+            google()
+            jcenter()
+            mavenCentral()
+            maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        }
+    }
+
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
+}
+
+subprojects{
+    apply plugin: "java"
+    apply plugin: "maven"
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    compileJava{
+        options.fork = true
+        options.incremental = true
+    }
+
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        archiveClassifier.set('sources')
+        from sourceSets.main.allSource
+    }
+
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        archiveClassifier.set('javadoc')
+        from javadoc.destinationDir
+    }
+
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
+    }
+
+    if (JavaVersion.current().isJava8Compatible()) {
+        tasks.withType(Javadoc) {
+            // disable the crazy super-strict DocLint tool in Java 8
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
