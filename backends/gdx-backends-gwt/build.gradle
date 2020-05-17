@@ -16,6 +16,9 @@
 
 dependencies {
     compile libraries.gwt
+    compile("com.google.gwt:gwt-dev:${versions.gwt}"){
+        exclude group: "org.eclipse.jetty", module: "apache-jsp"
+    }
 }
 
 sourceSets.main.java.exclude "**/System.java"
