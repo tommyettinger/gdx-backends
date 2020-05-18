@@ -21,6 +21,14 @@ allprojects{
     }
 }
 
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
 subprojects{
     apply plugin: "java"
     apply plugin: "maven"

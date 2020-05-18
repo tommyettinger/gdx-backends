@@ -181,7 +181,27 @@ public class IOSGraphics extends NSObject implements Graphics, GLKViewDelegate, 
 	GLVersion glVersion;
 	GLKView view;
 	IOSUIViewController viewController;
-
+	
+	@Override
+	public int getSafeInsetLeft() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetTop() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetBottom() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetRight() {
+		return 0;
+	}
+	
 	public IOSGraphics (float scale, IOSApplication app, IOSApplicationConfiguration config, IOSInput input, boolean useGLES30) {
 		this.config = config;
 

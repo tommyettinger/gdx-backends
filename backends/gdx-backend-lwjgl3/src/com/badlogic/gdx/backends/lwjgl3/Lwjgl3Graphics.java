@@ -73,7 +73,27 @@ public class Lwjgl3Graphics implements Graphics, Disposable {
 			GLFW.glfwSwapBuffers(windowHandle);
 		}
 	};
-
+	
+	@Override
+	public int getSafeInsetLeft() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetTop() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetBottom() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetRight() {
+		return 0;
+	}
+	
 	public Lwjgl3Graphics(Lwjgl3Window window) {
 		this.window = window;
 		if (window.getConfig().useGL30) {

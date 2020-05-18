@@ -71,7 +71,27 @@ public class LwjglGraphics implements Graphics {
 	LwjglGraphics (LwjglApplicationConfiguration config) {
 		this.config = config;
 	}
-
+	
+	@Override
+	public int getSafeInsetLeft() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetTop() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetBottom() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetRight() {
+		return 0;
+	}
+	
 	LwjglGraphics (Canvas canvas) {
 		this.config = new LwjglApplicationConfiguration();
 		config.width = canvas.getWidth();

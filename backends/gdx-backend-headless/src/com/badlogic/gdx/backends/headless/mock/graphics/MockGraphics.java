@@ -45,7 +45,39 @@ public class MockGraphics implements Graphics {
 	public GL20 getGL20() {
 		return null;
 	}
-
+	
+	/**
+	 * @return the inset from the left which avoids display cutouts in pixels
+	 */
+	@Override
+	public int getSafeInsetLeft() {
+		return 0;
+	}
+	
+	/**
+	 * @return the inset from the top which avoids display cutouts in pixels
+	 */
+	@Override
+	public int getSafeInsetTop() {
+		return 0;
+	}
+	
+	/**
+	 * @return the inset from the bottom which avoids display cutouts or floating gesture bars, in pixels
+	 */
+	@Override
+	public int getSafeInsetBottom() {
+		return 0;
+	}
+	
+	/**
+	 * @return the inset from the right which avoids display cutouts in pixels
+	 */
+	@Override
+	public int getSafeInsetRight() {
+		return 0;
+	}
+	
 	@Override
 	public void setGL20 (GL20 gl20) {
 
