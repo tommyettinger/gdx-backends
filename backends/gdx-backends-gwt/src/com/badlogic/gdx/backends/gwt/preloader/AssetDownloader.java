@@ -143,7 +143,7 @@ public class AssetDownloader {
 	}
 
 	public void loadImage (final String url, final String mimeType, final AssetLoaderListener<ImageElement> listener) {
-		loadImage(url, mimeType, null, listener);
+		loadImage(url, mimeType, "anonymous", listener);
 	}
 	
 	public void loadImage (final String url, final String mimeType, final String crossOrigin, final AssetLoaderListener<ImageElement> listener) {
