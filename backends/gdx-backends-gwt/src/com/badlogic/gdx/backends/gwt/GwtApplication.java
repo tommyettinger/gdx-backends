@@ -91,7 +91,7 @@ public abstract class GwtApplication implements EntryPoint, Application {
 	
 	public String getPreloaderBaseURL()
 	{
-		return GWT.getHostPageBaseURL() + "assets/";
+		return GWT.getModuleBaseURL().replace("/html", "") + "assets/";
 	}
 	
 	@Override
