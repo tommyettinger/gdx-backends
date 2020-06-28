@@ -63,8 +63,8 @@ Own additions:
 
 Checkout the tag `v1.910.2` of this repo to use this version, or use the following dependencies for GWT:
 
-      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:1.910.2'
-      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:1.910.2:sources'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.910.2'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.910.2:sources'
 
 Own additions:
 * GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
@@ -74,7 +74,7 @@ it permits.
 - [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
 like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
-file, add this line after the compiler settings: `sourceLevel = 11`
+file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
 on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
@@ -98,7 +98,7 @@ it permits.
 - [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
 like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
-file, add this line after the compiler settings: `sourceLevel = 11`
+file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
 on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
