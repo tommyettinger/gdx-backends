@@ -61,6 +61,30 @@ Own additions:
 
 ### 1.910.2
 
+Checkout the tag `v1.910.2` of this repo to use this version, or use the following dependencies for GWT:
+
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:1.910.2'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:1.910.2:sources'
+
+Own additions:
+* GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
+
+Upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
+it permits.
+- [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
+like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
+- [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
+file, add this line after the compiler settings: `sourceLevel = 11`
+- [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
+- [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
+on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
+[gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
+`gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
+
+## For use with 1.9.11-SNAPSHOT
+
+### 1.911.0
+
 Checkout the branch `master` of this repo to use this version, or use the following dependencies for GWT:
 
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
@@ -75,14 +99,7 @@ it permits.
 like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
 file, add this line after the compiler settings: `sourceLevel = 11`
-- [ ] Make sure your Gradle or IDE settings are configured to use JDK 11 or newer. Unfortunately, it seems like
-a lot of OpenJDK distributions have bugs that affect some part of libGDX; using
-[AdoptOpenJDK](https://adoptopenjdk.net/) builds is strongly recommended. If you use some other type of JDK and
-encounter any weird crashes inside the JDK itself (such as crashes that mention `ld.so`), try AdoptOpenJDK first.
-Note that `desktop` projects run with Java 9 or higher will always display a warning (not an error) starting with
-`WARNING: An illegal reflective access operation has occurred` when you run them; this warning is harmless.
-Immediately after the illegal access warning, sometimes actual errors are displayed without any break; this can
-be quite confusing. The illegal access warning doesn't seem to happen with LWJGL3 projects.
+- [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
 on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
 [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
