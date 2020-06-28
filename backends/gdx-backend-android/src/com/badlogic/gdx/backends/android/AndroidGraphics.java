@@ -111,7 +111,27 @@ public class AndroidGraphics implements Graphics, Renderer {
 		ResolutionStrategy resolutionStrategy) {
 		this(application, config, resolutionStrategy, true);
 	}
-
+	
+	@Override
+	public int getSafeInsetLeft() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetTop() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetBottom() {
+		return 0;
+	}
+	
+	@Override
+	public int getSafeInsetRight() {
+		return 0;
+	}
+	
 	public AndroidGraphics (AndroidApplicationBase application, AndroidApplicationConfiguration config,
 		ResolutionStrategy resolutionStrategy, boolean focusableView) {
 		this.config = config;
