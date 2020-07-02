@@ -22,26 +22,28 @@ Your options for using this repo depend on whether you want to make changes to i
 
 ### How to use as a dependency (I want to use a build without making changes)
 
-In case you don't want to change something here yourself, but just want to use some of the additions, you can also use a Jitpack dependency.
-Don't forget to add Jitpack as a repo to your project:
-
+In case you don't want to change something here yourself, but just want to use some of the additions, you can either use
+the 1.910.2 stable release (featuring GWT 2.9.0) from the standard Maven Central repository, or use a Jitpack
+dependency. If you choose JitPack, don't forget to add Jitpack as a repo to your project:
+```groovy
     allprojects {
 	    repositories {
 		    ...
 		    maven { url 'https://jitpack.io' }
 	    }
     }
+```
 
 ## For use with libGDX 1.9.10 core
 
 ### 1.910.0
 
 Checkout branch [release/1.910.0](https://github.com/MrStahlfelge/gdx-backends/tree/release/1.910.0) of
-MrStahlfelge's repo to use this version, or use the following dependencies for GWT:
-
+MrStahlfelge's repo to use this version, or use the following JitPack dependencies for GWT:
+```groovy
        implementation 'com.github.MrStahlfelge.gdx-backends:gdx-backend-gwt:1.910.0'
        implementation 'com.github.MrStahlfelge.gdx-backends:gdx-backend-gwt:1.910.0:sources'
-
+```
 Own additions
 * GWT: Switched to WebAudio, fixes sounds for mobiles too. [Original PR by @barkholt](https://github.com/libgdx/libgdx/pull/4220). See [current PR](https://github.com/libgdx/libgdx/pull/5659) for more information.
 * GWT: Faster bootstrap process by lazy loading assets. See [current PR](https://github.com/libgdx/libgdx/pull/5677) for more information.
@@ -49,11 +51,11 @@ Own additions
 
 ### 1.910.1
 
-Use MrStahlfelge's repo:
-
+Use MrStahlfelge's repo, with these JitPack dependencies for GWT:
+```groovy
       implementation 'com.github.MrStahlfelge.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
       implementation 'com.github.MrStahlfelge.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
-
+```
 Own additions:
 * GWT: Fix for getPeriphalAvailable reporting accelerometer present on desktop. [Pending PR](https://github.com/libgdx/libgdx/pull/5758)
 * GWT: Pulled feature policy implementation by @SimonIT. [Pending PR](https://github.com/libgdx/libgdx/pull/5784)
@@ -61,16 +63,28 @@ Own additions:
 
 ### 1.910.2
 
-Checkout the tag `v1.910.2` of this repo to use this version, or use the following dependencies for GWT:
+Checkout the tag `v1.910.2` of this repo to use this version, or use one of the following sets of dependencies for GWT:
 
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.910.2'
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.910.2:sources'
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.910.2'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.910.2:sources'
+```
+
+If Maven Central is down, you can switch to JitPack, or vice versa; the files should be equivalent.
 
 Own additions:
 * GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
 
 Upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
-it permits.
+it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
+have to use it everywhere; that's why the backend needs to be changed and not just your code.
 - [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
 like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
@@ -85,16 +99,17 @@ on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
 
 ### 1.911.0
 
-Checkout the branch `master` of this repo to use this version, or use the following dependencies for GWT:
-
+Checkout the branch `master` of this repo to use this version, or use the following JitPack dependencies for GWT:
+```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
-
+```
 Own additions:
 * GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
 
 Upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
-it permits.
+it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
+have to use it everywhere; that's why the backend needs to be changed and not just your code.
 - [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
 like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
