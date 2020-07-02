@@ -1,14 +1,14 @@
 modifyPom {
     project {
-        name 'colorful-gdx'
-        description 'A libGDX Batch that can manipulate colors in powerful ways.'
-        url 'https://github.com/tommyettinger/colorful-gdx'
-        inceptionYear '2019'
+        name 'libgdx'
+        description 'Android/Desktop/iOS/HTML5 game development framework.'
+        url 'http://libgdx.badlogicgames.com'
+        inceptionYear '2011'
 
         scm {
-            url 'https://github.com/tommyettinger/colorful-gdx'
-            connection 'scm:https://tommyettinger@github.com/tommyettinger/colorful-gdx.git'
-            developerConnection 'scm:git://github.com/tommyettinger/colorful-gdx.git'
+            url 'https://github.com/tommyettinger/gdx-backends'
+            connection 'scm:https://github.com/tommyettinger/gdx-backends.git'
+            developerConnection 'scm:git://github.com/tommyettinger/gdx-backends.git'
         }
 
         licenses {
@@ -21,9 +21,9 @@ modifyPom {
 
         developers {
             developer {
-                id 'tommyettinger'
-                name 'Tommy Ettinger'
-                email 'tommy.ettinger@gmail.com'
+                id 'contributors'
+                name 'https://github.com/libgdx/libgdx/graphs/contributors'
+                email 'not.real@temp.mil.io'
             }
         }
     }
