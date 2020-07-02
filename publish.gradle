@@ -1,0 +1,34 @@
+modifyPom {
+    project {
+        name 'libgdx'
+        description 'Android/Desktop/iOS/HTML5 game development framework.'
+        url 'http://libgdx.badlogicgames.com'
+        inceptionYear '2011'
+
+        scm {
+            url 'https://github.com/tommyettinger/gdx-backends'
+            connection 'scm:https://github.com/tommyettinger/gdx-backends.git'
+            developerConnection 'scm:git://github.com/tommyettinger/gdx-backends.git'
+        }
+
+        licenses {
+            license {
+                name 'Apache Public License'
+                url 'https://www.apache.org/licenses/LICENSE-2.0.html'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'contributors'
+                name 'https://github.com/libgdx/libgdx/graphs/contributors'
+                email 'not.real@temp.mil.io'
+            }
+        }
+    }
+}
+
+nexusStaging {
+    packageGroup = 'com.github.tommyettinger'
+}

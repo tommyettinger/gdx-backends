@@ -1,25 +1,37 @@
 apply from: "gradle/dependencies.gradle"
 
 allprojects{
-    group = 'com.badlogicgames.gdx'
+    group = 'com.github.tommyettinger'
     version = '1.910.2'
 
     buildscript {
         repositories {
             google()
-            jcenter()
             mavenCentral()
             maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+            jcenter()
         }
     }
-
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
     }
 }
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.0"
+    }
+}
+apply plugin: 'io.codearte.nexus-staging'
 
 if (JavaVersion.current().isJava8Compatible()) {
     allprojects {
@@ -30,8 +42,10 @@ if (JavaVersion.current().isJava8Compatible()) {
 }
 
 subprojects{
-    apply plugin: "java"
-    apply plugin: "maven"
+    apply plugin: "java-library"
+    apply plugin: 'com.bmuschko.nexus'
+    apply from: rootDir.canonicalPath + '/publish.gradle'
+    def projectName = 'gdx-backends'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -41,25 +55,31 @@ subprojects{
         options.incremental = true
     }
 
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        archiveClassifier.set('sources')
-        from sourceSets.main.allSource
-    }
+//    task sourcesJar(type: Jar, dependsOn: classes) {
+//        archiveClassifier.set('sources')
+//        from sourceSets.main.allSource
+//    }
+//
+//    task javadocJar(type: Jar, dependsOn: javadoc) {
+//        archiveClassifier.set('javadoc')
+//        from javadoc.destinationDir
+//    }
 
-    task javadocJar(type: Jar, dependsOn: javadoc) {
-        archiveClassifier.set('javadoc')
-        from javadoc.destinationDir
-    }
-
-    artifacts {
-        archives sourcesJar
-        archives javadocJar
-    }
+//    artifacts {
+//        archives sourcesJar
+//        archives javadocJar
+//    }
 
     if (JavaVersion.current().isJava8Compatible()) {
         tasks.withType(Javadoc) {
             // disable the crazy super-strict DocLint tool in Java 8
             options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+    
+    jar {
+        manifest {
+            attributes 'Implementation-Title': projectName, 'Implementation-Version': archiveVersion
         }
     }
 }
