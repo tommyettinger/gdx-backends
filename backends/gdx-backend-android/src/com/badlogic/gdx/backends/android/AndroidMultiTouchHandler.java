@@ -23,7 +23,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.backends.android.AndroidInput.TouchEvent;
 
-/** Multitouch handler for devices running Android >= 2.0. If device is capable of (fake) multitouch this will report additional
+/** Multitouch handler for devices running Android &gt;= 2.0. If device is capable of (fake) multitouch this will report additional
  * pointers.
  * 
  * @author badlogicgames@gmail.com */

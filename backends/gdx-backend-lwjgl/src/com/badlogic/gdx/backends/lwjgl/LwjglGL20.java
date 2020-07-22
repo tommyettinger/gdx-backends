@@ -16,23 +16,11 @@
 
 package com.badlogic.gdx.backends.lwjgl;
 
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.DoubleBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.nio.ShortBuffer;
-
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.EXTFramebufferObject;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL15;
-import org.lwjgl.opengl.GL20;
-
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.*;
+
+import java.nio.*;
 
 /** An implementation of the {@link GL20} interface based on LWJGL. Note that LWJGL shaders and OpenGL ES shaders will not be 100%
  * compatible. Some glGetXXX methods are not implemented.
@@ -352,21 +340,21 @@ class LwjglGL20 implements com.badlogic.gdx.graphics.GL20 {
 		EXTFramebufferObject.glGenerateMipmapEXT(target);
 	}
 
-	public String glGetActiveAttrib (int program, int index, IntBuffer size, Buffer type) {
+	public String glGetActiveAttrib (int program, int index, IntBuffer size, IntBuffer type) {
 		// FIXME this is less than ideal of course...
 		IntBuffer typeTmp = BufferUtils.createIntBuffer(2);
 		String name = GL20.glGetActiveAttrib(program, index, 256, typeTmp);
 		size.put(typeTmp.get(0));
-		if (type instanceof IntBuffer) ((IntBuffer)type).put(typeTmp.get(1));
+		type.put(typeTmp.get(1));
 		return name;
 	}
 
-	public String glGetActiveUniform (int program, int index, IntBuffer size, Buffer type) {
+	public String glGetActiveUniform (int program, int index, IntBuffer size, IntBuffer type) {
 		// FIXME this is less than ideal of course...
 		IntBuffer typeTmp = BufferUtils.createIntBuffer(2);
 		String name = GL20.glGetActiveUniform(program, index, 256, typeTmp);
 		size.put(typeTmp.get(0));
-		if (type instanceof IntBuffer) ((IntBuffer)type).put(typeTmp.get(1));
+		type.put(typeTmp.get(1));
 		return name;
 	}
 

@@ -468,7 +468,7 @@ public class GLSurfaceViewAPI18 extends SurfaceView implements SurfaceHolder.Cal
      *     }
      * </pre>
      * <p>Note: Activities which require OpenGL ES 2.0 should indicate this by
-     * setting @lt;uses-feature android:glEsVersion="0x00020000" /> in the activity's
+     * setting @lt;uses-feature android:glEsVersion="0x00020000" /&gt; in the activity's
      * AndroidManifest.xml file.
      * <p>If this method is called, it must be called before {@link #setRenderer(Renderer)}
      * is called.

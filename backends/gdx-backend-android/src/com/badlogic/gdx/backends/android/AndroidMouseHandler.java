@@ -25,7 +25,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.backends.android.AndroidInput.TouchEvent;
 
-/** Mouse handler for devices running Android >= 3.1.
+/** Mouse handler for devices running Android &gt;= 3.1.
  * 
  * @author Richard Martin */
 public class AndroidMouseHandler {

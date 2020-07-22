@@ -95,9 +95,46 @@ on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
 [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
 `gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
 
-## For use with 1.9.11-SNAPSHOT
+## For use with 1.9.11
 
-### 1.911.0
+### 1.911.1
+
+Checkout the tag `v1.911.1` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.911.1'
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.911.1:sources'
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.1'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.1:sources'
+```
+
+If Maven Central is down, you can switch to JitPack, or vice versa; the files should be equivalent.
+
+Own additions:
+* GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
+
+Upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
+it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
+have to use it everywhere; that's why the backend needs to be changed and not just your code.
+- [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
+like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
+- [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
+file, add this line after the compiler settings: `sourceLevel = 1.11`
+- [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
+- [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
+on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
+[gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
+`gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
+
+
+## For use with 1.9.12-SNAPSHOT
+
+### 1.912.0
 
 Checkout the branch `master` of this repo to use this version, or use the following JitPack dependencies for GWT:
 ```groovy
