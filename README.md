@@ -97,23 +97,25 @@ on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
 
 ## For use with 1.9.11
 
-### 1.911.1
+### 1.911.2
 
-Checkout the tag `v1.911.1` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+Checkout the tag `v1.911.2` of this repo to use this version, or use one of the following sets of dependencies for GWT:
 
 Maven Central (uses the repository `mavenCentral()`, which most projects already have):
 ```groovy
-      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.911.1'
-      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.911.1:sources'
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.911.2'
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.911.2:sources'
 ```
 
 JitPack (needs the JitPack repository given above):
 ```groovy
-      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.1'
-      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.1:sources'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.2'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.2:sources'
 ```
 
 If Maven Central is down, you can switch to JitPack, or vice versa; the files should be equivalent.
+
+(There was a 1.911.1 release, but it had unexpected incompatibility with GWT.)
 
 Own additions:
 * GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
