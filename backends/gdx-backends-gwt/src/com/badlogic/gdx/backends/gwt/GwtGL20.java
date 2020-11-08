@@ -16,7 +16,6 @@
 
 package com.badlogic.gdx.backends.gwt;
 
-
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -76,6 +75,14 @@ public class GwtGL20 implements GL20 {
 			delete this[key];
 			return value;
 		}-*/;
+
+		public native int getKey(T value) /*-{
+			for (i = 0; i < this.length; i++) {
+		           if (value === this[i]) {
+		               return i;
+		           }
+		       }
+		}-*/;
 	}
 
 	final IntMap<WebGLProgram> programs = IntMap.create();
@@ -92,7 +99,7 @@ public class GwtGL20 implements GL20 {
 	Int16Array shortBuffer = TypedArrays.createInt16Array(2000 * 6);
 	float[] floatArray = new float[16000];
 
-	final WebGLRenderingContext gl;
+	public final WebGLRenderingContext gl;
 
 	protected GwtGL20 (WebGLRenderingContext gl) {
 		this.gl = gl;
@@ -117,7 +124,7 @@ public class GwtGL20 implements GL20 {
 		} else {
 			ensureCapacity(buffer);
 			for (int i = buffer.position(), j = 0; i < buffer.limit(); i++, j++) {
-				shortBuffer.set(j, buffer.get(i));
+				shortBuffer.set(j, (buffer.get(i) & 0xFFFF));
 			}
 			return shortBuffer.subarray(0, buffer.remaining());
 		}
@@ -541,7 +548,8 @@ public class GwtGL20 implements GL20 {
 			textures.put(id);
 		}
 	}
-	
+
+
 	@Override
 	public String glGetActiveAttrib (int program, int index, IntBuffer size, IntBuffer type) {
 		WebGLActiveInfo activeAttrib = gl.getActiveAttrib(programs.get(program), index);
@@ -629,6 +637,14 @@ public class GwtGL20 implements GL20 {
 			params.put(1, array.get(1));
 			params.put(2, array.get(2));
 			params.put(3, array.get(3));
+			params.flip();
+		} else if(pname == GL20.GL_FRAMEBUFFER_BINDING) {
+			WebGLFramebuffer fbo = gl.getParametero(pname);
+			if(fbo == null) {
+				params.put(0);
+			} else {
+				params.put(frameBuffers.getKey(fbo));
+			}
 			params.flip();
 		} else
 			throw new GdxRuntimeException("glGetInteger not supported by GWT WebGL backend");
@@ -897,6 +913,9 @@ public class GwtGL20 implements GL20 {
 				// Prefer to use the HTMLImageElement when possible, since reading from the CanvasElement can be lossy.
 				if (pixmap.canUseImageElement()) {
 					gl.texImage2D(target, level, internalformat, format, type, pixmap.getImageElement());
+				}
+				else if (pixmap.canUseVideoElement()) {
+					gl.texImage2D(target, level, internalformat, format, type, pixmap.getVideoElement());
 				}
 				else {
 					gl.texImage2D(target, level, internalformat, format, type, pixmap.getCanvasElement());

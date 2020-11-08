@@ -109,9 +109,9 @@ public class LwjglAWTInput implements Input, MouseMotionListener, MouseListener,
 	boolean touchDown = false;
 	boolean justTouched = false;
 	int keyCount = 0;
-	boolean[] keys = new boolean[256];
+	boolean[] keys = new boolean[Keys.MAX_KEYCODE + 1];
 	boolean keyJustPressed = false;
-	boolean[] justPressedKeys = new boolean[256];
+	boolean[] justPressedKeys = new boolean[Keys.MAX_KEYCODE + 1];
 	boolean[] justPressedButtons = new boolean[5];
 	IntSet pressedButtons = new IntSet();
 	InputProcessor processor;
@@ -160,7 +160,13 @@ public class LwjglAWTInput implements Input, MouseMotionListener, MouseListener,
 		return 0;
 	}
 
-	public void getTextInput (final TextInputListener listener, final String title, final String text, final String hint) {
+	@Override
+	public void getTextInput(TextInputListener listener, String title, String text, String hint) {
+		getTextInput(listener, title, text, hint, OnscreenKeyboardType.Default);
+	}
+
+	@Override
+	public void getTextInput (final TextInputListener listener, final String title, final String text, final String hint, OnscreenKeyboardType type) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run () {
@@ -383,7 +389,7 @@ public class LwjglAWTInput implements Input, MouseMotionListener, MouseListener,
 						processor.mouseMoved(e.x, e.y);
 						break;
 					case TouchEvent.TOUCH_SCROLLED:
-						processor.scrolled(e.scrollAmount);
+						processor.scrolled(0, e.scrollAmount);
 						break;
 					}
 					usedTouchEvents.free(e);
@@ -444,6 +450,11 @@ public class LwjglAWTInput implements Input, MouseMotionListener, MouseListener,
 
 	@Override
 	public void setOnscreenKeyboardVisible (boolean visible) {
+
+	}
+
+	@Override
+	public void setOnscreenKeyboardVisible(boolean visible, OnscreenKeyboardType type) {
 
 	}
 

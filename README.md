@@ -49,6 +49,8 @@ Own additions
 * GWT: Faster bootstrap process by lazy loading assets. See [current PR](https://github.com/libgdx/libgdx/pull/5677) for more information.
 * GWT: Fixed density problems on mobile with new config setting. See [current PR](https://github.com/libgdx/libgdx/pull/5691)
 
+All of these PRs have been merged as of 1.9.12.
+
 ### 1.910.1
 
 Use MrStahlfelge's repo, with these JitPack dependencies for GWT:
@@ -134,7 +136,10 @@ on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
 `gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
 
 
-## For use with 1.9.12-SNAPSHOT
+## For use with 1.9.12
+
+Version 1.9.12 of libGDX merges all of MrStahlfelge's additions to the GWT backend, so the only reason to use this
+unofficial backend is GWT 2.9.0 support.
 
 ### 1.912.0
 
@@ -153,7 +158,7 @@ have to use it everywhere; that's why the backend needs to be changed and not ju
 like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
 file, add this line after the compiler settings: `sourceLevel = 1.11`
-- [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
+- [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer. This isn't done automatically.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
 on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
 [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in

@@ -16,15 +16,26 @@
 
 package com.badlogic.gdx.backends.gwt;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.gwt.preloader.Preloader;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 
 public class GwtFileHandle extends FileHandle {
 	public final Preloader preloader;
@@ -43,6 +54,11 @@ public class GwtFileHandle extends FileHandle {
 		this.type = FileType.Internal;
 		this.preloader = ((GwtApplication)Gdx.app).getPreloader();
 		this.file = fixSlashes(path);
+	}
+
+	/** @return The full url to an asset, e.g. http://localhost:8080/assets/data/shotgun-e5f56587d6f025bff049632853ae4ff9.ogg */
+	public String getAssetUrl() {
+		return preloader.baseUrl + preloader.assetNames.get(file, file);
 	}
 
 	public String path () {
@@ -84,7 +100,7 @@ public class GwtFileHandle extends FileHandle {
 	/** Returns a java.io.File that represents this file handle. Note the returned file will only be usable for
 	 * {@link FileType#Absolute} and {@link FileType#External} file handles. */
 	public File file () {
-		throw new GdxRuntimeException("Not supported in GWT backend");
+		throw new GdxRuntimeException("file() not supported in GWT backend");
 	}
 
 	/** Returns a stream for reading this file as bytes.
@@ -206,6 +222,10 @@ public class GwtFileHandle extends FileHandle {
 			}
 		}
 		return position - offset;
+	}
+
+	public ByteBuffer map () {
+		throw new GdxRuntimeException("Cannot map files in GWT backend");
 	}
 
 	public ByteBuffer map (FileChannel.MapMode mode) {

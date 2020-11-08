@@ -16,11 +16,23 @@
 
 package com.badlogic.gdx.backends.lwjgl;
 
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.*;
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
-import java.nio.*;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.EXTFramebufferObject;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL14;
+import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
+
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /** An implementation of the {@link GL20} interface based on LWJGL. Note that LWJGL shaders and OpenGL ES shaders will not be 100%
  * compatible. Some glGetXXX methods are not implemented.

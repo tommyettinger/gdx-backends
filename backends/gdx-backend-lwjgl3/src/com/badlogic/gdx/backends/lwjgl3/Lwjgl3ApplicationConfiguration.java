@@ -57,6 +57,7 @@ public class Lwjgl3ApplicationConfiguration extends Lwjgl3WindowConfiguration {
 	boolean transparentFramebuffer;
 
 	int idleFPS = 60;
+	int foregroundFPS = 0;
 
 	String preferencesDirectory = ".prefs/";
 	Files.FileType preferencesFileType = FileType.External;
@@ -90,6 +91,7 @@ public class Lwjgl3ApplicationConfiguration extends Lwjgl3WindowConfiguration {
 		samples = config.samples;
 		transparentFramebuffer = config.transparentFramebuffer;
 		idleFPS = config.idleFPS;
+		foregroundFPS = config.foregroundFPS;
 		preferencesDirectory = config.preferencesDirectory;
 		preferencesFileType = config.preferencesFileType;
 		hdpiMode = config.hdpiMode;
@@ -111,6 +113,13 @@ public class Lwjgl3ApplicationConfiguration extends Lwjgl3WindowConfiguration {
 	 */
 	public void disableAudio(boolean disableAudio) {
 		this.disableAudio = disableAudio;
+	}
+
+	/**
+	 * Sets the maximum number of threads to use for network requests.
+	 */
+	public void setMaxNetThreads(int maxNetThreads) {
+		this.maxNetThreads = maxNetThreads;
 	}
 
 	/**
@@ -198,6 +207,12 @@ public class Lwjgl3ApplicationConfiguration extends Lwjgl3WindowConfiguration {
 	 * Default is 60. */
 	public void setIdleFPS (int fps) {
 		this.idleFPS = fps;
+	}
+
+	/**Sets the target framerate for the application. The CPU sleeps as needed. Must be positive.
+	 * Use 0 to never sleep. Default is 0. */
+	public void setForegroundFPS (int fps) {
+		this.foregroundFPS = fps;
 	}
 
 	/**

@@ -534,10 +534,10 @@ public class GwtGL20Debug extends GwtGL20 {
 		super.glGenRenderbuffers(n, renderbuffers);
 		checkError();
 	}
-	
+
 	@Override
 	public String glGetActiveAttrib (int program, int index, IntBuffer size, IntBuffer type) {
-
+		 
 		String attrib = super.glGetActiveAttrib(program, index, size, type);
 		checkError();
 		return attrib;
@@ -545,7 +545,7 @@ public class GwtGL20Debug extends GwtGL20 {
 
 	@Override
 	public String glGetActiveUniform (int program, int index, IntBuffer size, IntBuffer type) {
-
+		 
 		String uniform = super.glGetActiveUniform(program, index, size, type);
 		checkError();
 		return uniform;

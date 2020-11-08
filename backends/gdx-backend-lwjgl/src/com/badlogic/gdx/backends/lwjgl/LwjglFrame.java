@@ -16,15 +16,22 @@
 
 package com.badlogic.gdx.backends.lwjgl;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import javax.swing.JFrame;
+
+import org.lwjgl.opengl.Display;
+
+import com.badlogic.gdx.ApplicationListener;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GraphicsConfiguration;
 import java.awt.Point;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
-
-import javax.swing.JFrame;
-
-import com.badlogic.gdx.ApplicationListener;
 
 /** Wraps an {@link LwjglCanvas} in a resizable {@link JFrame}. */
 public class LwjglFrame extends JFrame {
@@ -78,8 +85,16 @@ public class LwjglFrame extends JFrame {
 				LwjglFrame.this.start();
 			}
 
+			protected void disposed () {
+				LwjglFrame.this.disposed();
+			}
+
 			protected void exception (Throwable t) {
 				LwjglFrame.this.exception(t);
+			}
+
+			protected void postedException (Throwable ex, Throwable caller) {
+				LwjglFrame.this.postedException(ex, caller);
 			}
 
 			protected int getFrameRate () {
@@ -103,6 +118,21 @@ public class LwjglFrame extends JFrame {
 		if (location.x == 0 && location.y == 0) setLocationRelativeTo(null);
 		lwjglCanvas.getCanvas().setSize(size);
 
+		addWindowFocusListener(new WindowAdapter() {
+			public void windowLostFocus (WindowEvent event) {
+				// Display.reshape sizes and positions the OpenGL window to match the canvas.
+				// Normally Display.reshape is called from Display.update when the size changes, but LwjglCanvas doesn't call
+				// Display.update when rendering is not needed because it also swaps buffers and would flicker.
+				// After losing focus rendering may not be needed so Display.reshape must be called, else the OpenGL window may be
+				// left in the wrong place.
+				// Display.setLocation calls Display.reshape, despite javadocs saying it's a no-op when a canvas is set.
+				if (Display.isCreated()) {
+					Display.setLocation(0, 0);
+					lwjglCanvas.graphics.requestRendering();
+				}
+			}
+		});
+
 		// Finish with invokeLater so any LwjglFrame super constructor has a chance to initialize.
 		EventQueue.invokeLater(new Runnable() {
 			public void run () {
@@ -121,16 +151,23 @@ public class LwjglFrame extends JFrame {
 	/** When true, <code>Runtime.getRuntime().halt(0);</code> is used when the JVM shuts down. This prevents Swing shutdown hooks
 	 * from causing a deadlock and keeping the JVM alive indefinitely. Default is true. */
 	public void setHaltOnShutdown (boolean halt) {
-		if (halt) {
-			if (shutdownHook != null) return;
-			shutdownHook = new Thread() {
-				public void run () {
-					Runtime.getRuntime().halt(0); // Because fuck you, deadlock causing Swing shutdown hooks.
+		try {
+			try {
+				if (halt) {
+					if (shutdownHook != null) return;
+					shutdownHook = new Thread() {
+						public void run () {
+							Runtime.getRuntime().halt(0);
+						}
+					};
+					Runtime.getRuntime().addShutdownHook(shutdownHook);
+				} else if (shutdownHook != null) {
+					Runtime.getRuntime().removeShutdownHook(shutdownHook);
+					shutdownHook = null;
 				}
-			};
-			Runtime.getRuntime().addShutdownHook(shutdownHook);
-		} else if (shutdownHook != null) {
-			Runtime.getRuntime().removeShutdownHook(shutdownHook);
+			} catch (Throwable ignored) { // Can happen if already shutting down.
+			}
+		} catch (IllegalStateException ex) {
 			shutdownHook = null;
 		}
 	}
@@ -142,6 +179,13 @@ public class LwjglFrame extends JFrame {
 	protected void exception (Throwable ex) {
 		ex.printStackTrace();
 		lwjglCanvas.stop();
+	}
+
+	protected void postedException (Throwable ex, Throwable caller) {
+		if (caller == null) throw new RuntimeException(ex);
+		StringWriter buffer = new StringWriter(1024);
+		caller.printStackTrace(new PrintWriter(buffer));
+		throw new RuntimeException("Posted: " + buffer, ex);
 	}
 
 	/** Called before the JFrame is made displayable. */
@@ -159,6 +203,10 @@ public class LwjglFrame extends JFrame {
 
 	/** Called when the canvas size changes. */
 	public void updateSize (int width, int height) {
+	}
+
+	/** Called after dispose is complete. */
+	protected void disposed () {
 	}
 
 	public LwjglCanvas getLwjglCanvas () {
