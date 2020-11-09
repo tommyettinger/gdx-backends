@@ -22,6 +22,7 @@ dependencies {
 }
 
 sourceSets.main.java.exclude "**/System.java"
+sourceSets.main.resources.srcDirs += [ file('res').path ]
 
 // see https://stackoverflow.com/questions/52788326/gradle-javadoc-gwt-error-cannot-access-event-in-import-com-google-gwt-user-cli
 javadoc {
