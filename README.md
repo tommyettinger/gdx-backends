@@ -59,9 +59,11 @@ Use MrStahlfelge's repo, with these JitPack dependencies for GWT:
       implementation 'com.github.MrStahlfelge.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
 ```
 Own additions:
-* GWT: Fix for getPeriphalAvailable reporting accelerometer present on desktop. [Pending PR](https://github.com/libgdx/libgdx/pull/5758)
+* GWT: Fix for getPeripheralAvailable reporting accelerometer present on desktop. [Pending PR](https://github.com/libgdx/libgdx/pull/5758)
 * GWT: Pulled feature policy implementation by @SimonIT. [Pending PR](https://github.com/libgdx/libgdx/pull/5784)
 * GWT: GWT preferences NPE fix by @SimonIT. [Pending PR](https://github.com/libgdx/libgdx/pull/5838)
+
+All of these PRs have been merged as of 1.9.12.
 
 ### 1.910.2
 
@@ -81,21 +83,7 @@ JitPack (needs the JitPack repository given above):
 
 If Maven Central is down, you can switch to JitPack, or vice versa; the files should be equivalent.
 
-Own additions:
-* GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
-
-Upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
-it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
-have to use it everywhere; that's why the backend needs to be changed and not just your code.
-- [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
-like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
-- [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
-file, add this line after the compiler settings: `sourceLevel = 1.11`
-- [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
-- [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
-on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
-[gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-`gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
+This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
 ## For use with 1.9.11
 
@@ -119,21 +107,7 @@ If Maven Central is down, you can switch to JitPack, or vice versa; the files sh
 
 (There was a 1.911.1 release, but it had unexpected incompatibility with GWT.)
 
-Own additions:
-* GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
-
-Upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
-it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
-have to use it everywhere; that's why the backend needs to be changed and not just your code.
-- [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
-like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
-- [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
-file, add this line after the compiler settings: `sourceLevel = 1.11`
-- [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer.
-- [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
-on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
-[gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-`gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
+This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
 
 ## For use with 1.9.12
@@ -143,29 +117,54 @@ unofficial backend is GWT 2.9.0 support.
 
 ### 1.912.0
 
-Checkout the branch `master` of this repo to use this version, or use the following JitPack dependencies for GWT:
+Checkout the tag `v1.912.0` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.912.0'
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.912.0:sources'
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.912.0'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.912.0:sources'
+```
+
+This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
+
+### 1.912.1-SNAPSHOT
+
+Checkout the `master` branch, or use the following JitPack dependencies for GWT:
+
 ```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
 ```
-Own additions:
-* GWT: Update to GWT 2.9.0; this benefits from some changes in users' build.gradle files.
 
-Upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
+This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
+
+## GWT 2.9.0 Support
+
+Most of these versions have been updated to use GWT 2.9.0; this benefits from some changes in users' build.gradle files, 
+but should still work without changes as long as no other GWT versions are in use.
+
+However, upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
 it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
 have to use it everywhere; that's why the backend needs to be changed and not just your code.
 - [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
-like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
+  like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
-file, add this line after the compiler settings: `sourceLevel = 1.11`
+  file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer. This isn't done automatically.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
-on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
-[gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-`gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
+  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
+  [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
+  `gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
+
 
 ## Future work
 
 ### GWT
-- [ ] Move resizable browser window support into the backend, no template hassle any more
+- [x] Move resizable browser window support into the backend, no template hassle any more
 - [ ] Electron extensions
