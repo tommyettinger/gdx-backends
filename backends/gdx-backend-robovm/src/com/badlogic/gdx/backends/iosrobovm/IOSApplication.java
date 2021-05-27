@@ -21,10 +21,7 @@ import java.io.File;
 import com.badlogic.gdx.ApplicationLogger;
 import com.badlogic.gdx.backends.iosrobovm.objectal.OALIOSAudio;
 import org.robovm.apple.coregraphics.CGRect;
-import org.robovm.apple.foundation.NSMutableDictionary;
-import org.robovm.apple.foundation.NSObject;
-import org.robovm.apple.foundation.NSProcessInfo;
-import org.robovm.apple.foundation.NSString;
+import org.robovm.apple.foundation.*;
 import org.robovm.apple.uikit.UIApplication;
 import org.robovm.apple.uikit.UIApplicationDelegateAdapter;
 import org.robovm.apple.uikit.UIApplicationLaunchOptions;
@@ -432,6 +429,16 @@ public class IOSApplication implements Application {
 			public void setContents (String content) {
 				UIPasteboard.getGeneralPasteboard().setString(content);
 			}
+            
+            @Override
+            public boolean hasContents () {
+                if (Foundation.getMajorSystemVersion() >= 10) {
+                    return UIPasteboard.getGeneralPasteboard().hasStrings();
+                }
+                
+                String contents = getContents();
+                return contents != null && !contents.isEmpty();
+            }
 
 			@Override
 			public String getContents () {
