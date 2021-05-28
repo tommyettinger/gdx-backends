@@ -20,6 +20,8 @@ dependencies {
         exclude group: "org.eclipse.jetty", module: "apache-jsp"
     }
 }
+compileJava.exclude("emu")
+javadoc.exclude("emu")
 
 sourceSets.main.java.exclude "**/System.java"
 sourceSets.main.resources.srcDirs += [ file('res').path ]

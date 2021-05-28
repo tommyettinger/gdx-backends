@@ -1,7 +1,7 @@
 ## Backends for libGDX, easy to build
 
-Since we have few regular libGDX releases anymore, it is a problem to fix or extend backend behaviour that can't be overridden.
-While there's always a way to work around bugs in the core project, this is often not possible in the backends.
+ - Do you need to change the behavior of one or more of the libGDX backends for your own (nefarious?) purposes?
+ - Or do you just want **GWT 2.9.0** support before libGDX has it officially?
 
 This is where this repo comes in.
 
@@ -23,8 +23,9 @@ Your options for using this repo depend on whether you want to make changes to i
 ### How to use as a dependency (I want to use a build without making changes)
 
 In case you don't want to change something here yourself, but just want to use some of the additions, you can either use
-the 1.910.2 stable release (featuring GWT 2.9.0) from the standard Maven Central repository, or use a Jitpack
-dependency. If you choose JitPack, don't forget to add Jitpack as a repo to your project:
+the 1.100.0 stable release (featuring GWT 2.9.0) from the standard Maven Central repository, or use a Jitpack
+dependency. If you choose JitPack, you might need to add JitPack as a repo to your project (current gdx-setup and
+gdx-liftoff both do this step for you already):
 ```groovy
     allprojects {
 	    repositories {
@@ -109,7 +110,6 @@ If Maven Central is down, you can switch to JitPack, or vice versa; the files sh
 
 This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
-
 ## For use with 1.9.12
 
 Version 1.9.12 of libGDX merges all of MrStahlfelge's additions to the GWT backend, so the only reason to use this
@@ -133,7 +133,30 @@ JitPack (needs the JitPack repository given above):
 
 This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
-### 1.912.1-SNAPSHOT
+## For use with 1.10.0
+
+Version 1.10.0 of libGDX already has all of MrStahlfelge's additions to the GWT backend merged, so the only reason to
+use this unofficial backend is GWT 2.9.0 support.
+
+### 1.100.0
+
+Checkout the tag `v1.100.0` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.100.0'
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.100.0:sources'
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.0'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.0:sources'
+```
+
+This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
+
+### 1.100.1-SNAPSHOT
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
@@ -157,10 +180,10 @@ have to use it everywhere; that's why the backend needs to be changed and not ju
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
   file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer. This isn't done automatically.
-- [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested only
-  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.0.13` ;
+- [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested mostly
+  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.1.12` ;
   [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-  `gradle.properties`, so you can change it there to `1.0.13` if you use that project generator.
+  `gradle.properties`, so you can change it there to `1.1.12` if you use that project generator.
 
 
 ## Future work

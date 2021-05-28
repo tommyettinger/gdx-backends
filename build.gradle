@@ -9,14 +9,14 @@ allprojects{
             google()
             mavenCentral()
             maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-            jcenter()
+            gradlePluginPortal()
         }
     }
     repositories {
         google()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
+        gradlePluginPortal()
     }
 }
 buildscript {
@@ -24,7 +24,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
         classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
