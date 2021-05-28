@@ -18,6 +18,7 @@ package com.badlogic.gdx.backends.lwjgl3;
 
 import java.nio.IntBuffer;
 
+import com.badlogic.gdx.AbstractGraphics;
 import com.badlogic.gdx.Application;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.PointerBuffer;
@@ -35,7 +36,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.utils.Disposable;
 import org.lwjgl.opengl.GL11;
 
-public class Lwjgl3Graphics implements Graphics, Disposable {
+public class Lwjgl3Graphics extends AbstractGraphics implements  Disposable {
 	final Lwjgl3Window window;
 	GL20 gl20;
 	private GL30 gl30;
@@ -203,11 +204,6 @@ public class Lwjgl3Graphics implements Graphics, Disposable {
 	}
 
 	@Override
-	public float getRawDeltaTime() {
-		return deltaTime;
-	}
-
-	@Override
 	public int getFramesPerSecond() {
 		return fps;
 	}
@@ -224,12 +220,12 @@ public class Lwjgl3Graphics implements Graphics, Disposable {
 
 	@Override
 	public float getPpiX() {
-		return getPpcX() / 0.393701f;
+		return getPpcX() * 2.54f;
 	}
 
 	@Override
 	public float getPpiY() {
-		return getPpcY() / 0.393701f;
+		return getPpcY() * 2.54f;
 	}
 
 	@Override
@@ -248,11 +244,6 @@ public class Lwjgl3Graphics implements Graphics, Disposable {
 		int sizeY = tmpBuffer2.get(0);
 		DisplayMode mode = getDisplayMode();
 		return mode.height / (float) sizeY * 10;
-	}
-
-	@Override
-	public float getDensity() {
-		return getPpiX() / 160f;
 	}
 
 	@Override
@@ -424,25 +415,32 @@ public class Lwjgl3Graphics implements Graphics, Disposable {
 
 	@Override
 	public void setUndecorated(boolean undecorated) {
-		Lwjgl3ApplicationConfiguration config = getWindow().getConfig();
-		config.setDecorated(!undecorated);
+		getWindow().getConfig().setDecorated(!undecorated);
 		GLFW.glfwSetWindowAttrib(window.getWindowHandle(), GLFW.GLFW_DECORATED, undecorated ? GLFW.GLFW_FALSE : GLFW.GLFW_TRUE);
 	}
 
 	@Override
 	public void setResizable(boolean resizable) {
-		Lwjgl3ApplicationConfiguration config = getWindow().getConfig();
-		config.setResizable(resizable);
+		getWindow().getConfig().setResizable(resizable);
 		GLFW.glfwSetWindowAttrib(window.getWindowHandle(), GLFW.GLFW_RESIZABLE, resizable ? GLFW.GLFW_TRUE : GLFW.GLFW_FALSE);
 	}
 
 	@Override
 	public void setVSync(boolean vsync) {
-		window.getConfig().vSyncEnabled = vsync;
+		getWindow().getConfig().vSyncEnabled = vsync;
 
 		GLFW.glfwSwapInterval(vsync ? 1 : 0);
 	}
-
+	
+	/** Sets the target framerate for the application, when using continuous rendering. Must be positive. The cpu sleeps as needed.
+	 *  Use 0 to never sleep. If there are multiple windows, the value for the first window created is used for all. Default is 0.
+	 *
+	 * @param fps fps */
+	@Override
+	public void setForegroundFPS (int fps) {
+		getWindow().getConfig().foregroundFPS = fps;
+	}
+	
 	@Override
 	public BufferFormat getBufferFormat() {
 		return bufferFormat;

@@ -323,7 +323,12 @@ class Lwjgl3GL30 extends Lwjgl3GL20 implements com.badlogic.gdx.graphics.GL30 {
 	public void glFramebufferTextureLayer (int target, int attachment, int texture, int level, int layer) {
 		GL30.glFramebufferTextureLayer(target, attachment, texture, level, layer);
 	}
-
+    
+    @Override
+    public java.nio.Buffer glMapBufferRange (int target, int offset, int length, int access) {
+        return GL30.glMapBufferRange(target, offset, length, access, null);
+    }
+    
 	@Override
 	public void glFlushMappedBufferRange (int target, int offset, int length) {
 		GL30.glFlushMappedBufferRange(target, offset, length);

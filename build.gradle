@@ -2,7 +2,7 @@ apply from: "gradle/dependencies.gradle"
 
 allprojects{
     group = 'com.github.tommyettinger'
-    version = '1.912.0'
+    version = '1.100.0'
 
     buildscript {
         repositories {

@@ -27,7 +27,13 @@ public class GwtClipboard implements Clipboard {
 	private ClipboardWriteHandler writeHandler = new ClipboardWriteHandler();
 
 	private String content = "";
-
+    
+    @Override
+    public boolean hasContents () {
+        String contents = getContents();
+        return contents != null && !contents.isEmpty();
+    }
+	
 	@Override
 	public String getContents () {
 		return content;

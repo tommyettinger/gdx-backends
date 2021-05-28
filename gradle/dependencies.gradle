@@ -20,7 +20,7 @@ ext {
     testnatives = [:]
 }
 
-versions.gdx = "1.9.12"
+versions.gdx = "1.10.0"
 versions.robovm = "2.3.11"
 versions.gwt = "2.9.0"
 versions.jsinteropAnnotations = "2.0.0"
