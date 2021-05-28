@@ -159,9 +159,9 @@ public class IOSApplication implements Application {
 	protected IOSGraphics createGraphics() {
 		 return new IOSGraphics(this, config, input, config.useGL30);
 	}
-
-	protected IOSGraphics.IOSUIViewController createUIViewController (IOSGraphics graphics) {
-		return new IOSGraphics.IOSUIViewController(this, graphics);
+	
+	protected IOSUIViewController createUIViewController (IOSGraphics graphics) {
+		return new IOSUIViewController(this, graphics);
 	}
 
 	protected IOSInput createInput() {

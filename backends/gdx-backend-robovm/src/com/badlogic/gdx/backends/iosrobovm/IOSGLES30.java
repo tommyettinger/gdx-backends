@@ -72,7 +72,9 @@ public class IOSGLES30 extends IOSGLES20 implements GL30 {
     public native void glRenderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height);
 
     public native void glFramebufferTextureLayer(int target, int attachment, int texture, int level, int layer);
-
+    
+    public native java.nio.Buffer glMapBufferRange (int target, int offset, int length, int access);
+    
     public native void glFlushMappedBufferRange(int target, int offset, int length);
 
     public native void glBindVertexArray(int array);

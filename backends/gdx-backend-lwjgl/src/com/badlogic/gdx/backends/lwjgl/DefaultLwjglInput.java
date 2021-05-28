@@ -50,6 +50,7 @@ import org.lwjgl.opengl.Display;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputEventQueue;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.utils.Pool;
 
@@ -59,54 +60,42 @@ import com.badlogic.gdx.utils.Pool;
 final public class DefaultLwjglInput implements LwjglInput {
 	static public float keyRepeatInitialTime = 0.4f;
 	static public float keyRepeatTime = 0.1f;
-
-	List<KeyEvent> keyEvents = new ArrayList<KeyEvent>();
-	List<TouchEvent> touchEvents = new ArrayList<TouchEvent>();
-	boolean mousePressed = false;
-	int mouseX, mouseY;
+	
+	final InputEventQueue eventQueue = new InputEventQueue();
 	int deltaX, deltaY;
 	int pressedKeys = 0;
 	boolean keyJustPressed = false;
 	boolean[] justPressedKeys = new boolean[Keys.MAX_KEYCODE + 1];
-	boolean[] justPressedButtons = new boolean[5];
-	boolean justTouched = false;
-	IntSet pressedButtons = new IntSet();
+	final boolean[] justPressedButtons = new boolean[5];
+	boolean justTouched;
+	final IntSet pressedButtons = new IntSet();
 	InputProcessor processor;
 	char lastKeyCharPressed;
 	float keyRepeatTimer;
-	long currentEventTimeStamp;
 	float deltaTime;
 	long lastTime;
-
-	Pool<KeyEvent> usedKeyEvents = new Pool<KeyEvent>(16, 1000) {
-		protected KeyEvent newObject () {
-			return new KeyEvent();
-		}
-	};
-
-	Pool<TouchEvent> usedTouchEvents = new Pool<TouchEvent>(16, 1000) {
-		protected TouchEvent newObject () {
-			return new TouchEvent();
-		}
-	};
 
 	public DefaultLwjglInput () {
 		Keyboard.enableRepeatEvents(false);
 		Mouse.setClipMouseCoordinatesToWindow(false);
 	}
-
+	
+	@Override
 	public float getAccelerometerX () {
 		return 0;
 	}
-
+	
+	@Override
 	public float getAccelerometerY () {
 		return 0;
 	}
-
+	
+	@Override
 	public float getAccelerometerZ () {
 		return 0;
 	}
 	
+	@Override
 	public float getGyroscopeX () {
 		return 0;
 	}
@@ -221,11 +210,13 @@ final public class DefaultLwjglInput implements LwjglInput {
 	public int getMaxPointers () {
 		return 1;
 	}
-
+	
+	@Override
 	public int getX () {
 		return (int)(Mouse.getX() * Display.getPixelScaleFactor());
 	}
-
+	
+	@Override
 	public int getY () {
 		return Gdx.graphics.getHeight() - 1 - (int)(Mouse.getY() * Display.getPixelScaleFactor());
 	}
@@ -257,7 +248,8 @@ final public class DefaultLwjglInput implements LwjglInput {
 		}
 		return justPressedKeys[key];
 	}
-
+	
+	@Override
 	public boolean isTouched () {
 		boolean button = Mouse.isButtonDown(0) || Mouse.isButtonDown(1) || Mouse.isButtonDown(2);
 		return button;
@@ -340,63 +332,7 @@ final public class DefaultLwjglInput implements LwjglInput {
 
 	@Override
 	public void processEvents () {
-		synchronized (this) {
-			if (processor != null) {
-				InputProcessor processor = this.processor;
-				int len = keyEvents.size();
-				for (int i = 0; i < len; i++) {
-					KeyEvent e = keyEvents.get(i);
-					currentEventTimeStamp = e.timeStamp;
-					switch (e.type) {
-					case KeyEvent.KEY_DOWN:
-						processor.keyDown(e.keyCode);
-						break;
-					case KeyEvent.KEY_UP:
-						processor.keyUp(e.keyCode);
-						break;
-					case KeyEvent.KEY_TYPED:
-						processor.keyTyped(e.keyChar);
-					}
-					usedKeyEvents.free(e);
-				}
-
-				len = touchEvents.size();
-				for (int i = 0; i < len; i++) {
-					TouchEvent e = touchEvents.get(i);
-					currentEventTimeStamp = e.timeStamp;
-					switch (e.type) {
-					case TouchEvent.TOUCH_DOWN:
-						processor.touchDown(e.x, e.y, e.pointer, e.button);
-						break;
-					case TouchEvent.TOUCH_UP:
-						processor.touchUp(e.x, e.y, e.pointer, e.button);
-						break;
-					case TouchEvent.TOUCH_DRAGGED:
-						processor.touchDragged(e.x, e.y, e.pointer);
-						break;
-					case TouchEvent.TOUCH_MOVED:
-						processor.mouseMoved(e.x, e.y);
-						break;
-					case TouchEvent.TOUCH_SCROLLED:
-						processor.scrolled(0, e.scrollAmount);
-					}
-					usedTouchEvents.free(e);
-				}
-			} else {
-				int len = touchEvents.size();
-				for (int i = 0; i < len; i++) {
-					usedTouchEvents.free(touchEvents.get(i));
-				}
-
-				len = keyEvents.size();
-				for (int i = 0; i < len; i++) {
-					usedKeyEvents.free(keyEvents.get(i));
-				}
-			}
-
-			keyEvents.clear();
-			touchEvents.clear();
-		}
+		eventQueue.drain(processor);
 	}
 
 	public static int getGdxKeyCode (int lwjglKeyCode) {
@@ -849,40 +785,27 @@ final public class DefaultLwjglInput implements LwjglInput {
 				int button = Mouse.getEventButton();
 				int gdxButton = toGdxButton(button);
 				if (button != -1 && gdxButton == -1) continue; // Ignore unknown button.
-
-				TouchEvent event = usedTouchEvents.obtain();
-				event.x = x;
-				event.y = y;
-				event.button = gdxButton;
-				event.pointer = 0;
-				event.timeStamp = Mouse.getEventNanoseconds();
+				
+				long time = Mouse.getEventNanoseconds();
 
 				// could be drag, scroll or move
 				if (button == -1) {
-					if (Mouse.getEventDWheel() != 0) {
-						event.type = TouchEvent.TOUCH_SCROLLED;
-						event.scrollAmount = (int)-Math.signum(Mouse.getEventDWheel());
-					} else if (pressedButtons.size > 0) {
-						event.type = TouchEvent.TOUCH_DRAGGED;
-					} else {
-						event.type = TouchEvent.TOUCH_MOVED;
-					}
-				} else {
+					if (Mouse.getEventDWheel() != 0)
+						eventQueue.scrolled(0, (int)-Math.signum(Mouse.getEventDWheel()), time);
+					else if (pressedButtons.size > 0)
+						eventQueue.touchDragged(x, y, 0, time);
+					else
+						eventQueue.mouseMoved(x, y, time);
 					// nope, it's a down or up event.
-					if (Mouse.getEventButtonState()) {
-						event.type = TouchEvent.TOUCH_DOWN;
-						pressedButtons.add(event.button);
-						justPressedButtons[event.button] = true;
-						justTouched = true;
-					} else {
-						event.type = TouchEvent.TOUCH_UP;
-						pressedButtons.remove(event.button);
-					}
+				} else if (Mouse.getEventButtonState()) {
+					eventQueue.touchDown(x, y, 0, gdxButton, time);
+					pressedButtons.add(gdxButton);
+					justPressedButtons[gdxButton] = true;
+					justTouched = true;
+				} else {
+					eventQueue.touchUp(x, y, 0, gdxButton, time);
+					pressedButtons.remove(gdxButton);
 				}
-
-				touchEvents.add(event);
-				mouseX = event.x;
-				mouseY = event.y;
 				deltaX = (int)(Mouse.getEventDX() * Display.getPixelScaleFactor());
 				deltaY = (int)(Mouse.getEventDY() * Display.getPixelScaleFactor());
 			}
@@ -906,14 +829,8 @@ final public class DefaultLwjglInput implements LwjglInput {
 		if (lastKeyCharPressed != 0) {
 			keyRepeatTimer -= deltaTime;
 			if (keyRepeatTimer < 0) {
-				keyRepeatTimer = keyRepeatTime;
-
-				KeyEvent event = usedKeyEvents.obtain();
-				event.keyCode = 0;
-				event.keyChar = lastKeyCharPressed;
-				event.type = KeyEvent.KEY_TYPED;
-				event.timeStamp = System.nanoTime(); // FIXME this should use the repeat time plus the timestamp of the original
-				keyEvents.add(event);
+				keyRepeatTimer = DefaultLwjglInput.keyRepeatTime;
+				eventQueue.keyTyped(lastKeyCharPressed, System.nanoTime());
 				Gdx.graphics.requestRendering();
 			}
 		}
@@ -922,8 +839,8 @@ final public class DefaultLwjglInput implements LwjglInput {
 			while (Keyboard.next()) {
 				int keyCode = getGdxKeyCode(Keyboard.getEventKey());
 				char keyChar = Keyboard.getEventCharacter();
+				long time = Keyboard.getEventNanoseconds();
 				if (Keyboard.getEventKeyState() || (keyCode == 0 && keyChar != 0 && Character.isDefined(keyChar))) {
-					long timeStamp = Keyboard.getEventNanoseconds();
 
 					switch (keyCode) {
 					case Keys.DEL:
@@ -935,34 +852,17 @@ final public class DefaultLwjglInput implements LwjglInput {
 					}
 
 					if (keyCode != 0) {
-						KeyEvent event = usedKeyEvents.obtain();
-						event.keyCode = keyCode;
-						event.keyChar = 0;
-						event.type = KeyEvent.KEY_DOWN;
-						event.timeStamp = timeStamp;
-						keyEvents.add(event);
-
+						eventQueue.keyDown(keyCode, time);
 						pressedKeys++;
 						keyJustPressed = true;
 						justPressedKeys[keyCode] = true;
 						lastKeyCharPressed = keyChar;
-						keyRepeatTimer = keyRepeatInitialTime;
+						keyRepeatTimer = DefaultLwjglInput.keyRepeatInitialTime;
 					}
-
-					KeyEvent event = usedKeyEvents.obtain();
-					event.keyCode = 0;
-					event.keyChar = keyChar;
-					event.type = KeyEvent.KEY_TYPED;
-					event.timeStamp = timeStamp;
-					keyEvents.add(event);
+					
+					eventQueue.keyTyped(keyChar, time);
 				} else {
-					KeyEvent event = usedKeyEvents.obtain();
-					event.keyCode = keyCode;
-					event.keyChar = 0;
-					event.type = KeyEvent.KEY_UP;
-					event.timeStamp = Keyboard.getEventNanoseconds();
-					keyEvents.add(event);
-
+					eventQueue.keyUp(keyCode, time);
 					pressedKeys--;
 					lastKeyCharPressed = 0;
 				}
@@ -1042,8 +942,7 @@ final public class DefaultLwjglInput implements LwjglInput {
 
 	@Override
 	public boolean isPeripheralAvailable (Peripheral peripheral) {
-		if (peripheral == Peripheral.HardwareKeyboard) return true;
-		return false;
+		return peripheral == Peripheral.HardwareKeyboard;
 	}
 
 	@Override
@@ -1099,40 +998,12 @@ final public class DefaultLwjglInput implements LwjglInput {
 
 	@Override
 	public long getCurrentEventTime () {
-		return currentEventTimeStamp;
+		return eventQueue.getCurrentEventTime();
 	}
 
 	@Override
 	public void getRotationMatrix (float[] matrix) {
-		// TODO Auto-generated method stub
-
-	}
-
-	class KeyEvent {
-		static final int KEY_DOWN = 0;
-		static final int KEY_UP = 1;
-		static final int KEY_TYPED = 2;
-
-		long timeStamp;
-		int type;
-		int keyCode;
-		char keyChar;
-	}
-
-	class TouchEvent {
-		static final int TOUCH_DOWN = 0;
-		static final int TOUCH_UP = 1;
-		static final int TOUCH_DRAGGED = 2;
-		static final int TOUCH_SCROLLED = 3;
-		static final int TOUCH_MOVED = 4;
-
-		long timeStamp;
-		int type;
-		int x;
-		int y;
-		int scrollAmount;
-		int button;
-		int pointer;
+	
 	}
 
 }

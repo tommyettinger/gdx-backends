@@ -20,7 +20,10 @@ import java.awt.Canvas;
 import java.awt.Toolkit;
 import java.nio.ByteBuffer;
 
+import com.badlogic.gdx.AbstractGraphics;
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Graphics.BufferFormat;
+import com.badlogic.gdx.Graphics.GraphicsType;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
@@ -44,7 +47,7 @@ import com.badlogic.gdx.utils.SharedLibraryLoader;
 
 /** An implementation of the {@link Graphics} interface based on Lwjgl.
  * @author mzechner */
-public class LwjglGraphics implements Graphics {
+public class LwjglGraphics extends AbstractGraphics {
 
 	/** The suppored OpenGL extensions */
 	static Array<String> extensions;
@@ -115,10 +118,6 @@ public class LwjglGraphics implements Graphics {
 	}
 
 	public float getDeltaTime () {
-		return deltaTime;
-	}
-
-	public float getRawDeltaTime () {
 		return deltaTime;
 	}
 
@@ -416,18 +415,18 @@ public class LwjglGraphics implements Graphics {
 
 	@Override
 	public float getPpcX () {
-		return (Toolkit.getDefaultToolkit().getScreenResolution() / 2.54f);
+		return getPpiX() / 2.54f;
 	}
 
 	@Override
 	public float getPpcY () {
-		return (Toolkit.getDefaultToolkit().getScreenResolution() / 2.54f);
+		return getPpiY () / 2.54f;
 	}
 
 	@Override
 	public float getDensity () {
 		if (config.overrideDensity != -1) return config.overrideDensity / 160f;
-		return (Toolkit.getDefaultToolkit().getScreenResolution() / 160f);
+		return super.getDensity();
 	}
 
 	@Override
@@ -624,7 +623,16 @@ public class LwjglGraphics implements Graphics {
 		this.vsync = vsync;
 		Display.setVSyncEnabled(vsync);
 	}
-
+	
+	/** Sets the target framerate for the application, when using continuous rendering. Must be positive.
+	 * The cpu sleeps as needed. Use 0 to never sleep. Default is 60.
+	 *
+	 * @param fps fps */
+	@Override
+	public void setForegroundFPS (int fps) {
+		this.config.foregroundFPS = fps;
+	}
+	
 	@Override
 	public boolean supportsExtension (String extension) {
 		return extensions.contains(extension, false);

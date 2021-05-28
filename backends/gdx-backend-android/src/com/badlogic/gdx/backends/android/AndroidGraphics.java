@@ -25,10 +25,10 @@ import android.view.Display;
 import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.LifecycleListener;
+import com.badlogic.gdx.*;
+import com.badlogic.gdx.Graphics.BufferFormat;
+import com.badlogic.gdx.Graphics.DisplayMode;
+import com.badlogic.gdx.Graphics.GraphicsType;
 import com.badlogic.gdx.backends.android.surfaceview.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
@@ -48,7 +48,7 @@ import javax.microedition.khronos.opengles.GL10;
 /** An implementation of {@link Graphics} for Android.
  *
  * @author mzechner */
-public class AndroidGraphics implements Graphics, Renderer {
+public class AndroidGraphics extends AbstractGraphics implements Renderer {
 
 	private static final String LOG_TAG = "AndroidGraphics";
 
@@ -514,11 +514,6 @@ public class AndroidGraphics implements Graphics, Renderer {
 		return deltaTime;
 	}
 
-	@Override
-	public float getRawDeltaTime () {
-		return deltaTime;
-	}
-
 	/** {@inheritDoc} */
 	@Override
 	public GraphicsType getType () {
@@ -703,7 +698,11 @@ public class AndroidGraphics implements Graphics, Renderer {
 	@Override
 	public void setVSync (boolean vsync) {
 	}
-
+    
+    @Override
+    public void setForegroundFPS (int fps) {
+    }
+	
 	@Override
 	public boolean supportsExtension (String extension) {
 		if (extensions == null) extensions = Gdx.gl.glGetString(GL10.GL_EXTENSIONS);
