@@ -1,3 +1,4 @@
+
 package com.badlogic.gdx.graphics;
 
 import com.badlogic.gdx.files.FileHandle;
@@ -9,14 +10,16 @@ import com.badlogic.gdx.graphics.glutils.MipMapGenerator;
  * itself. It signals it's type via {@link #getType()} to the Texture that's using it. The Texture will then either invoke
  * {@link #consumePixmap()} or {@link #consumeCustomData(int)}. These are the first methods to be called by Texture. After that
  * the Texture will invoke the other methods to find out about the size of the image data, the format, whether mipmaps should be
- * generated and whether the TextureData is able to manage the pixel data if the OpenGL ES context is lost.</p>
- * 
+ * generated and whether the TextureData is able to manage the pixel data if the OpenGL ES context is lost.
+ * </p>
+ *
  * In case the TextureData implementation has the type {@link TextureDataType#Custom}, the implementation has to generate the
- * mipmaps itself if necessary. See {@link MipMapGenerator}.</p>
- * 
- * Before a call to either {@link #consumePixmap()} or {@link #consumeCustomData(int)}, Texture will bind the OpenGL ES
- * texture.</p>
- * 
+ * mipmaps itself if necessary. See {@link MipMapGenerator}.
+ * </p>
+ *
+ * Before a call to either {@link #consumePixmap()} or {@link #consumeCustomData(int)}, Texture will bind the OpenGL ES texture.
+ * </p>
+ *
  * Look at {@link FileTextureData} for example implementations of this interface.
  * @author mzechner */
 public interface TextureData {
@@ -38,7 +41,7 @@ public interface TextureData {
 
 	/** Returns the {@link Pixmap} for upload by Texture. A call to {@link #prepare()} must precede a call to this method. Any
 	 * internal data structures created in {@link #prepare()} should be disposed of here.
-	 * 
+	 *
 	 * @return the pixmap. */
 	public Pixmap consumePixmap ();
 
@@ -46,7 +49,8 @@ public interface TextureData {
 	public boolean disposePixmap ();
 
 	/** Uploads the pixel data to the OpenGL ES texture. The caller must bind an OpenGL ES texture. A call to {@link #prepare()}
-	 * must preceed a call to this method. Any internal data structures created in {@link #prepare()} should be disposed of here. */
+	 * must preceed a call to this method. Any internal data structures created in {@link #prepare()} should be disposed of
+	 * here. */
 	public void consumeCustomData (int target);
 
 	/** @return the width of the pixel data */
