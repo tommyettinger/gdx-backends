@@ -23,7 +23,7 @@ Your options for using this repo depend on whether you want to make changes to i
 ### How to use as a dependency (I want to use a build without making changes)
 
 In case you don't want to change something here yourself, but just want to use some of the additions, you can either use
-the 1.100.0 stable release (featuring GWT 2.9.0) from the standard Maven Central repository, or use a Jitpack
+the 1.100.1 stable release (featuring GWT 2.9.0) from the standard Maven Central repository, or use a Jitpack
 dependency. If you choose JitPack, you might need to add JitPack as a repo to your project (current gdx-setup and
 gdx-liftoff both do this step for you already):
 ```groovy
@@ -156,7 +156,28 @@ JitPack (needs the JitPack repository given above):
 
 This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
-### 1.100.1-SNAPSHOT
+### 1.100.1
+
+Checkout the tag `v1.100.0` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.100.1'
+      implementation 'com.github.tommyettinger:gdx-backend-gwt:1.100.1:sources'
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.1'
+      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.1:sources'
+```
+
+This version fixes some GWT-specific bugs in recently-changed files, like ScreenUtils. The now-recommended
+`ScreenUtils.clear()` method didn't work in v1.100.0, for example, but does in v1.100.1 .
+
+This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
+
+### 1.100.2-SNAPSHOT
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
