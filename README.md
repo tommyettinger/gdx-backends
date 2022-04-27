@@ -158,7 +158,7 @@ This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
 ### 1.100.1
 
-Checkout the tag `v1.100.0` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+Checkout the tag `v1.100.1` of this repo to use this version, or use one of the following sets of dependencies for GWT:
 
 Maven Central (uses the repository `mavenCentral()`, which most projects already have):
 ```groovy
