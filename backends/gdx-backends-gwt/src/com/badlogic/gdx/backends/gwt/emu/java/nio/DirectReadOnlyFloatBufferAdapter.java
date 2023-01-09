@@ -36,10 +36,10 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class DirectReadOnlyFloatBufferAdapter extends FloatBuffer implements HasArrayBufferView {
+final class DirectReadOnlyFloatBufferAdapter extends java.nio.FloatBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
-	static FloatBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
+	static java.nio.FloatBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
 		return new DirectReadOnlyFloatBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
 	}
 
@@ -55,7 +55,7 @@ final class DirectReadOnlyFloatBufferAdapter extends FloatBuffer implements HasA
 	}
 
 	@Override
-	public FloatBuffer asReadOnlyBuffer () {
+	public java.nio.FloatBuffer asReadOnlyBuffer () {
 		DirectReadOnlyFloatBufferAdapter buf = new DirectReadOnlyFloatBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -64,12 +64,12 @@ final class DirectReadOnlyFloatBufferAdapter extends FloatBuffer implements HasA
 	}
 
 	@Override
-	public FloatBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.FloatBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	@Override
-	public FloatBuffer duplicate () {
+	public java.nio.FloatBuffer duplicate () {
 		DirectReadOnlyFloatBufferAdapter buf = new DirectReadOnlyFloatBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -124,17 +124,17 @@ final class DirectReadOnlyFloatBufferAdapter extends FloatBuffer implements HasA
 	}
 
 	@Override
-	public FloatBuffer put (float c) {
+	public java.nio.FloatBuffer put (float c) {
+		throw new java.nio.ReadOnlyBufferException();
+	}
+
+	@Override
+	public java.nio.FloatBuffer put (int index, float c) {
 		throw new ReadOnlyBufferException();
 	}
 
 	@Override
-	public FloatBuffer put (int index, float c) {
-		throw new ReadOnlyBufferException();
-	}
-
-	@Override
-	public FloatBuffer slice () {
+	public java.nio.FloatBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		FloatBuffer result = new DirectReadOnlyFloatBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());

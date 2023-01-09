@@ -51,11 +51,11 @@ final class ReadWriteDoubleArrayBuffer extends DoubleArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public DoubleBuffer asReadOnlyBuffer () {
+	public java.nio.DoubleBuffer asReadOnlyBuffer () {
 		return ReadOnlyDoubleArrayBuffer.copy(this, mark);
 	}
 
-	public DoubleBuffer compact () {
+	public java.nio.DoubleBuffer compact () {
 		System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		position = limit - position;
 		limit = capacity;
@@ -63,7 +63,7 @@ final class ReadWriteDoubleArrayBuffer extends DoubleArrayBuffer {
 		return this;
 	}
 
-	public DoubleBuffer duplicate () {
+	public java.nio.DoubleBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -83,15 +83,15 @@ final class ReadWriteDoubleArrayBuffer extends DoubleArrayBuffer {
 		return true;
 	}
 
-	public DoubleBuffer put (double c) {
+	public java.nio.DoubleBuffer put (double c) {
 		if (position == limit) {
-			throw new BufferOverflowException();
+			throw new java.nio.BufferOverflowException();
 		}
 		backingArray[offset + position++] = c;
 		return this;
 	}
 
-	public DoubleBuffer put (int index, double c) {
+	public java.nio.DoubleBuffer put (int index, double c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -99,7 +99,7 @@ final class ReadWriteDoubleArrayBuffer extends DoubleArrayBuffer {
 		return this;
 	}
 
-	public DoubleBuffer put (double[] src, int off, int len) {
+	public java.nio.DoubleBuffer put (double[] src, int off, int len) {
 		int length = src.length;
 		if (off < 0 || len < 0 || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();

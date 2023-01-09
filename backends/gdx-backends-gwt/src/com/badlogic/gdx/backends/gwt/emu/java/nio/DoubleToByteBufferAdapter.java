@@ -37,14 +37,14 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class DoubleToByteBufferAdapter extends DoubleBuffer {
+final class DoubleToByteBufferAdapter extends java.nio.DoubleBuffer {
 	// implements DirectBuffer {
 
-	static DoubleBuffer wrap (ByteBuffer byteBuffer) {
+	static java.nio.DoubleBuffer wrap (java.nio.ByteBuffer byteBuffer) {
 		return new DoubleToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final ByteBuffer byteBuffer;
+	private final java.nio.ByteBuffer byteBuffer;
 
 	DoubleToByteBufferAdapter (ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 3));
@@ -101,7 +101,7 @@ final class DoubleToByteBufferAdapter extends DoubleBuffer {
 // }
 
 	@Override
-	public DoubleBuffer asReadOnlyBuffer () {
+	public java.nio.DoubleBuffer asReadOnlyBuffer () {
 		DoubleToByteBufferAdapter buf = new DoubleToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -110,7 +110,7 @@ final class DoubleToByteBufferAdapter extends DoubleBuffer {
 	}
 
 	@Override
-	public DoubleBuffer compact () {
+	public java.nio.DoubleBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -125,7 +125,7 @@ final class DoubleToByteBufferAdapter extends DoubleBuffer {
 	}
 
 	@Override
-	public DoubleBuffer duplicate () {
+	public java.nio.DoubleBuffer duplicate () {
 		DoubleToByteBufferAdapter buf = new DoubleToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -180,7 +180,7 @@ final class DoubleToByteBufferAdapter extends DoubleBuffer {
 	}
 
 	@Override
-	public DoubleBuffer put (double c) {
+	public java.nio.DoubleBuffer put (double c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -189,7 +189,7 @@ final class DoubleToByteBufferAdapter extends DoubleBuffer {
 	}
 
 	@Override
-	public DoubleBuffer put (int index, double c) {
+	public java.nio.DoubleBuffer put (int index, double c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -198,7 +198,7 @@ final class DoubleToByteBufferAdapter extends DoubleBuffer {
 	}
 
 	@Override
-	public DoubleBuffer slice () {
+	public java.nio.DoubleBuffer slice () {
 		byteBuffer.limit(limit << 3);
 		byteBuffer.position(position << 3);
 		DoubleBuffer result = new DoubleToByteBufferAdapter(byteBuffer.slice());

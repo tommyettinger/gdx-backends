@@ -43,15 +43,15 @@ final class ReadOnlyDoubleArrayBuffer extends DoubleArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public DoubleBuffer asReadOnlyBuffer () {
+	public java.nio.DoubleBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public DoubleBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.DoubleBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public DoubleBuffer duplicate () {
+	public java.nio.DoubleBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -60,30 +60,30 @@ final class ReadOnlyDoubleArrayBuffer extends DoubleArrayBuffer {
 	}
 
 	protected double[] protectedArray () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public DoubleBuffer put (double c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.DoubleBuffer put (double c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public DoubleBuffer put (int index, double c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.DoubleBuffer put (int index, double c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public final DoubleBuffer put (double[] src, int off, int len) {
-		throw new ReadOnlyBufferException();
+	public final java.nio.DoubleBuffer put (double[] src, int off, int len) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public final DoubleBuffer put (DoubleBuffer buf) {
+	public final java.nio.DoubleBuffer put (java.nio.DoubleBuffer buf) {
 		throw new ReadOnlyBufferException();
 	}
 

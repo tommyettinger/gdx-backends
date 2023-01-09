@@ -29,7 +29,7 @@ import java.nio.IntBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class IntArrayBuffer extends IntBuffer {
+abstract class IntArrayBuffer extends java.nio.IntBuffer {
 
 	protected final int[] backingArray;
 
@@ -80,7 +80,7 @@ abstract class IntArrayBuffer extends IntBuffer {
 		return false;
 	}
 
-	public final ByteOrder order () {
+	public final java.nio.ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

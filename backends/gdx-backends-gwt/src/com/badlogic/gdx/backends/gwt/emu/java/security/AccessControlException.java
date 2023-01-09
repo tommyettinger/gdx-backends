@@ -13,13 +13,13 @@ package com.badlogic.gdx.backends.gwt.emu.java.security;
 import java.security.Permission;
 
 public class AccessControlException extends SecurityException {
-	private final Permission permission;
+	private final java.security.Permission permission;
 
 	public AccessControlException (String message) {
 		this(message, null);
 	}
 
-	public AccessControlException (String message, Permission permission) {
+	public AccessControlException (String message, java.security.Permission permission) {
 		super(message);
 		this.permission = permission;
 	}

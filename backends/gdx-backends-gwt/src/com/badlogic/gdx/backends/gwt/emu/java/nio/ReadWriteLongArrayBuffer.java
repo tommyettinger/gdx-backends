@@ -50,11 +50,11 @@ final class ReadWriteLongArrayBuffer extends LongArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public LongBuffer asReadOnlyBuffer () {
+	public java.nio.LongBuffer asReadOnlyBuffer () {
 		return ReadOnlyLongArrayBuffer.copy(this, mark);
 	}
 
-	public LongBuffer compact () {
+	public java.nio.LongBuffer compact () {
 		System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		position = limit - position;
 		limit = capacity;
@@ -62,7 +62,7 @@ final class ReadWriteLongArrayBuffer extends LongArrayBuffer {
 		return this;
 	}
 
-	public LongBuffer duplicate () {
+	public java.nio.LongBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -82,15 +82,15 @@ final class ReadWriteLongArrayBuffer extends LongArrayBuffer {
 		return true;
 	}
 
-	public LongBuffer put (long c) {
+	public java.nio.LongBuffer put (long c) {
 		if (position == limit) {
-			throw new BufferOverflowException();
+			throw new java.nio.BufferOverflowException();
 		}
 		backingArray[offset + position++] = c;
 		return this;
 	}
 
-	public LongBuffer put (int index, long c) {
+	public java.nio.LongBuffer put (int index, long c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -98,7 +98,7 @@ final class ReadWriteLongArrayBuffer extends LongArrayBuffer {
 		return this;
 	}
 
-	public LongBuffer put (long[] src, int off, int len) {
+	public java.nio.LongBuffer put (long[] src, int off, int len) {
 		int length = src.length;
 		if (off < 0 || len < 0 || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();

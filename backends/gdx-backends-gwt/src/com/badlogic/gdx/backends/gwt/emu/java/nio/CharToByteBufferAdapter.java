@@ -37,13 +37,13 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuffer {
+final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements DirectBuffer {
 
-	static CharBuffer wrap (ByteBuffer byteBuffer) {
+	static java.nio.CharBuffer wrap (java.nio.ByteBuffer byteBuffer) {
 		return new CharToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final ByteBuffer byteBuffer;
+	private final java.nio.ByteBuffer byteBuffer;
 
 	CharToByteBufferAdapter (ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 1));
@@ -100,7 +100,7 @@ final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuf
 // }
 
 	@Override
-	public CharBuffer asReadOnlyBuffer () {
+	public java.nio.CharBuffer asReadOnlyBuffer () {
 		CharToByteBufferAdapter buf = new CharToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -109,7 +109,7 @@ final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuf
 	}
 
 	@Override
-	public CharBuffer compact () {
+	public java.nio.CharBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -124,7 +124,7 @@ final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuf
 	}
 
 	@Override
-	public CharBuffer duplicate () {
+	public java.nio.CharBuffer duplicate () {
 		CharToByteBufferAdapter buf = new CharToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -179,7 +179,7 @@ final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuf
 	}
 
 	@Override
-	public CharBuffer put (char c) {
+	public java.nio.CharBuffer put (char c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -188,7 +188,7 @@ final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuf
 	}
 
 	@Override
-	public CharBuffer put (int index, char c) {
+	public java.nio.CharBuffer put (int index, char c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -197,10 +197,10 @@ final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuf
 	}
 
 	@Override
-	public CharBuffer slice () {
+	public java.nio.CharBuffer slice () {
 		byteBuffer.limit(limit << 1);
 		byteBuffer.position(position << 1);
-		CharBuffer result = new CharToByteBufferAdapter(byteBuffer.slice());
+		java.nio.CharBuffer result = new CharToByteBufferAdapter(byteBuffer.slice());
 		byteBuffer.clear();
 		return result;
 	}

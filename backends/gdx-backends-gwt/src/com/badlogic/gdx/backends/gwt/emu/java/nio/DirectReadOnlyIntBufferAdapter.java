@@ -36,10 +36,10 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArrayBufferView {
+final class DirectReadOnlyIntBufferAdapter extends java.nio.IntBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
-	static IntBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
+	static java.nio.IntBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
 		return new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
 	}
 
@@ -54,7 +54,7 @@ final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArray
 	}
 
 	@Override
-	public IntBuffer asReadOnlyBuffer () {
+	public java.nio.IntBuffer asReadOnlyBuffer () {
 		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -63,12 +63,12 @@ final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArray
 	}
 
 	@Override
-	public IntBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.IntBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	@Override
-	public IntBuffer duplicate () {
+	public java.nio.IntBuffer duplicate () {
 		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -123,17 +123,17 @@ final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArray
 	}
 
 	@Override
-	public IntBuffer put (int c) {
+	public java.nio.IntBuffer put (int c) {
+		throw new java.nio.ReadOnlyBufferException();
+	}
+
+	@Override
+	public java.nio.IntBuffer put (int index, int c) {
 		throw new ReadOnlyBufferException();
 	}
 
 	@Override
-	public IntBuffer put (int index, int c) {
-		throw new ReadOnlyBufferException();
-	}
-
-	@Override
-	public IntBuffer slice () {
+	public java.nio.IntBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		IntBuffer result = new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());

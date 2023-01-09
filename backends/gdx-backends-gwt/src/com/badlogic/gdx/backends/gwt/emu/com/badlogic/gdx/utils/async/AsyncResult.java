@@ -19,7 +19,7 @@ package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.async;
 import com.badlogic.gdx.utils.async.AsyncExecutor;
 import com.badlogic.gdx.utils.async.AsyncTask;
 
-/** Returned by {@link AsyncExecutor#submit(AsyncTask)}, allows to poll for the result of the asynch workload.
+/** Returned by {@link AsyncExecutor#submit(com.badlogic.gdx.utils.async.AsyncTask)}, allows to poll for the result of the asynch workload.
  * @author badlogic */
 public class AsyncResult<T> {
 	private final T result;

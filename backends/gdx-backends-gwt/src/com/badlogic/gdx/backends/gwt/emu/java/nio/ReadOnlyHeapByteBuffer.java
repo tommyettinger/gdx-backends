@@ -44,15 +44,15 @@ final class ReadOnlyHeapByteBuffer extends java.nio.HeapByteBuffer {
 		super(backingArray, capacity, arrayOffset);
 	}
 
-	public ByteBuffer asReadOnlyBuffer () {
+	public java.nio.ByteBuffer asReadOnlyBuffer () {
 		return copy(this, mark);
 	}
 
-	public ByteBuffer compact () {
+	public java.nio.ByteBuffer compact () {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer duplicate () {
+	public java.nio.ByteBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -72,59 +72,59 @@ final class ReadOnlyHeapByteBuffer extends java.nio.HeapByteBuffer {
 		return false;
 	}
 
-	public ByteBuffer put (byte b) {
+	public java.nio.ByteBuffer put (byte b) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer put (int index, byte b) {
+	public java.nio.ByteBuffer put (int index, byte b) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer put (byte[] src, int off, int len) {
+	public java.nio.ByteBuffer put (byte[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putDouble (double value) {
+	public java.nio.ByteBuffer putDouble (double value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putDouble (int index, double value) {
+	public java.nio.ByteBuffer putDouble (int index, double value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putFloat (float value) {
+	public java.nio.ByteBuffer putFloat (float value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putFloat (int index, float value) {
+	public java.nio.ByteBuffer putFloat (int index, float value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putInt (int value) {
+	public java.nio.ByteBuffer putInt (int value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putInt (int index, int value) {
+	public java.nio.ByteBuffer putInt (int index, int value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putLong (int index, long value) {
+	public java.nio.ByteBuffer putLong (int index, long value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putLong (long value) {
+	public java.nio.ByteBuffer putLong (long value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putShort (int index, short value) {
+	public java.nio.ByteBuffer putShort (int index, short value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putShort (short value) {
+	public java.nio.ByteBuffer putShort (short value) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public ByteBuffer put (ByteBuffer buf) {
+	public java.nio.ByteBuffer put (java.nio.ByteBuffer buf) {
 		throw new ReadOnlyBufferException();
 	}
 

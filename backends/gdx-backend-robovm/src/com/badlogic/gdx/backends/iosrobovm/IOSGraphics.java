@@ -16,7 +16,10 @@
 
 package com.badlogic.gdx.backends.iosrobovm;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.AbstractGraphics;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.backends.iosrobovm.custom.HWMachine;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
@@ -24,33 +27,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
+import com.badlogic.gdx.graphics.glutils.HdpiMode;
 import com.badlogic.gdx.utils.Array;
-
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.Foundation;
 import org.robovm.apple.foundation.NSObject;
-import org.robovm.apple.foundation.NSSet;
-import org.robovm.apple.glkit.GLKView;
-import org.robovm.apple.glkit.GLKViewController;
-import org.robovm.apple.glkit.GLKViewControllerDelegate;
-import org.robovm.apple.glkit.GLKViewDelegate;
-import org.robovm.apple.glkit.GLKViewDrawableColorFormat;
-import org.robovm.apple.glkit.GLKViewDrawableDepthFormat;
-import org.robovm.apple.glkit.GLKViewDrawableMultisample;
-import org.robovm.apple.glkit.GLKViewDrawableStencilFormat;
+import org.robovm.apple.glkit.*;
 import org.robovm.apple.opengles.EAGLContext;
 import org.robovm.apple.opengles.EAGLRenderingAPI;
 import org.robovm.apple.uikit.UIEdgeInsets;
 import org.robovm.apple.uikit.UIEvent;
-import org.robovm.apple.uikit.UIInterfaceOrientation;
-import org.robovm.apple.uikit.UIInterfaceOrientationMask;
-import org.robovm.apple.uikit.UIPress;
-import org.robovm.apple.uikit.UIPressesEvent;
-import org.robovm.apple.uikit.UIRectEdge;
-import org.robovm.objc.Selector;
-import org.robovm.objc.annotation.BindSelector;
 import org.robovm.objc.annotation.Method;
-import org.robovm.rt.bro.annotation.Callback;
 import org.robovm.rt.bro.annotation.Pointer;
 
 public class IOSGraphics extends AbstractGraphics {
@@ -77,6 +64,7 @@ public class IOSGraphics extends AbstractGraphics {
 	private float ppcY = 0;
 	private float density = 1;
 
+	volatile boolean resume = false;
 	volatile boolean appPaused;
 	private long frameId = -1;
 	private boolean isContinuous = true;
@@ -106,7 +94,7 @@ public class IOSGraphics extends AbstractGraphics {
 			gl20 = new IOSGLES20();
 			gl30 = null;
 		}
-		
+
 		IOSViewDelegate viewDelegate = new IOSViewDelegate();
 		view = new GLKView(new CGRect(0, 0, screenBounds.width, screenBounds.height), context) {
 			@Method(selector = "touchesBegan:withEvent:")
@@ -144,7 +132,7 @@ public class IOSGraphics extends AbstractGraphics {
 
 		viewController = app.createUIViewController(this);
 		viewController.setView(view);
-		view.setDelegate(viewDelegate);
+		viewController.setDelegate(viewDelegate);
 		viewController.setPreferredFramesPerSecond(config.preferredFramesPerSecond);
 
 		this.app = app;
@@ -176,7 +164,7 @@ public class IOSGraphics extends AbstractGraphics {
 
 		String machineString = HWMachine.getMachineString();
 		IOSDevice device = config.knownDevices.get(machineString);
-		if (device == null) app.error(tag, "Machine ID: " + machineString + " not found, please report to LibGDX");
+		if (device == null) app.error(tag, "Machine ID: " + machineString + " not found, please report to libGDX");
 		int ppi = device != null ? device.ppi : app.guessUnknownPpi();
 		density = ppi / 160f;
 		ppiX = ppi;
@@ -202,6 +190,7 @@ public class IOSGraphics extends AbstractGraphics {
 				listener.resume();
 			}
 		}
+		resume = true;
 		app.listener.resume();
 	}
 
@@ -219,7 +208,7 @@ public class IOSGraphics extends AbstractGraphics {
 	}
 
 	boolean created = false;
-	
+
 	public void draw (GLKView view, CGRect rect) {
 		makeCurrent();
 		// massive hack, GLKView resets the viewport on each draw call, so IOSGLES20
@@ -227,9 +216,8 @@ public class IOSGraphics extends AbstractGraphics {
 		gl20.glViewport(IOSGLES20.x, IOSGLES20.y, IOSGLES20.width, IOSGLES20.height);
 
 		if (!created) {
-			final int width = screenBounds.width;
-			final int height = screenBounds.height;
-			gl20.glViewport(0, 0, width, height);
+			// OpenGL glViewport() function expects backbuffer coordinates instead of logical coordinates
+			gl20.glViewport(0, 0, screenBounds.backBufferWidth, screenBounds.backBufferHeight);
 
 			String versionString = gl20.glGetString(GL20.GL_VERSION);
 			String vendorString = gl20.glGetString(GL20.GL_VENDOR);
@@ -238,7 +226,7 @@ public class IOSGraphics extends AbstractGraphics {
 
 			updateSafeInsets();
 			app.listener.create();
-			app.listener.resize(width, height);
+			app.listener.resize(getWidth(), getHeight());
 			created = true;
 		}
 		if (appPaused) {
@@ -246,7 +234,12 @@ public class IOSGraphics extends AbstractGraphics {
 		}
 
 		long time = System.nanoTime();
-		deltaTime = (time - lastFrameTime) / 1000000000.0f;
+		if (!resume) {
+			deltaTime = (time - lastFrameTime) / 1000000000.0f;
+		} else {
+			resume = false;
+			deltaTime = 0;
+		}
 		lastFrameTime = time;
 
 		frames++;
@@ -264,7 +257,7 @@ public class IOSGraphics extends AbstractGraphics {
 	void makeCurrent () {
 		EAGLContext.setCurrentContext(context);
 	}
-	
+
 	public void update (GLKViewController controller) {
 		makeCurrent();
 		app.processRunnables();
@@ -275,7 +268,7 @@ public class IOSGraphics extends AbstractGraphics {
 		}
 		isFrameRequested = false;
 	}
-	
+
 	public void willPause (GLKViewController controller, boolean pause) {
 	}
 
@@ -315,29 +308,36 @@ public class IOSGraphics extends AbstractGraphics {
 		}
 	}
 
-
 	@Override
 	public int getWidth () {
-		return screenBounds.width;
+		if (config.hdpiMode == HdpiMode.Pixels) {
+			return getBackBufferWidth();
+		} else {
+			return screenBounds.width;
+		}
 	}
 
 	@Override
 	public int getHeight () {
-		return screenBounds.height;
+		if (config.hdpiMode == HdpiMode.Pixels) {
+			return getBackBufferHeight();
+		} else {
+			return screenBounds.height;
+		}
 	}
 
 	@Override
-	public int getBackBufferWidth() {
+	public int getBackBufferWidth () {
 		return screenBounds.backBufferWidth;
 	}
 
 	@Override
-	public int getBackBufferHeight() {
+	public int getBackBufferHeight () {
 		return screenBounds.backBufferHeight;
 	}
 
 	@Override
-	public float getBackBufferScale() {
+	public float getBackBufferScale () {
 		return app.pixelsPerPoint;
 	}
 
@@ -398,36 +398,36 @@ public class IOSGraphics extends AbstractGraphics {
 
 	@Override
 	public DisplayMode getDisplayMode () {
-		return new IOSDisplayMode(getWidth(), getHeight(), config.preferredFramesPerSecond, bufferFormat.r + bufferFormat.g
-			+ bufferFormat.b + bufferFormat.a);
+		return new IOSDisplayMode(getWidth(), getHeight(), config.preferredFramesPerSecond,
+			bufferFormat.r + bufferFormat.g + bufferFormat.b + bufferFormat.a);
 	}
 
 	@Override
-	public Monitor getPrimaryMonitor() {
+	public Monitor getPrimaryMonitor () {
 		return new IOSMonitor(0, 0, "Primary Monitor");
 	}
 
 	@Override
-	public Monitor getMonitor() {
+	public Monitor getMonitor () {
 		return getPrimaryMonitor();
 	}
 
 	@Override
-	public Monitor[] getMonitors() {
-		return new Monitor[] { getPrimaryMonitor() };
+	public Monitor[] getMonitors () {
+		return new Monitor[] {getPrimaryMonitor()};
 	}
 
 	@Override
-	public DisplayMode[] getDisplayModes(Monitor monitor) {
+	public DisplayMode[] getDisplayModes (Monitor monitor) {
 		return getDisplayModes();
 	}
 
 	@Override
-	public DisplayMode getDisplayMode(Monitor monitor) {
+	public DisplayMode getDisplayMode (Monitor monitor) {
 		return getDisplayMode();
 	}
 
-	protected void updateSafeInsets() {
+	protected void updateSafeInsets () {
 		safeInsetTop = 0;
 		safeInsetLeft = 0;
 		safeInsetRight = 0;
@@ -435,30 +435,36 @@ public class IOSGraphics extends AbstractGraphics {
 
 		if (Foundation.getMajorSystemVersion() >= 11) {
 			UIEdgeInsets edgeInsets = viewController.getView().getSafeAreaInsets();
-			safeInsetTop = (int) edgeInsets.getTop();
-			safeInsetLeft = (int) edgeInsets.getLeft();
-			safeInsetRight = (int) edgeInsets.getRight();
-			safeInsetBottom = (int) edgeInsets.getBottom();
+			safeInsetTop = (int)edgeInsets.getTop();
+			safeInsetLeft = (int)edgeInsets.getLeft();
+			safeInsetRight = (int)edgeInsets.getRight();
+			safeInsetBottom = (int)edgeInsets.getBottom();
+			if (config.hdpiMode == HdpiMode.Pixels) {
+				safeInsetTop *= app.pixelsPerPoint;
+				safeInsetLeft *= app.pixelsPerPoint;
+				safeInsetRight *= app.pixelsPerPoint;
+				safeInsetBottom *= app.pixelsPerPoint;
+			}
 		}
 	}
 
 	@Override
-	public int getSafeInsetLeft() {
+	public int getSafeInsetLeft () {
 		return safeInsetLeft;
 	}
 
 	@Override
-	public int getSafeInsetTop() {
+	public int getSafeInsetTop () {
 		return safeInsetTop;
 	}
 
 	@Override
-	public int getSafeInsetBottom() {
+	public int getSafeInsetBottom () {
 		return safeInsetBottom;
 	}
 
 	@Override
-	public int getSafeInsetRight() {
+	public int getSafeInsetRight () {
 		return safeInsetRight;
 	}
 
@@ -477,17 +483,17 @@ public class IOSGraphics extends AbstractGraphics {
 	}
 
 	@Override
-	public void setUndecorated(boolean undecorated) {
+	public void setUndecorated (boolean undecorated) {
 	}
 
 	@Override
-	public void setResizable(boolean resizable) {
+	public void setResizable (boolean resizable) {
 	}
 
 	@Override
 	public void setVSync (boolean vsync) {
 	}
-	
+
 	/** Sets the preferred framerate for the application. Default is 60. Is not generally advised to be used on mobile platforms.
 	 *
 	 * @param fps the preferred fps */
@@ -551,18 +557,18 @@ public class IOSGraphics extends AbstractGraphics {
 	@Override
 	public void setSystemCursor (SystemCursor systemCursor) {
 	}
-	
+
 	private class IOSViewDelegate extends NSObject implements GLKViewDelegate, GLKViewControllerDelegate {
 		@Override
 		public void update (GLKViewController controller) {
 			IOSGraphics.this.update(controller);
 		}
-		
+
 		@Override
 		public void willPause (GLKViewController controller, boolean pause) {
 			IOSGraphics.this.willPause(controller, pause);
 		}
-		
+
 		@Override
 		public void draw (GLKView view, CGRect rect) {
 			IOSGraphics.this.draw(view, rect);

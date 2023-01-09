@@ -16,12 +16,11 @@
 
 package com.badlogic.gdx.backends.android;
 
-import java.io.IOException;
-
 import android.media.MediaPlayer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+
+import java.io.IOException;
 
 public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
 	private final AndroidAudio audio;
@@ -57,8 +56,7 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
 		if (player == null) return false;
 		try {
 			return player.isLooping();
-		} catch (Exception e) {
-			// NOTE: isLooping() can potentially throw an exception and crash the application
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -69,22 +67,20 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
 		if (player == null) return false;
 		try {
 			return player.isPlaying();
-		} catch (Exception e) {
-			// NOTE: isPlaying() can potentially throw an exception and crash the application
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
 
 	@Override
-	public void pause () { 
+	public void pause () {
 		if (player == null) return;
 		try {
-			if (player.isPlaying()) {			
+			if (player.isPlaying()) {
 				player.pause();
 			}
-		} catch (Exception e) {
-			// NOTE: isPlaying() can potentially throw an exception and crash the application
+		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}
 		wasPlaying = false;
@@ -93,14 +89,6 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
 	@Override
 	public void play () {
 		if (player == null) return;
-		try {
-			if (player.isPlaying()) return;
-		} catch (Exception e) {
-			// NOTE: isPlaying() can potentially throw an exception and crash the application
-			e.printStackTrace();
-			return;
-		}
-
 		try {
 			if (!isPrepared) {
 				player.prepare();
@@ -151,9 +139,6 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
 	@Override
 	public void stop () {
 		if (player == null) return;
-		if (isPrepared) {
-			player.seekTo(0);
-		}
 		player.stop();
 		isPrepared = false;
 	}
@@ -195,7 +180,9 @@ public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
 			Gdx.app.postRunnable(new Runnable() {
 				@Override
 				public void run () {
-					onCompletionListener.onCompletion(AndroidMusic.this);
+					if (onCompletionListener != null) {
+						onCompletionListener.onCompletion(AndroidMusic.this);
+					}
 				}
 			});
 		}

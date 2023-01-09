@@ -17,7 +17,6 @@
 include ":backends"
 include ":backends:gdx-backend-android"
 include ":backends:gdx-backend-headless"
-include ":backends:gdx-backend-jglfw"
 include ":backends:gdx-backend-lwjgl"
 include ":backends:gdx-backend-lwjgl3"
 include ":backends:gdx-backend-robovm"

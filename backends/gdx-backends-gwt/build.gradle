@@ -17,8 +17,10 @@
 dependencies {
     api libraries.gwt
 }
-compileJava.exclude("emu")
-javadoc.exclude("emu")
+
+apply plugin: 'idea'
+idea.module.excludeDirs += [file("src/com/badlogic/gdx/backends/gwt/emu/")]
+[compileJava, compileTestJava, javadoc]*.exclude("com/badlogic/gdx/backends/gwt")
 
 sourceSets.main.java.exclude "**/System.java"
 sourceSets.main.resources.srcDirs += [ file('res').path ]
@@ -27,3 +29,4 @@ sourceSets.main.resources.srcDirs += [ file('res').path ]
 javadoc {
     options.addStringOption("sourcepath", "")
 }
+jar.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)

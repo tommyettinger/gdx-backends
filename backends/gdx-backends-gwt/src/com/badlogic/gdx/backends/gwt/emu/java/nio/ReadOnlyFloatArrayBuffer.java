@@ -43,15 +43,15 @@ final class ReadOnlyFloatArrayBuffer extends FloatArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public FloatBuffer asReadOnlyBuffer () {
+	public java.nio.FloatBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public FloatBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.FloatBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public FloatBuffer duplicate () {
+	public java.nio.FloatBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -60,30 +60,30 @@ final class ReadOnlyFloatArrayBuffer extends FloatArrayBuffer {
 	}
 
 	protected float[] protectedArray () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public FloatBuffer put (float c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.FloatBuffer put (float c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public FloatBuffer put (int index, float c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.FloatBuffer put (int index, float c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public FloatBuffer put (FloatBuffer buf) {
-		throw new ReadOnlyBufferException();
+	public java.nio.FloatBuffer put (java.nio.FloatBuffer buf) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public final FloatBuffer put (float[] src, int off, int len) {
+	public final java.nio.FloatBuffer put (float[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

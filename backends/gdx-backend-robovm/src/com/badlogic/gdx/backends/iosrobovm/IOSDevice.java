@@ -24,14 +24,15 @@ public class IOSDevice {
 	final String machineString;
 	final int ppi;
 
-	public IOSDevice(String classifier, String machineString, int ppi) {
+	public IOSDevice (String classifier, String machineString, int ppi) {
 		this.classifier = classifier;
 		this.machineString = machineString;
 		this.ppi = ppi;
 	}
 
-	/** The devices information can be obtained from https://github.com/lmirosevic/GBDeviceInfo or https://gist.github.com/adamawolf/3048717 */
-	static ObjectMap<String, IOSDevice> populateWithKnownDevices() {
+	/** The devices information can be obtained from https://github.com/lmirosevic/GBDeviceInfo or
+	 * https://gist.github.com/adamawolf/3048717 */
+	static ObjectMap<String, IOSDevice> populateWithKnownDevices () {
 		ObjectMap<String, IOSDevice> deviceMap = new ObjectMap<String, IOSDevice>();
 
 		addDeviceToMap(deviceMap, "IPHONE_2G", "iPhone1,1", 163);
@@ -138,11 +139,12 @@ public class IOSDevice {
 
 		addDeviceToMap(deviceMap, "SIMULATOR_32", "i386", 264);
 		addDeviceToMap(deviceMap, "SIMULATOR_64", "x86_64", 264);
+		addDeviceToMap(deviceMap, "SIMULATOR_ARM64", "arm64", 264);
 
 		return deviceMap;
 	}
 
-	static void addDeviceToMap(ObjectMap<String, IOSDevice> deviceMap, String classifier, String machineString, int ppi) {
+	static void addDeviceToMap (ObjectMap<String, IOSDevice> deviceMap, String classifier, String machineString, int ppi) {
 		deviceMap.put(machineString, new IOSDevice(classifier, machineString, ppi));
 	}
 }

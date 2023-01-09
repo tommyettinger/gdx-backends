@@ -30,7 +30,10 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class OALIOSAudio implements IOSAudio {
 
+	private final IOSApplicationConfiguration config;
+
 	public OALIOSAudio (IOSApplicationConfiguration config) {
+		this.config = config;
 		if (!config.useAudio) return;
 		OALSimpleAudio audio = OALSimpleAudio.sharedInstance();
 		if (audio != null) {
@@ -62,11 +65,45 @@ public class OALIOSAudio implements IOSAudio {
 		String path = fileHandle.file().getPath().replace('\\', '/');
 		OALAudioTrack track = OALAudioTrack.create();
 		if (track != null) {
-			if (track.preloadFile(path)) {
-				return new IOSMusic(track);
-			}
+			return new IOSMusic(track, path);
 		}
-		throw new GdxRuntimeException("Error opening music file at " + path);
+		throw new GdxRuntimeException("Error creating music audio track");
 	}
 
+	@Override
+	public void didBecomeActive () {
+		// workaround for ObjectAL crash problem
+		// see: https://groups.google.com/g/objectal-for-iphone/c/ubRWltp_i1Q
+		forceEndInterruption();
+		if (config.allowIpod) {
+			OALSimpleAudio audio = OALSimpleAudio.sharedInstance();
+			if (audio != null) {
+				audio.setUseHardwareIfAvailable(false);
+			}
+		}
+	}
+
+	@Override
+	public void willEnterForeground () {
+		// workaround for ObjectAL crash problem
+		// see: https://groups.google.com/forum/?fromgroups=#!topic/objectal-for-iphone/ubRWltp_i1Q
+		forceEndInterruption();
+	}
+
+	@Override
+	public void willResignActive () {
+
+	}
+
+	@Override
+	public void willTerminate () {
+
+	}
+
+	private void forceEndInterruption () {
+		OALAudioSession audioSession = OALAudioSession.sharedInstance();
+		if (audioSession != null) {
+			audioSession.forceEndInterruption();
+		}
+	}
 }

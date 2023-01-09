@@ -36,9 +36,9 @@ import java.nio.ShortBuffer;
  * </ul>
  * </p>
  */
-final class DirectReadOnlyShortBufferAdapter extends ShortBuffer implements HasArrayBufferView {
+final class DirectReadOnlyShortBufferAdapter extends java.nio.ShortBuffer implements HasArrayBufferView {
 
-	static ShortBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
+	static java.nio.ShortBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
 		return new DirectReadOnlyShortBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
 	}
 
@@ -53,7 +53,7 @@ final class DirectReadOnlyShortBufferAdapter extends ShortBuffer implements HasA
 	}
 
 	@Override
-	public ShortBuffer asReadOnlyBuffer () {
+	public java.nio.ShortBuffer asReadOnlyBuffer () {
 		DirectReadOnlyShortBufferAdapter buf = new DirectReadOnlyShortBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -62,12 +62,12 @@ final class DirectReadOnlyShortBufferAdapter extends ShortBuffer implements HasA
 	}
 
 	@Override
-	public ShortBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.ShortBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	@Override
-	public ShortBuffer duplicate () {
+	public java.nio.ShortBuffer duplicate () {
 		DirectReadOnlyShortBufferAdapter buf = new DirectReadOnlyShortBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -122,17 +122,17 @@ final class DirectReadOnlyShortBufferAdapter extends ShortBuffer implements HasA
 	}
 
 	@Override
-	public ShortBuffer put (short c) {
+	public java.nio.ShortBuffer put (short c) {
+		throw new java.nio.ReadOnlyBufferException();
+	}
+
+	@Override
+	public java.nio.ShortBuffer put (int index, short c) {
 		throw new ReadOnlyBufferException();
 	}
 
 	@Override
-	public ShortBuffer put (int index, short c) {
-		throw new ReadOnlyBufferException();
-	}
-
-	@Override
-	public ShortBuffer slice () {
+	public java.nio.ShortBuffer slice () {
 		byteBuffer.limit(limit << 1);
 		byteBuffer.position(position << 1);
 		ShortBuffer result = new DirectReadOnlyShortBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());

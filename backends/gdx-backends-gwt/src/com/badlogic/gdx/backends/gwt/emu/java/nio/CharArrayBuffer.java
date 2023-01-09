@@ -29,7 +29,7 @@ import java.nio.CharBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class CharArrayBuffer extends CharBuffer {
+abstract class CharArrayBuffer extends java.nio.CharBuffer {
 
 	protected final char[] backingArray;
 
@@ -63,7 +63,7 @@ abstract class CharArrayBuffer extends CharBuffer {
 		return backingArray[offset + index];
 	}
 
-	public final CharBuffer get (char[] dest, int off, int len) {
+	public final java.nio.CharBuffer get (char[] dest, int off, int len) {
 		int length = dest.length;
 		if ((off < 0) || (len < 0) || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();
@@ -80,7 +80,7 @@ abstract class CharArrayBuffer extends CharBuffer {
 		return false;
 	}
 
-	public final ByteOrder order () {
+	public final java.nio.ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

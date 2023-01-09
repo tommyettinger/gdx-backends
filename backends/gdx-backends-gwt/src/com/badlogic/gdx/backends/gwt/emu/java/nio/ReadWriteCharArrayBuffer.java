@@ -50,11 +50,11 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public CharBuffer asReadOnlyBuffer () {
+	public java.nio.CharBuffer asReadOnlyBuffer () {
 		return ReadOnlyCharArrayBuffer.copy(this, mark);
 	}
 
-	public CharBuffer compact () {
+	public java.nio.CharBuffer compact () {
 		System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		position = limit - position;
 		limit = capacity;
@@ -62,7 +62,7 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		return this;
 	}
 
-	public CharBuffer duplicate () {
+	public java.nio.CharBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -82,15 +82,15 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		return true;
 	}
 
-	public CharBuffer put (char c) {
+	public java.nio.CharBuffer put (char c) {
 		if (position == limit) {
-			throw new BufferOverflowException();
+			throw new java.nio.BufferOverflowException();
 		}
 		backingArray[offset + position++] = c;
 		return this;
 	}
 
-	public CharBuffer put (int index, char c) {
+	public java.nio.CharBuffer put (int index, char c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -98,7 +98,7 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		return this;
 	}
 
-	public CharBuffer put (char[] src, int off, int len) {
+	public java.nio.CharBuffer put (char[] src, int off, int len) {
 		int length = src.length;
 		if (off < 0 || len < 0 || (long)len + (long)off > length) {
 			throw new IndexOutOfBoundsException();

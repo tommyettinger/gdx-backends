@@ -34,10 +34,10 @@ import java.nio.FloatBuffer;
  * </ul>
  * </p>
  */
-final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements HasArrayBufferView {
+final class DirectReadWriteFloatBufferAdapter extends java.nio.FloatBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
-	static FloatBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
+	static java.nio.FloatBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
 		return new DirectReadWriteFloatBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());
 	}
 
@@ -54,7 +54,7 @@ final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements Has
 
 	// TODO(haustein) This will be slow
 	@Override
-	public FloatBuffer asReadOnlyBuffer () {
+	public java.nio.FloatBuffer asReadOnlyBuffer () {
 		DirectReadOnlyFloatBufferAdapter buf = new DirectReadOnlyFloatBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -63,7 +63,7 @@ final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements Has
 	}
 
 	@Override
-	public FloatBuffer compact () {
+	public java.nio.FloatBuffer compact () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		byteBuffer.compact();
@@ -75,7 +75,7 @@ final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements Has
 	}
 
 	@Override
-	public FloatBuffer duplicate () {
+	public java.nio.FloatBuffer duplicate () {
 		DirectReadWriteFloatBufferAdapter buf = new DirectReadWriteFloatBufferAdapter(
 			(DirectReadWriteByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
@@ -131,7 +131,7 @@ final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements Has
 	}
 
 	@Override
-	public FloatBuffer put (float c) {
+	public java.nio.FloatBuffer put (float c) {
 // if (position == limit) {
 // throw new BufferOverflowException();
 // }
@@ -140,7 +140,7 @@ final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements Has
 	}
 
 	@Override
-	public FloatBuffer put (int index, float c) {
+	public java.nio.FloatBuffer put (int index, float c) {
 // if (index < 0 || index >= limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -149,7 +149,7 @@ final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements Has
 	}
 
 	@Override
-	public FloatBuffer slice () {
+	public java.nio.FloatBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		FloatBuffer result = new DirectReadWriteFloatBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());

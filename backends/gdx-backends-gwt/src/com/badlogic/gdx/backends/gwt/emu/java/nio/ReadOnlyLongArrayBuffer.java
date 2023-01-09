@@ -42,15 +42,15 @@ final class ReadOnlyLongArrayBuffer extends LongArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public LongBuffer asReadOnlyBuffer () {
+	public java.nio.LongBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public LongBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.LongBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public LongBuffer duplicate () {
+	public java.nio.LongBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -59,30 +59,30 @@ final class ReadOnlyLongArrayBuffer extends LongArrayBuffer {
 	}
 
 	protected long[] protectedArray () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public LongBuffer put (long c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.LongBuffer put (long c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public LongBuffer put (int index, long c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.LongBuffer put (int index, long c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public LongBuffer put (LongBuffer buf) {
-		throw new ReadOnlyBufferException();
+	public java.nio.LongBuffer put (java.nio.LongBuffer buf) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public final LongBuffer put (long[] src, int off, int len) {
+	public final java.nio.LongBuffer put (long[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

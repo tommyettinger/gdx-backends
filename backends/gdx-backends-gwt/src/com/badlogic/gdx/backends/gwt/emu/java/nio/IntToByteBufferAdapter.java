@@ -37,16 +37,16 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrapper {
+final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBufferWrapper {
 // implements DirectBuffer {
 
-	static IntBuffer wrap (ByteBuffer byteBuffer) {
+	static java.nio.IntBuffer wrap (java.nio.ByteBuffer byteBuffer) {
 		return new IntToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final ByteBuffer byteBuffer;
+	private final java.nio.ByteBuffer byteBuffer;
 
-	IntToByteBufferAdapter (ByteBuffer byteBuffer) {
+	IntToByteBufferAdapter (java.nio.ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 2));
 		this.byteBuffer = byteBuffer;
 		this.byteBuffer.clear();
@@ -101,7 +101,7 @@ final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrappe
 // }
 
 	@Override
-	public IntBuffer asReadOnlyBuffer () {
+	public java.nio.IntBuffer asReadOnlyBuffer () {
 		IntToByteBufferAdapter buf = new IntToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -110,7 +110,7 @@ final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrappe
 	}
 
 	@Override
-	public IntBuffer compact () {
+	public java.nio.IntBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -125,7 +125,7 @@ final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrappe
 	}
 
 	@Override
-	public IntBuffer duplicate () {
+	public java.nio.IntBuffer duplicate () {
 		IntToByteBufferAdapter buf = new IntToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -180,7 +180,7 @@ final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrappe
 	}
 
 	@Override
-	public IntBuffer put (int c) {
+	public java.nio.IntBuffer put (int c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -189,7 +189,7 @@ final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrappe
 	}
 
 	@Override
-	public IntBuffer put (int index, int c) {
+	public java.nio.IntBuffer put (int index, int c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -198,7 +198,7 @@ final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrappe
 	}
 
 	@Override
-	public IntBuffer slice () {
+	public java.nio.IntBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		IntBuffer result = new IntToByteBufferAdapter(byteBuffer.slice());

@@ -24,7 +24,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
-
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.audio.AudioDevice;
@@ -50,13 +49,15 @@ public class DefaultAndroidAudio implements AndroidAudio {
 	public DefaultAndroidAudio (Context context, AndroidApplicationConfiguration config) {
 		if (!config.disableAudio) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				AudioAttributes audioAttrib = new AudioAttributes.Builder()
-						.setUsage(AudioAttributes.USAGE_GAME)
-						.setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-						.build();
-				soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(config.maxSimultaneousSounds).build();
-			}else {
-				soundPool = new SoundPool(config.maxSimultaneousSounds, AudioManager.STREAM_MUSIC, 0);// srcQuality: the sample-rate converter quality. Currently has no effect. Use 0 for the default.
+				AudioAttributes audioAttrib = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME)
+					.setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build();
+				soundPool = new SoundPool.Builder().setAudioAttributes(audioAttrib).setMaxStreams(config.maxSimultaneousSounds)
+					.build();
+			} else {
+				soundPool = new SoundPool(config.maxSimultaneousSounds, AudioManager.STREAM_MUSIC, 0);// srcQuality: the sample-rate
+																																	// converter quality. Currently
+																																	// has no effect. Use 0 for the
+																																	// default.
 			}
 			manager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 			if (context instanceof Activity) {
@@ -77,7 +78,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
 			for (AndroidMusic music : musics) {
 				if (music.isPlaying()) {
 					music.pause();
-					music.wasPlaying = true;					
+					music.wasPlaying = true;
 				} else
 					music.wasPlaying = false;
 			}
@@ -115,7 +116,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
 		}
 		AndroidFileHandle aHandle = (AndroidFileHandle)file;
 
-		MediaPlayer mediaPlayer = new MediaPlayer();
+		MediaPlayer mediaPlayer = createMediaPlayer();
 
 		if (aHandle.type() == FileType.Internal) {
 			try {
@@ -129,8 +130,8 @@ public class DefaultAndroidAudio implements AndroidAudio {
 				}
 				return music;
 			} catch (Exception ex) {
-				throw new GdxRuntimeException("Error loading audio file: " + file
-					+ "\nNote: Internal audio files must be placed in the assets directory.", ex);
+				throw new GdxRuntimeException(
+					"Error loading audio file: " + file + "\nNote: Internal audio files must be placed in the assets directory.", ex);
 			}
 		} else {
 			try {
@@ -153,14 +154,13 @@ public class DefaultAndroidAudio implements AndroidAudio {
 	 * 
 	 * @param fd the FileDescriptor from which to create the Music
 	 * 
-	 * @see Audio#newMusic(FileHandle)
-	 */
+	 * @see Audio#newMusic(FileHandle) */
 	public Music newMusic (FileDescriptor fd) {
 		if (soundPool == null) {
 			throw new GdxRuntimeException("Android audio is not enabled by the application config.");
 		}
-		
-		MediaPlayer mediaPlayer = new MediaPlayer();
+
+		MediaPlayer mediaPlayer = createMediaPlayer();
 
 		try {
 			mediaPlayer.setDataSource(fd);
@@ -175,7 +175,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
 			throw new GdxRuntimeException("Error loading audio from FileDescriptor", ex);
 		}
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public Sound newSound (FileHandle file) {
@@ -190,8 +190,8 @@ public class DefaultAndroidAudio implements AndroidAudio {
 				androidSound = new AndroidSound(soundPool, manager, soundPool.load(descriptor, 1));
 				descriptor.close();
 			} catch (IOException ex) {
-				throw new GdxRuntimeException("Error loading audio file: " + file
-					+ "\nNote: Internal audio files must be placed in the assets directory.", ex);
+				throw new GdxRuntimeException(
+					"Error loading audio file: " + file + "\nNote: Internal audio files must be placed in the assets directory.", ex);
 			}
 		} else {
 			try {
@@ -202,7 +202,7 @@ public class DefaultAndroidAudio implements AndroidAudio {
 		}
 		return androidSound;
 	}
-	
+
 	/** {@inheritDoc} */
 	@Override
 	public AudioRecorder newAudioRecorder (int samplingRate, boolean isMono) {
@@ -233,5 +233,16 @@ public class DefaultAndroidAudio implements AndroidAudio {
 		synchronized (musics) {
 			musics.remove(this);
 		}
+	}
+
+	protected MediaPlayer createMediaPlayer () {
+		MediaPlayer mediaPlayer = new MediaPlayer();
+		if (Build.VERSION.SDK_INT <= 21) {
+			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		} else {
+			mediaPlayer.setAudioAttributes(new AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+				.setUsage(AudioAttributes.USAGE_GAME).build());
+		}
+		return mediaPlayer;
 	}
 }

@@ -38,16 +38,13 @@ import com.badlogic.gdx.utils.Clipboard;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import com.badlogic.gdx.utils.SnapshotArray;
 
-/** An implementation of the {@link Application} interface for Android. Create an {@link Activity} that derives from this class. In
- * the Activity#onCreate(Bundle) method call the {@link #initialize(ApplicationListener)} method specifying the configuration for
- * the {@link GLSurfaceView}.
+/** An implementation of the {@link Application} interface for Android. Create an {@link Activity} that derives from this class.
+ * In the Activity#onCreate(Bundle) method call the {@link #initialize(ApplicationListener)} method specifying the configuration
+ * for the {@link GLSurfaceView}.
  * 
  * @author mzechner */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class AndroidDaydream extends DreamService implements AndroidApplicationBase {
-	static {
-		GdxNativesLoader.load();
-	}
 
 	protected AndroidGraphics graphics;
 	protected AndroidInput input;
@@ -60,7 +57,8 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 	protected boolean firstResume = true;
 	protected final Array<Runnable> runnables = new Array<Runnable>();
 	protected final Array<Runnable> executedRunnables = new Array<Runnable>();
-	protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<LifecycleListener>(LifecycleListener.class);
+	protected final SnapshotArray<LifecycleListener> lifecycleListeners = new SnapshotArray<LifecycleListener>(
+		LifecycleListener.class);
 	protected int logLevel = LOG_INFO;
 	protected ApplicationLogger applicationLogger;
 
@@ -108,13 +106,13 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 	}
 
 	private void init (ApplicationListener listener, AndroidApplicationConfiguration config, boolean isForView) {
+		GdxNativesLoader.load();
 		setApplicationLogger(new AndroidApplicationLogger());
-		graphics = new AndroidGraphics(this, config, config.resolutionStrategy == null ? new FillResolutionStrategy()
-			: config.resolutionStrategy);
+		graphics = new AndroidGraphics(this, config,
+			config.resolutionStrategy == null ? new FillResolutionStrategy() : config.resolutionStrategy);
 		input = createInput(this, this, graphics.view, config);
 		audio = createAudio(this, config);
-		this.getFilesDir(); // workaround for Android bug #10515463
-		files = new AndroidFiles(this.getAssets(), this);
+		files = createFiles();
 		net = new AndroidNet(this, config);
 		this.listener = listener;
 		this.handler = new Handler();
@@ -127,12 +125,12 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 			public void resume () {
 				audio.resume();
 			}
-			
+
 			@Override
 			public void pause () {
 				audio.pause();
 			}
-			
+
 			@Override
 			public void dispose () {
 				audio.dispose();
@@ -153,11 +151,9 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 		}
 
 		createWakeLock(config.useWakelock);
-		hideStatusBar(config);
 
 		// detect an already connected bluetooth keyboardAvailable
-		if (getResources().getConfiguration().keyboard != Configuration.KEYBOARD_NOKEYS)
-			input.setKeyboardAvailable(true);
+		if (getResources().getConfiguration().keyboard != Configuration.KEYBOARD_NOKEYS) input.setKeyboardAvailable(true);
 	}
 
 	protected FrameLayout.LayoutParams createLayoutParams () {
@@ -171,15 +167,6 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 		if (use) {
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
-	}
-
-	protected void hideStatusBar (AndroidApplicationConfiguration config) {
-		if (!config.hideStatusBar) return;
-
-		View rootView = getWindow().getDecorView();
-
-		rootView.setSystemUiVisibility(0x0);
-		rootView.setSystemUiVisibility(0x1);
 	}
 
 	@Override
@@ -263,7 +250,7 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 
 	@Override
 	public int getVersion () {
-		return android.os.Build.VERSION.SDK_INT;
+		return Build.VERSION.SDK_INT;
 	}
 
 	@Override
@@ -414,6 +401,11 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 	@Override
 	public AndroidInput createInput (Application activity, Context context, Object view, AndroidApplicationConfiguration config) {
 		return new DefaultAndroidInput(this, this, graphics.view, config);
+	}
+
+	protected AndroidFiles createFiles () {
+		this.getFilesDir(); // workaround for Android bug #10515463
+		return new DefaultAndroidFiles(this.getAssets(), this, true);
 	}
 
 	@Override

@@ -30,7 +30,7 @@ import java.nio.DoubleBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class DoubleArrayBuffer extends DoubleBuffer {
+abstract class DoubleArrayBuffer extends java.nio.DoubleBuffer {
 
 	protected final double[] backingArray;
 
@@ -81,7 +81,7 @@ abstract class DoubleArrayBuffer extends DoubleBuffer {
 		return false;
 	}
 
-	public final ByteOrder order () {
+	public final java.nio.ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

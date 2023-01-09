@@ -43,7 +43,7 @@ public class DataInputStream extends FilterInputStream implements DataInput {
 	public byte readByte () throws IOException {
 		int i = read();
 		if (i == -1) {
-			throw new EOFException();
+			throw new java.io.EOFException();
 		}
 		return (byte)i;
 	}
@@ -70,7 +70,7 @@ public class DataInputStream extends FilterInputStream implements DataInput {
 		while (len > 0) {
 			int count = is.read(b, off, len);
 			if (count <= 0) {
-				throw new EOFException();
+				throw new java.io.EOFException();
 			}
 			off += count;
 			len -= count;

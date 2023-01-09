@@ -66,18 +66,18 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 	}
 
 	public IntBuffer asIntBuffer () {
-		return order() == ByteOrder.nativeOrder() ? DirectReadWriteIntBufferAdapter.wrap(this) : super.asIntBuffer();
+		return order() == java.nio.ByteOrder.nativeOrder() ? DirectReadWriteIntBufferAdapter.wrap(this) : super.asIntBuffer();
 	}
 
 	public ShortBuffer asShortBuffer () {
 		return order() == ByteOrder.nativeOrder() ? DirectReadWriteShortBufferAdapter.wrap(this) : super.asShortBuffer();
 	}
 
-	public ByteBuffer asReadOnlyBuffer () {
+	public java.nio.ByteBuffer asReadOnlyBuffer () {
 		return DirectReadOnlyByteBuffer.copy(this, mark);
 	}
 
-	public ByteBuffer compact () {
+	public java.nio.ByteBuffer compact () {
 // System.arraycopy(backingArray, position + offset, backingArray, offset,
 // remaining());
 
@@ -92,7 +92,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer duplicate () {
+	public java.nio.ByteBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -112,7 +112,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return true;
 	}
 
-	public ByteBuffer put (byte b) {
+	public java.nio.ByteBuffer put (byte b) {
 // if (position == limit) {
 // throw new BufferOverflowException();
 // }
@@ -120,7 +120,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer put (int index, byte b) {
+	public java.nio.ByteBuffer put (int index, byte b) {
 // if (index < 0 || index >= limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -135,7 +135,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 	 * 
 	 * @see java.nio.ByteBuffer#put(byte[], int, int)
 	 */
-	public ByteBuffer put (byte[] src, int off, int len) {
+	public java.nio.ByteBuffer put (byte[] src, int off, int len) {
 		if (off < 0 || len < 0 || (long)off + (long)len > src.length) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -152,23 +152,23 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer putDouble (double value) {
+	public java.nio.ByteBuffer putDouble (double value) {
 		return putLong(Numbers.doubleToRawLongBits(value));
 	}
 
-	public ByteBuffer putDouble (int index, double value) {
+	public java.nio.ByteBuffer putDouble (int index, double value) {
 		return putLong(index, Numbers.doubleToRawLongBits(value));
 	}
 
-	public ByteBuffer putFloat (float value) {
+	public java.nio.ByteBuffer putFloat (float value) {
 		return putInt(Numbers.floatToIntBits(value));
 	}
 
-	public ByteBuffer putFloat (int index, float value) {
+	public java.nio.ByteBuffer putFloat (int index, float value) {
 		return putInt(index, Numbers.floatToIntBits(value));
 	}
 
-	public ByteBuffer putInt (int value) {
+	public java.nio.ByteBuffer putInt (int value) {
 		int newPosition = position + 4;
 // if (newPosition > limit) {
 // throw new BufferOverflowException();
@@ -178,7 +178,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer putInt (int index, int value) {
+	public java.nio.ByteBuffer putInt (int index, int value) {
 // if (index < 0 || (long)index + 4 > limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -186,7 +186,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer putLong (int index, long value) {
+	public java.nio.ByteBuffer putLong (int index, long value) {
 // if (index < 0 || (long)index + 8 > limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -194,7 +194,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer putLong (long value) {
+	public java.nio.ByteBuffer putLong (long value) {
 		int newPosition = position + 8;
 // if (newPosition > limit) {
 // throw new BufferOverflowException();
@@ -204,7 +204,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer putShort (int index, short value) {
+	public java.nio.ByteBuffer putShort (int index, short value) {
 // if (index < 0 || (long)index + 2 > limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -212,7 +212,7 @@ public final class DirectReadWriteByteBuffer extends java.nio.DirectByteBuffer {
 		return this;
 	}
 
-	public ByteBuffer putShort (short value) {
+	public java.nio.ByteBuffer putShort (short value) {
 		int newPosition = position + 2;
 // if (newPosition > limit) {
 // throw new BufferOverflowException();

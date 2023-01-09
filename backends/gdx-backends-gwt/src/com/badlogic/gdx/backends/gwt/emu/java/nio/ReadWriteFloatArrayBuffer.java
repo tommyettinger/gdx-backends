@@ -51,11 +51,11 @@ final class ReadWriteFloatArrayBuffer extends FloatArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public FloatBuffer asReadOnlyBuffer () {
+	public java.nio.FloatBuffer asReadOnlyBuffer () {
 		return ReadOnlyFloatArrayBuffer.copy(this, mark);
 	}
 
-	public FloatBuffer compact () {
+	public java.nio.FloatBuffer compact () {
 // System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		for (int i = position + offset, j = offset, k = 0; k < remaining(); i++, j++, k++) {
 			backingArray[j] = backingArray[i];
@@ -66,7 +66,7 @@ final class ReadWriteFloatArrayBuffer extends FloatArrayBuffer {
 		return this;
 	}
 
-	public FloatBuffer duplicate () {
+	public java.nio.FloatBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -86,15 +86,15 @@ final class ReadWriteFloatArrayBuffer extends FloatArrayBuffer {
 		return true;
 	}
 
-	public FloatBuffer put (float c) {
+	public java.nio.FloatBuffer put (float c) {
 		if (position == limit) {
-			throw new BufferOverflowException();
+			throw new java.nio.BufferOverflowException();
 		}
 		backingArray[offset + position++] = c;
 		return this;
 	}
 
-	public FloatBuffer put (int index, float c) {
+	public java.nio.FloatBuffer put (int index, float c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -102,7 +102,7 @@ final class ReadWriteFloatArrayBuffer extends FloatArrayBuffer {
 		return this;
 	}
 
-	public FloatBuffer put (float[] src, int off, int len) {
+	public java.nio.FloatBuffer put (float[] src, int off, int len) {
 		int length = src.length;
 		if (off < 0 || len < 0 || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();

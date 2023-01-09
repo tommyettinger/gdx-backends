@@ -531,27 +531,27 @@ public abstract class ByteBuffer extends Buffer implements Comparable<ByteBuffer
 
 	/** Returns the byte order used by this buffer when converting bytes from/to other primitive types.
 	 * <p>
-	 * The default byte order of byte buffer is always {@link ByteOrder#BIG_ENDIAN BIG_ENDIAN}
+	 * The default byte order of byte buffer is always {@link java.nio.ByteOrder#BIG_ENDIAN BIG_ENDIAN}
 	 * </p>
 	 * 
 	 * @return the byte order used by this buffer when converting bytes from/to other primitive types.
 	 * @since Android 1.0 */
-	public final ByteOrder order () {
-		return order == Endianness.BIG_ENDIAN ? ByteOrder.BIG_ENDIAN : ByteOrder.LITTLE_ENDIAN;
+	public final java.nio.ByteOrder order () {
+		return order == Endianness.BIG_ENDIAN ? java.nio.ByteOrder.BIG_ENDIAN : java.nio.ByteOrder.LITTLE_ENDIAN;
 	}
 
 	/** Sets the byte order of this buffer.
 	 * 
-	 * @param byteOrder the byte order to set. If {@code null} then the order will be {@link ByteOrder#LITTLE_ENDIAN LITTLE_ENDIAN}
+	 * @param byteOrder the byte order to set. If {@code null} then the order will be {@link java.nio.ByteOrder#LITTLE_ENDIAN LITTLE_ENDIAN}
 	 *           .
 	 * @return this buffer.
-	 * @see ByteOrder
+	 * @see java.nio.ByteOrder
 	 * @since Android 1.0 */
-	public final ByteBuffer order (ByteOrder byteOrder) {
+	public final ByteBuffer order (java.nio.ByteOrder byteOrder) {
 		return orderImpl(byteOrder);
 	}
 
-	ByteBuffer orderImpl (ByteOrder byteOrder) {
+	ByteBuffer orderImpl (java.nio.ByteOrder byteOrder) {
 		order = byteOrder == ByteOrder.BIG_ENDIAN ? Endianness.BIG_ENDIAN : Endianness.LITTLE_ENDIAN;
 		return this;
 	}

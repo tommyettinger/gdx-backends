@@ -26,7 +26,7 @@ import java.nio.LongBuffer;
 import java.nio.ShortBuffer;
 
 /** Serves as the root of other byte buffer impl classes, implements common methods that can be shared by child classes. */
-abstract class BaseByteBuffer extends ByteBuffer {
+abstract class BaseByteBuffer extends java.nio.ByteBuffer {
 
 	protected BaseByteBuffer (int capacity) {
 		super(capacity);
@@ -70,7 +70,7 @@ abstract class BaseByteBuffer extends ByteBuffer {
 		return (char)getShort(index);
 	}
 
-	public final ByteBuffer putChar (char value) {
+	public final java.nio.ByteBuffer putChar (char value) {
 		return putShort((short)value);
 	}
 

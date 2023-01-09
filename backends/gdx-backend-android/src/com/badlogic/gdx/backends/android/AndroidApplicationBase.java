@@ -22,11 +22,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
-
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Audio;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
@@ -98,6 +94,5 @@ public interface AndroidApplicationBase extends Application {
 
 	/** Returns the AndroidInput to be used by the application
 	 * @return the created {@link AndroidInput} */
-	AndroidInput createInput (Application activity, Context context, Object view,
-		AndroidApplicationConfiguration config);
+	AndroidInput createInput (Application activity, Context context, Object view, AndroidApplicationConfiguration config);
 }

@@ -45,11 +45,11 @@ public abstract class FileHandleStream extends GwtFileHandle {
 		return true;
 	}
 
-	public FileHandle child (String name) {
+	public com.badlogic.gdx.files.FileHandle child (String name) {
 		throw new UnsupportedOperationException();
 	}
 
-	public FileHandle parent () {
+	public com.badlogic.gdx.files.FileHandle parent () {
 		throw new UnsupportedOperationException();
 	}
 
@@ -61,7 +61,7 @@ public abstract class FileHandleStream extends GwtFileHandle {
 		throw new UnsupportedOperationException();
 	}
 
-	public FileHandle[] list () {
+	public com.badlogic.gdx.files.FileHandle[] list () {
 		throw new UnsupportedOperationException();
 	}
 
@@ -77,7 +77,7 @@ public abstract class FileHandleStream extends GwtFileHandle {
 		throw new UnsupportedOperationException();
 	}
 
-	public void copyTo (FileHandle dest) {
+	public void copyTo (com.badlogic.gdx.files.FileHandle dest) {
 		throw new UnsupportedOperationException();
 	}
 

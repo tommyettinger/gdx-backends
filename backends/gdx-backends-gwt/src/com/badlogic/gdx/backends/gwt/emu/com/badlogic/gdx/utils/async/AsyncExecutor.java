@@ -37,7 +37,7 @@ public class AsyncExecutor implements Disposable {
 	/** Submits a {@link Runnable} to be executed asynchronously. If maxConcurrent runnables are already running, the runnable will
 	 * be queued.
 	 * @param task the task to execute asynchronously */
-	public <T> AsyncResult<T> submit (final AsyncTask<T> task) {
+	public <T> com.badlogic.gdx.utils.async.AsyncResult<T> submit (final com.badlogic.gdx.utils.async.AsyncTask<T> task) {
 		T result = null;
 		try {
 			result = task.call();

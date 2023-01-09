@@ -52,15 +52,15 @@ final class DirectReadOnlyByteBuffer extends java.nio.DirectByteBuffer {
 		super(backingArray, capacity, arrayOffset);
 	}
 
-	public ByteBuffer asReadOnlyBuffer () {
+	public java.nio.ByteBuffer asReadOnlyBuffer () {
 		return copy(this, mark);
 	}
 
-	public ByteBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer duplicate () {
+	public java.nio.ByteBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -69,11 +69,11 @@ final class DirectReadOnlyByteBuffer extends java.nio.DirectByteBuffer {
 	}
 
 	protected byte[] protectedArray () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
@@ -85,66 +85,66 @@ final class DirectReadOnlyByteBuffer extends java.nio.DirectByteBuffer {
 	}
 
 	public IntBuffer asIntBuffer () {
-		return order() == ByteOrder.nativeOrder() ? DirectReadOnlyIntBufferAdapter.wrap(this) : super.asIntBuffer();
+		return order() == java.nio.ByteOrder.nativeOrder() ? DirectReadOnlyIntBufferAdapter.wrap(this) : super.asIntBuffer();
 	}
 
 	public ShortBuffer asShortBuffer () {
 		return order() == ByteOrder.nativeOrder() ? DirectReadOnlyShortBufferAdapter.wrap(this) : super.asShortBuffer();
 	}
 
-	public ByteBuffer put (byte b) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer put (byte b) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer put (int index, byte b) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer put (int index, byte b) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer put (byte[] src, int off, int len) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer put (byte[] src, int off, int len) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putDouble (double value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putDouble (double value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putDouble (int index, double value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putDouble (int index, double value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putFloat (float value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putFloat (float value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putFloat (int index, float value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putFloat (int index, float value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putInt (int value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putInt (int value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putInt (int index, int value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putInt (int index, int value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putLong (int index, long value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putLong (int index, long value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putLong (long value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putLong (long value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putShort (int index, short value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putShort (int index, short value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer putShort (short value) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ByteBuffer putShort (short value) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ByteBuffer put (ByteBuffer buf) {
+	public java.nio.ByteBuffer put (java.nio.ByteBuffer buf) {
 		throw new ReadOnlyBufferException();
 	}
 

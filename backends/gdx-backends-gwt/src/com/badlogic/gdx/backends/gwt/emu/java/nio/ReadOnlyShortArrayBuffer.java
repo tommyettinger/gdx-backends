@@ -43,15 +43,15 @@ final class ReadOnlyShortArrayBuffer extends ShortArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public ShortBuffer asReadOnlyBuffer () {
+	public java.nio.ShortBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public ShortBuffer compact () {
-		throw new ReadOnlyBufferException();
+	public java.nio.ShortBuffer compact () {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ShortBuffer duplicate () {
+	public java.nio.ShortBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -60,30 +60,30 @@ final class ReadOnlyShortArrayBuffer extends ShortArrayBuffer {
 	}
 
 	protected short[] protectedArray () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new ReadOnlyBufferException();
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public ShortBuffer put (ShortBuffer buf) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ShortBuffer put (java.nio.ShortBuffer buf) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ShortBuffer put (short c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ShortBuffer put (short c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public ShortBuffer put (int index, short c) {
-		throw new ReadOnlyBufferException();
+	public java.nio.ShortBuffer put (int index, short c) {
+		throw new java.nio.ReadOnlyBufferException();
 	}
 
-	public final ShortBuffer put (short[] src, int off, int len) {
+	public final java.nio.ShortBuffer put (short[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

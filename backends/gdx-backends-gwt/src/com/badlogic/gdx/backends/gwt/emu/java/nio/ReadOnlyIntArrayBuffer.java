@@ -42,15 +42,15 @@ final class ReadOnlyIntArrayBuffer extends IntArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public IntBuffer asReadOnlyBuffer () {
+	public java.nio.IntBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public IntBuffer compact () {
+	public java.nio.IntBuffer compact () {
 		throw new ReadOnlyBufferException();
 	}
 
-	public IntBuffer duplicate () {
+	public java.nio.IntBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -70,19 +70,19 @@ final class ReadOnlyIntArrayBuffer extends IntArrayBuffer {
 		return false;
 	}
 
-	public IntBuffer put (int c) {
+	public java.nio.IntBuffer put (int c) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public IntBuffer put (int index, int c) {
+	public java.nio.IntBuffer put (int index, int c) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public IntBuffer put (IntBuffer buf) {
+	public java.nio.IntBuffer put (java.nio.IntBuffer buf) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public final IntBuffer put (int[] src, int off, int len) {
+	public final java.nio.IntBuffer put (int[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

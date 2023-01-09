@@ -16,11 +16,11 @@
 
 package com.badlogic.gdx.backends.iosrobovm;
 
-import java.io.File;
-
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+
+import java.io.File;
 
 public class IOSFileHandle extends FileHandle {
 	protected IOSFileHandle (String fileName, FileType type) {

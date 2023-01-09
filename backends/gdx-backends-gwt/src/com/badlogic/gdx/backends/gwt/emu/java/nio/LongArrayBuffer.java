@@ -29,7 +29,7 @@ import java.nio.LongBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class LongArrayBuffer extends LongBuffer {
+abstract class LongArrayBuffer extends java.nio.LongBuffer {
 
 	protected final long[] backingArray;
 
@@ -80,7 +80,7 @@ abstract class LongArrayBuffer extends LongBuffer {
 		return false;
 	}
 
-	public final ByteOrder order () {
+	public final java.nio.ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

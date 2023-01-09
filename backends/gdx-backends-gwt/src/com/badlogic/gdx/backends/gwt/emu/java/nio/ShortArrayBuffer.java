@@ -30,7 +30,7 @@ import java.nio.ShortBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class ShortArrayBuffer extends ShortBuffer {
+abstract class ShortArrayBuffer extends java.nio.ShortBuffer {
 
 	protected final short[] backingArray;
 
@@ -81,7 +81,7 @@ abstract class ShortArrayBuffer extends ShortBuffer {
 		return false;
 	}
 
-	public final ByteOrder order () {
+	public final java.nio.ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

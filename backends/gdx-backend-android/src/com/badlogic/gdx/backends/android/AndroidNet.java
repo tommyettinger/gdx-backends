@@ -17,19 +17,11 @@
 package com.badlogic.gdx.backends.android;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-
 import com.badlogic.gdx.Net;
-import com.badlogic.gdx.net.NetJavaImpl;
-import com.badlogic.gdx.net.NetJavaServerSocketImpl;
-import com.badlogic.gdx.net.NetJavaSocketImpl;
-import com.badlogic.gdx.net.ServerSocket;
-import com.badlogic.gdx.net.ServerSocketHints;
-import com.badlogic.gdx.net.Socket;
-import com.badlogic.gdx.net.SocketHints;
-import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.net.*;
 
 /** Android implementation of the {@link Net} API.
  * @author acoppes */
@@ -54,7 +46,7 @@ public class AndroidNet implements Net {
 	public void cancelHttpRequest (HttpRequest httpRequest) {
 		netJavaImpl.cancelHttpRequest(httpRequest);
 	}
-	
+
 	@Override
 	public ServerSocket newServerSocket (Protocol protocol, String hostname, int port, ServerSocketHints hints) {
 		return new NetJavaServerSocketImpl(protocol, hostname, port, hints);
@@ -72,24 +64,18 @@ public class AndroidNet implements Net {
 
 	@Override
 	public boolean openURI (String URI) {
-		boolean result = false;
 		final Uri uri = Uri.parse(URI);
-		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-		PackageManager pm = app.getContext().getPackageManager();
-		if (pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
-			app.runOnUiThread(new Runnable() {
-				@Override
-				public void run () {
-					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-					// LiveWallpaper and Daydream applications need this flag
-					if (!(app.getContext() instanceof Activity))
-						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					app.startActivity(intent);
-				}
-			});
-			result = true;
+		try {
+			Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+			// LiveWallpaper and Daydream applications need this flag
+			if (!(app.getContext() instanceof Activity)) {
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			}
+			app.startActivity(intent);
+			return true;
+		} catch (ActivityNotFoundException e) {
+			return false;
 		}
-		return result;
 	}
 
 }

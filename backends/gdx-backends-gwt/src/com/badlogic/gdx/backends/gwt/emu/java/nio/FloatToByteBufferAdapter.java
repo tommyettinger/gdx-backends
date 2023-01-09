@@ -37,14 +37,14 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class FloatToByteBufferAdapter extends FloatBuffer {
+final class FloatToByteBufferAdapter extends java.nio.FloatBuffer {
 // implements DirectBuffer {
 
-	static FloatBuffer wrap (ByteBuffer byteBuffer) {
+	static java.nio.FloatBuffer wrap (java.nio.ByteBuffer byteBuffer) {
 		return new FloatToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final ByteBuffer byteBuffer;
+	private final java.nio.ByteBuffer byteBuffer;
 
 	FloatToByteBufferAdapter (ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 2));
@@ -101,7 +101,7 @@ final class FloatToByteBufferAdapter extends FloatBuffer {
 // }
 
 	@Override
-	public FloatBuffer asReadOnlyBuffer () {
+	public java.nio.FloatBuffer asReadOnlyBuffer () {
 		FloatToByteBufferAdapter buf = new FloatToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -110,7 +110,7 @@ final class FloatToByteBufferAdapter extends FloatBuffer {
 	}
 
 	@Override
-	public FloatBuffer compact () {
+	public java.nio.FloatBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -125,7 +125,7 @@ final class FloatToByteBufferAdapter extends FloatBuffer {
 	}
 
 	@Override
-	public FloatBuffer duplicate () {
+	public java.nio.FloatBuffer duplicate () {
 		FloatToByteBufferAdapter buf = new FloatToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -180,7 +180,7 @@ final class FloatToByteBufferAdapter extends FloatBuffer {
 	}
 
 	@Override
-	public FloatBuffer put (float c) {
+	public java.nio.FloatBuffer put (float c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -189,7 +189,7 @@ final class FloatToByteBufferAdapter extends FloatBuffer {
 	}
 
 	@Override
-	public FloatBuffer put (int index, float c) {
+	public java.nio.FloatBuffer put (int index, float c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -198,7 +198,7 @@ final class FloatToByteBufferAdapter extends FloatBuffer {
 	}
 
 	@Override
-	public FloatBuffer slice () {
+	public java.nio.FloatBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		FloatBuffer result = new FloatToByteBufferAdapter(byteBuffer.slice());

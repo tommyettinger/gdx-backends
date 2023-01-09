@@ -16,6 +16,8 @@
 
 package com.badlogic.gdx.backends.android;
 
+import android.content.Context;
+import android.hardware.display.DisplayManager;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLSurfaceView.EGLConfigChooser;
 import android.opengl.GLSurfaceView.Renderer;
@@ -26,16 +28,15 @@ import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.Graphics.BufferFormat;
-import com.badlogic.gdx.Graphics.DisplayMode;
-import com.badlogic.gdx.Graphics.GraphicsType;
-import com.badlogic.gdx.backends.android.surfaceview.*;
+import com.badlogic.gdx.backends.android.surfaceview.GLSurfaceView20;
+import com.badlogic.gdx.backends.android.surfaceview.GdxEglConfigChooser;
+import com.badlogic.gdx.backends.android.surfaceview.ResolutionStrategy;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.GLVersion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.WindowedMean;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.SnapshotArray;
 
@@ -90,7 +91,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	private float density = 1;
 
 	protected final AndroidApplicationConfiguration config;
-	private BufferFormat bufferFormat = new BufferFormat(5, 6, 5, 0, 16, 0, 0, false);
+	private BufferFormat bufferFormat = new BufferFormat(8, 8, 8, 0, 16, 0, 0, false);
 	private boolean isContinuous = true;
 
 	public AndroidGraphics (AndroidApplicationBase application, AndroidApplicationConfiguration config,
@@ -114,8 +115,9 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 		view.setPreserveEGLContextOnPause(true);
 	}
 
-	protected GLSurfaceView20 createGLSurfaceView (AndroidApplicationBase application, final ResolutionStrategy resolutionStrategy) {
-		if (!checkGL20()) throw new GdxRuntimeException("Libgdx requires OpenGL ES 2.0");
+	protected GLSurfaceView20 createGLSurfaceView (AndroidApplicationBase application,
+		final ResolutionStrategy resolutionStrategy) {
+		if (!checkGL20()) throw new GdxRuntimeException("libGDX requires OpenGL ES 2.0");
 
 		EGLConfigChooser configChooser = getEglConfigChooser();
 		GLSurfaceView20 view = new GLSurfaceView20(application.getContext(), resolutionStrategy, config.useGL30 ? 3 : 2);
@@ -235,12 +237,12 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 		return height;
 	}
 
-	/** This instantiates the GL10, GL11 and GL20 instances. Includes the check for certain devices that pretend to support GL11 but
-	 * fuck up vertex buffer objects. This includes the pixelflinger which segfaults when buffers are deleted as well as the
+	/** This instantiates the GL10, GL11 and GL20 instances. Includes the check for certain devices that pretend to support GL11
+	 * but fuck up vertex buffer objects. This includes the pixelflinger which segfaults when buffers are deleted as well as the
 	 * Motorola CLIQ and the Samsung Behold II.
 	 *
 	 * @param gl */
-	protected void setupGL (javax.microedition.khronos.opengles.GL10 gl) {
+	protected void setupGL (GL10 gl) {
 		String versionString = gl.glGetString(GL10.GL_VERSION);
 		String vendorString = gl.glGetString(GL10.GL_VENDOR);
 		String rendererString = gl.glGetString(GL10.GL_RENDERER);
@@ -267,7 +269,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onSurfaceChanged (javax.microedition.khronos.opengles.GL10 gl, int width, int height) {
+	public void onSurfaceChanged (GL10 gl, int width, int height) {
 		this.width = width;
 		this.height = height;
 		updatePpi();
@@ -284,7 +286,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onSurfaceCreated (javax.microedition.khronos.opengles.GL10 gl, EGLConfig config) {
+	public void onSurfaceCreated (GL10 gl, EGLConfig config) {
 		eglContext = ((EGL10)EGLContext.getEGL()).eglGetCurrentContext();
 		setupGL(gl);
 		logConfig(config);
@@ -356,7 +358,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 
 			view.queueEvent(new Runnable() {
 				@Override
-				public void run() {
+				public void run () {
 					if (!pause) {
 						// pause event already picked up by onDrawFrame
 						return;
@@ -402,7 +404,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onDrawFrame (javax.microedition.khronos.opengles.GL10 gl) {
+	public void onDrawFrame (GL10 gl) {
 		long time = System.nanoTime();
 		// After pause deltaTime can have somewhat huge value that destabilizes the mean, so let's cut it off
 		if (!resume) {
@@ -411,7 +413,6 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 			deltaTime = 0;
 		}
 		lastFrameTime = time;
-
 
 		boolean lrunning = false;
 		boolean lpause = false;
@@ -602,7 +603,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 
 	@Override
 	public Monitor[] getMonitors () {
-		return new Monitor[] { getPrimaryMonitor() };
+		return new Monitor[] {getPrimaryMonitor()};
 	}
 
 	@Override
@@ -620,7 +621,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 		return new DisplayMode[] {getDisplayMode()};
 	}
 
-	protected void updateSafeAreaInsets() {
+	protected void updateSafeAreaInsets () {
 		safeInsetLeft = 0;
 		safeInsetTop = 0;
 		safeInsetRight = 0;
@@ -643,22 +644,22 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public int getSafeInsetLeft() {
+	public int getSafeInsetLeft () {
 		return safeInsetLeft;
 	}
 
 	@Override
-	public int getSafeInsetTop() {
+	public int getSafeInsetTop () {
 		return safeInsetTop;
 	}
 
 	@Override
-	public int getSafeInsetBottom() {
+	public int getSafeInsetBottom () {
 		return safeInsetBottom;
 	}
 
 	@Override
-	public int getSafeInsetRight() {
+	public int getSafeInsetRight () {
 		return safeInsetRight;
 	}
 
@@ -685,9 +686,24 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 
 	@Override
 	public DisplayMode getDisplayMode () {
+		Display display;
 		DisplayMetrics metrics = new DisplayMetrics();
-		app.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		return new AndroidDisplayMode(metrics.widthPixels, metrics.heightPixels, 0, 0);
+
+		if (Build.VERSION.SDK_INT >= 17) {
+			DisplayManager displayManager = (DisplayManager)app.getContext().getSystemService(Context.DISPLAY_SERVICE);
+			display = displayManager.getDisplay(Display.DEFAULT_DISPLAY);
+			display.getRealMetrics(metrics); // Deprecated but no direct equivalent
+		} else {
+			display = app.getWindowManager().getDefaultDisplay();
+			display.getMetrics(metrics); // Excludes system UI!
+		}
+
+		int width = metrics.widthPixels;
+		int height = metrics.heightPixels;
+		int refreshRate = MathUtils.roundPositive(display.getRefreshRate());
+		int bitsPerPixel = config.r + config.g + config.b + config.a;
+
+		return new AndroidDisplayMode(width, height, refreshRate, bitsPerPixel);
 	}
 
 	@Override
@@ -698,11 +714,11 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	@Override
 	public void setVSync (boolean vsync) {
 	}
-    
-    @Override
-    public void setForegroundFPS (int fps) {
-    }
-	
+
+	@Override
+	public void setForegroundFPS (int fps) {
+	}
+
 	@Override
 	public boolean supportsExtension (String extension) {
 		if (extensions == null) extensions = Gdx.gl.glGetString(GL10.GL_EXTENSIONS);
@@ -736,7 +752,6 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 		return true;
 	}
 
-
 	@Override
 	public Cursor newCursor (Pixmap pixmap, int xHotspot, int yHotspot) {
 		return null;
@@ -748,6 +763,8 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 
 	@Override
 	public void setSystemCursor (SystemCursor systemCursor) {
+		View view = ((AndroidGraphics)app.getGraphics()).getView();
+		AndroidCursor.setSystemCursor(view, systemCursor);
 	}
 
 	private class AndroidDisplayMode extends DisplayMode {

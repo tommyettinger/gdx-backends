@@ -34,9 +34,9 @@ import java.nio.IntBuffer;
  * </ul>
  * </p>
  */
-final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArrayBufferView {
+final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implements HasArrayBufferView {
 
-	static IntBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
+	static java.nio.IntBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
 		return new DirectReadWriteIntBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());
 	}
 
@@ -52,7 +52,7 @@ final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArra
 
 	// TODO(haustein) This will be slow
 	@Override
-	public IntBuffer asReadOnlyBuffer () {
+	public java.nio.IntBuffer asReadOnlyBuffer () {
 		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -61,7 +61,7 @@ final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArra
 	}
 
 	@Override
-	public IntBuffer compact () {
+	public java.nio.IntBuffer compact () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		byteBuffer.compact();
@@ -73,7 +73,7 @@ final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArra
 	}
 
 	@Override
-	public IntBuffer duplicate () {
+	public java.nio.IntBuffer duplicate () {
 		DirectReadWriteIntBufferAdapter buf = new DirectReadWriteIntBufferAdapter(
 			(DirectReadWriteByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
@@ -129,7 +129,7 @@ final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArra
 	}
 
 	@Override
-	public IntBuffer put (int c) {
+	public java.nio.IntBuffer put (int c) {
 // if (position == limit) {
 // throw new BufferOverflowException();
 // }
@@ -138,7 +138,7 @@ final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArra
 	}
 
 	@Override
-	public IntBuffer put (int index, int c) {
+	public java.nio.IntBuffer put (int index, int c) {
 // if (index < 0 || index >= limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -147,7 +147,7 @@ final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArra
 	}
 
 	@Override
-	public IntBuffer slice () {
+	public java.nio.IntBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		IntBuffer result = new DirectReadWriteIntBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());

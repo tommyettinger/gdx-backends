@@ -18,7 +18,6 @@ package com.badlogic.gdx.backends.android;
 
 import android.annotation.TargetApi;
 import android.opengl.GLES30;
-
 import com.badlogic.gdx.graphics.GL30;
 
 @TargetApi(18)
@@ -41,8 +40,10 @@ public class AndroidGL30 extends AndroidGL20 implements GL30 {
 	@Override
 	public void glTexImage3D (int target, int level, int internalformat, int width, int height, int depth, int border, int format,
 		int type, java.nio.Buffer pixels) {
-		if (pixels == null) GLES30.glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, 0);
-		else GLES30.glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
+		if (pixels == null)
+			GLES30.glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, 0);
+		else
+			GLES30.glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
 	}
 
 	@Override
@@ -244,11 +245,11 @@ public class AndroidGL30 extends AndroidGL20 implements GL30 {
 	public void glFramebufferTextureLayer (int target, int attachment, int texture, int level, int layer) {
 		GLES30.glFramebufferTextureLayer(target, attachment, texture, level, layer);
 	}
-    
-    @Override
-    public java.nio.Buffer glMapBufferRange (int target, int offset, int length, int access) {
-        return GLES30.glMapBufferRange(target, offset, length, access);
-    }
+
+	@Override
+	public java.nio.Buffer glMapBufferRange (int target, int offset, int length, int access) {
+		return GLES30.glMapBufferRange(target, offset, length, access);
+	}
 
 	@Override
 	public void glFlushMappedBufferRange (int target, int offset, int length) {

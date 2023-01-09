@@ -38,14 +38,14 @@ public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */ 
 	int pos;
 	int len;
 
-	DataInputStream dis = new DataInputStream(new RafInputStream());
-	DataOutputStream dos = new DataOutputStream(new RafOutputStream());
+	java.io.DataInputStream dis = new DataInputStream(new RafInputStream());
+	java.io.DataOutputStream dos = new DataOutputStream(new RafOutputStream());
 
 	public RandomAccessFile (String name, String mode) throws FileNotFoundException {
-		this(new File(name), mode);
+		this(new java.io.File(name), mode);
 	}
 
-	public RandomAccessFile (File file, String mode) throws FileNotFoundException {
+	public RandomAccessFile (java.io.File file, String mode) throws FileNotFoundException {
 		name = file.getCanonicalPath();
 
 		mode = mode.toLowerCase();
@@ -54,7 +54,7 @@ public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */ 
 		}
 		writeable = mode.equals("rw");
 		if (file.exists()) {
-			data = atob(File.LocalStorage.getItem(name));
+			data = atob(java.io.File.LocalStorage.getItem(name));
 			len = data.length();
 		} else if (writeable) {
 			data = "";

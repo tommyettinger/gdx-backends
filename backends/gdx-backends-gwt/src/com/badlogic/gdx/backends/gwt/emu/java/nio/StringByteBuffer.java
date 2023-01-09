@@ -37,7 +37,7 @@ class StringByteBuffer extends BaseByteBuffer {
 		this.limit = limit;
 	}
 
-	public ByteBuffer asReadOnlyBuffer () {
+	public java.nio.ByteBuffer asReadOnlyBuffer () {
 		return this;
 	}
 
@@ -54,12 +54,12 @@ class StringByteBuffer extends BaseByteBuffer {
 	}
 
 	@Override
-	public ByteBuffer compact () {
+	public java.nio.ByteBuffer compact () {
 		return this;
 	}
 
 	@Override
-	public ByteBuffer duplicate () {
+	public java.nio.ByteBuffer duplicate () {
 		return this;
 	}
 
@@ -125,62 +125,62 @@ class StringByteBuffer extends BaseByteBuffer {
 	}
 
 	@Override
-	public ByteBuffer put (byte b) {
+	public java.nio.ByteBuffer put (byte b) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer put (int index, byte b) {
+	public java.nio.ByteBuffer put (int index, byte b) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putDouble (double value) {
+	public java.nio.ByteBuffer putDouble (double value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putDouble (int index, double value) {
+	public java.nio.ByteBuffer putDouble (int index, double value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putFloat (float value) {
+	public java.nio.ByteBuffer putFloat (float value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putFloat (int index, float value) {
+	public java.nio.ByteBuffer putFloat (int index, float value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putInt (int value) {
+	public java.nio.ByteBuffer putInt (int value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putInt (int index, int value) {
+	public java.nio.ByteBuffer putInt (int index, int value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putLong (long value) {
+	public java.nio.ByteBuffer putLong (long value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putLong (int index, long value) {
+	public java.nio.ByteBuffer putLong (int index, long value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putShort (short value) {
+	public java.nio.ByteBuffer putShort (short value) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public ByteBuffer putShort (int index, short value) {
+	public java.nio.ByteBuffer putShort (int index, short value) {
 		throw new UnsupportedOperationException();
 	}
 

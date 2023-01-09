@@ -16,13 +16,13 @@
 
 package com.badlogic.gdx.backends.lwjgl3.audio;
 
+import com.badlogic.gdx.audio.AudioRecorder;
+import com.badlogic.gdx.utils.GdxRuntimeException;
+
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.TargetDataLine;
-
-import com.badlogic.gdx.audio.AudioRecorder;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /** @author mzechner */
 public class JavaSoundAudioRecorder implements AudioRecorder {
@@ -31,8 +31,8 @@ public class JavaSoundAudioRecorder implements AudioRecorder {
 
 	public JavaSoundAudioRecorder (int samplingRate, boolean isMono) {
 		try {
-			AudioFormat format = new AudioFormat(Encoding.PCM_SIGNED, samplingRate, 16, isMono ? 1 : 2, isMono ? 2 : 4,
-				samplingRate, false);
+			AudioFormat format = new AudioFormat(Encoding.PCM_SIGNED, samplingRate, 16, isMono ? 1 : 2, isMono ? 2 : 4, samplingRate,
+				false);
 			line = AudioSystem.getTargetDataLine(format);
 			line.open(format, buffer.length);
 			line.start();

@@ -30,7 +30,7 @@ import java.nio.FloatBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class FloatArrayBuffer extends FloatBuffer {
+abstract class FloatArrayBuffer extends java.nio.FloatBuffer {
 
 	protected final float[] backingArray;
 
@@ -81,7 +81,7 @@ abstract class FloatArrayBuffer extends FloatBuffer {
 		return false;
 	}
 
-	public final ByteOrder order () {
+	public final java.nio.ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

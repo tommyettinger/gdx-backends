@@ -33,7 +33,7 @@ public class Pattern {
 		return new Pattern(regExp);
 	}
 
-	public Matcher matcher (CharSequence input) {
+	public java.util.regex.Matcher matcher (CharSequence input) {
 		return new Matcher(this, input);
 	}
 }

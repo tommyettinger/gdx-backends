@@ -43,10 +43,9 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
-subprojects{
+configure(subprojects - project(":backends:gdx-backend-android")) {
     apply plugin: 'java-library'
     apply plugin: 'com.vanniktech.maven.publish'
-    def projectName = 'gdx-backends'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
@@ -56,13 +55,12 @@ subprojects{
         options.incremental = true
     }
 
-    processResources.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-    processTestResources.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-
     jar {
-        archiveBaseName.set(projectName)
+        duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+
+        archiveBaseName.set("$POM_NAME")
         manifest {
-            attributes 'Implementation-Title': projectName, 'Implementation-Version': archiveVersion
+            attributes 'Implementation-Title': "$POM_NAME", 'Implementation-Version': archiveVersion
         }
     }
 }
@@ -90,6 +88,12 @@ allprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = 'UTF-8'
+    }
+    tasks.withType(org.gradle.jvm.tasks.Jar) {
+        duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    }
+    tasks.withType(ProcessResources) {
+        duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     }
     tasks.withType(Javadoc) {
         options.encoding = 'UTF-8'
