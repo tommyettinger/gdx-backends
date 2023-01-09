@@ -19,6 +19,11 @@ dependencies {
     compileOnly libraries.compileOnly.gwt
 }
 
+configurations.all {
+    // gwt-dev pulls in apache-jsp (Tomcat), but we don't need it and it messes with gretty
+    exclude group: 'org.eclipse.jetty', module: 'apache-jsp'
+}
+
 javadoc {
     exclude "com/badlogic/gdx/backends/gwt/emu/**"
 // see https://stackoverflow.com/questions/52788326/gradle-javadoc-gwt-error-cannot-access-event-in-import-com-google-gwt-user-cli
