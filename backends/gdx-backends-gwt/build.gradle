@@ -15,10 +15,7 @@
  ******************************************************************************/
 
 dependencies {
-    compile libraries.gwt
-    compile("com.google.gwt:gwt-dev:${versions.gwt}"){
-        exclude group: "org.eclipse.jetty", module: "apache-jsp"
-    }
+    api libraries.gwt
 }
 compileJava.exclude("emu")
 javadoc.exclude("emu")

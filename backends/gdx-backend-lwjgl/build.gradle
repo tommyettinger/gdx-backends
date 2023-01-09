@@ -15,7 +15,7 @@
  ******************************************************************************/
 
 dependencies {
-    compile libraries.lwjgl
+    api libraries.lwjgl
 }
 
 

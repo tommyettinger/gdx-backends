@@ -24,6 +24,6 @@ subprojects {
 
 
     dependencies {
-        compile "com.badlogicgames.gdx:gdx:${versions.gdx}"
+        api "com.badlogicgames.gdx:gdx:${versions.gdx}"
     }
 }

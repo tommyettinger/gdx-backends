@@ -2,7 +2,7 @@ apply from: "gradle/dependencies.gradle"
 
 allprojects{
     group = 'com.github.tommyettinger'
-    version = '1.100.1'
+    version = "$VERSION_NAME"
 
     buildscript {
         repositories {
@@ -27,11 +27,13 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.0"
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.22.0'
+        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.3.1"
     }
 }
-apply plugin: 'io.codearte.nexus-staging'
+
+apply plugin: 'java-library'
+apply plugin: 'com.vanniktech.maven.publish'
 
 if (JavaVersion.current().isJava8Compatible()) {
     allprojects {
@@ -42,9 +44,8 @@ if (JavaVersion.current().isJava8Compatible()) {
 }
 
 subprojects{
-    apply plugin: "java-library"
-    apply plugin: 'com.bmuschko.nexus'
-    apply from: rootDir.canonicalPath + '/publish.gradle'
+    apply plugin: 'java-library'
+    apply plugin: 'com.vanniktech.maven.publish'
     def projectName = 'gdx-backends'
 
     sourceCompatibility = 1.8
@@ -55,31 +56,58 @@ subprojects{
         options.incremental = true
     }
 
-//    task sourcesJar(type: Jar, dependsOn: classes) {
-//        archiveClassifier.set('sources')
-//        from sourceSets.main.allSource
-//    }
-//
-//    task javadocJar(type: Jar, dependsOn: javadoc) {
-//        archiveClassifier.set('javadoc')
-//        from javadoc.destinationDir
-//    }
+    processResources.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    processTestResources.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
 
-//    artifacts {
-//        archives sourcesJar
-//        archives javadocJar
-//    }
+    jar {
+        archiveBaseName.set(projectName)
+        manifest {
+            attributes 'Implementation-Title': projectName, 'Implementation-Version': archiveVersion
+        }
+    }
+}
+
+allprojects {
+    buildscript {
+        repositories {
+            google()
+            mavenLocal()
+            mavenCentral()
+            gradlePluginPortal()
+            maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+            maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        }
+    }
+
+    repositories {
+        google()
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+    tasks.withType(Javadoc) {
+        options.encoding = 'UTF-8'
+        options.addBooleanOption('use', true);
+    }
+    tasks.withType(Test) {
+        systemProperty 'file.encoding', 'UTF-8'
+    }
 
     if (JavaVersion.current().isJava8Compatible()) {
         tasks.withType(Javadoc) {
-            // disable the crazy super-strict DocLint tool in Java 8
-            options.addStringOption('Xdoclint:none', '-quiet')
+            options.addStringOption('Xdoclint:none,-missing', '-quiet')
         }
     }
-    
-    jar {
-        manifest {
-            attributes 'Implementation-Title': projectName, 'Implementation-Version': archiveVersion
+
+    if (JavaVersion.current().isJava9Compatible()) {
+        tasks.withType(Javadoc) {
+            options.addStringOption("-release", "8");
         }
     }
 }
