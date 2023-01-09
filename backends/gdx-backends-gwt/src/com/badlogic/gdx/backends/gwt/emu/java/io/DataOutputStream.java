@@ -14,9 +14,14 @@
  * the License.
  */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
 
 import com.google.gwt.corp.compatibility.Numbers;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.io.OutputStream;
 
 public class DataOutputStream extends OutputStream implements DataOutput {
 

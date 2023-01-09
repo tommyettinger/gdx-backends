@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.InvalidMarkException;
 
 /** A buffer is a list of elements of a specific primitive type.
  * <p>

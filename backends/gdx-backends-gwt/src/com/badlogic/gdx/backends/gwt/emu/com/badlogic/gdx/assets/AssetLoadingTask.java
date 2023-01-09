@@ -14,9 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.assets;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.assets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetLoaderParameters;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.SynchronousAssetLoader;
@@ -90,15 +93,17 @@ class AssetLoadingTask implements AsyncTask<Void> {
 	public boolean update () {
 		ticks++;
 
-		// GWT: check if we have a file that was not preloaded and is not done loading yet
-		Preloader preloader = ((GwtApplication) Gdx.app).getPreloader();
+		// GTW: check if we have a file that was not preloaded and is not done loading yet
+		Preloader preloader = ((GwtApplication)Gdx.app).getPreloader();
 		if (preloader.isNotFetchedYet(assetDesc.fileName)) {
 			preloader.preloadSingleFile(assetDesc.fileName);
 			// Loader.finishLoading breaks everything
 			if (ticks > 100000)
 				throw new GdxRuntimeException("File not prefetched, but finishLoading was probably called: " + assetDesc.fileName);
-		} // End of GWT
-		else if (loader instanceof SynchronousAssetLoader)
+		} else
+		// End of GTW
+
+		if (loader instanceof SynchronousAssetLoader)
 			handleSyncLoader();
 		else
 			handleAsyncLoader();

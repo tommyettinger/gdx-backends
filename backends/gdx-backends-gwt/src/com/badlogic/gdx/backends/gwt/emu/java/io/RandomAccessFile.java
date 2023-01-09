@@ -14,16 +14,18 @@
  * the License.
  */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
 
+import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
 import java.nio.channels.FileChannel;
-
-import com.google.gwt.storage.client.Storage;
 
 /** Saves binary data to the local storage; currently using hex encoding. The string is prefixed with "hex:"
  * @author haustein */
-public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */{
-	
+public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */ {
+
 /*
  * public final FileDescriptor getFD() throws IOException { }
  */
@@ -35,7 +37,7 @@ public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */{
 	StringBuilder newData;
 	int pos;
 	int len;
-	
+
 	DataInputStream dis = new DataInputStream(new RafInputStream());
 	DataOutputStream dos = new DataOutputStream(new RafOutputStream());
 
@@ -271,7 +273,9 @@ public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */{
 		dos.writeUTF(str);
 	}
 
-	public final FileChannel getChannel() throws IOException { return null; }
+	public final FileChannel getChannel () throws IOException {
+		return null;
+	}
 
 	class RafInputStream extends InputStream {
 		@Override

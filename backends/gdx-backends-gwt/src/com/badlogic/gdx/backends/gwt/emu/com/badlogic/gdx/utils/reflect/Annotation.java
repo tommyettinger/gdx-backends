@@ -1,4 +1,5 @@
-package com.badlogic.gdx.utils.reflect;
+
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.reflect;
 
 /** Provides information about, and access to, an annotation of a field, class or interface.
  * @author dludwig */
@@ -13,7 +14,7 @@ public final class Annotation {
 	@SuppressWarnings("unchecked")
 	public <T extends java.lang.annotation.Annotation> T getAnnotation (Class<T> annotationType) {
 		if (annotation.annotationType().equals(annotationType)) {
-			return (T) annotation;
+			return (T)annotation;
 		}
 		return null;
 	}

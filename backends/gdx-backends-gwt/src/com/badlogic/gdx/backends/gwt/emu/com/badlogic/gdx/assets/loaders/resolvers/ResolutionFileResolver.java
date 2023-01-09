@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.assets.loaders.resolvers;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.assets.loaders.resolvers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;

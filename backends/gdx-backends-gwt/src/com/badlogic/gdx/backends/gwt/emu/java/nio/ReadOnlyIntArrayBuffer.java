@@ -15,7 +15,10 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.IntBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** IntArrayBuffer, ReadWriteIntArrayBuffer and ReadOnlyIntArrayBuffer compose the implementation of array based int buffers.
  * <p>
@@ -23,7 +26,8 @@ package java.nio;
  * </p>
  * <p>
  * This class is marked final for runtime performance.
- * </p> */
+ * </p>
+ */
 final class ReadOnlyIntArrayBuffer extends IntArrayBuffer {
 
 	static ReadOnlyIntArrayBuffer copy (IntArrayBuffer other, int markOfOther) {

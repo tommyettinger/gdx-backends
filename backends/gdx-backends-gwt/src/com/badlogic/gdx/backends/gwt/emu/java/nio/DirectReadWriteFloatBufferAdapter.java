@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBufferView;
 import com.google.gwt.typedarrays.shared.Float32Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
+
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
 /** This class wraps a byte buffer to be a float buffer.
  * <p>
@@ -29,7 +32,8 @@ import com.google.gwt.typedarrays.shared.TypedArrays;
  * <li>The byte buffer's position and limit are NOT linked with the adapter. The adapter extends Buffer, thus has its own position
  * and limit.</li>
  * </ul>
- * </p> */
+ * </p>
+ */
 final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
@@ -44,7 +48,8 @@ final class DirectReadWriteFloatBufferAdapter extends FloatBuffer implements Has
 		super((byteBuffer.capacity() >> 2));
 		this.byteBuffer = byteBuffer;
 		this.byteBuffer.clear();
-		this.floatArray = TypedArrays.createFloat32Array(byteBuffer.byteArray.buffer(), byteBuffer.byteArray.byteOffset(), capacity);
+		this.floatArray = TypedArrays.createFloat32Array(byteBuffer.byteArray.buffer(), byteBuffer.byteArray.byteOffset(),
+			capacity);
 	}
 
 	// TODO(haustein) This will be slow

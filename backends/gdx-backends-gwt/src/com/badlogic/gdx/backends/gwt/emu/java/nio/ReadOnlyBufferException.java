@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 /** A {@code ReadOnlyBufferException} is thrown when some write operation is called on a read-only buffer.
  * 

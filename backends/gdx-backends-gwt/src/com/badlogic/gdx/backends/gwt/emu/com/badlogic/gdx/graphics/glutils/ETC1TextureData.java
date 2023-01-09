@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.graphics.glutils;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.glutils;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -60,7 +60,7 @@ public class ETC1TextureData implements TextureData {
 	@Override
 	public void consumeCustomData (int target) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

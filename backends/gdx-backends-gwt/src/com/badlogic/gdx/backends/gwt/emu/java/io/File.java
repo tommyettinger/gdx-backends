@@ -14,8 +14,11 @@
  * the License.
  */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
 
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 import com.google.gwt.storage.client.Storage;
@@ -37,7 +40,7 @@ public class File {
 	public static final String pathSeparator = "" + pathSeparatorChar;
 
 	public static final Storage LocalStorage = Storage.getLocalStorageIfSupported();
-	
+
 	File parent;
 	String name;
 	boolean absolute;

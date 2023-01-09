@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2011 See AUTHORS file.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,6 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.charset.StandardCharsets;
 
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
@@ -57,7 +58,7 @@ public class GwtFileHandle extends FileHandle {
 	}
 
 	/** @return The full url to an asset, e.g. http://localhost:8080/assets/data/shotgun-e5f56587d6f025bff049632853ae4ff9.ogg */
-	public String getAssetUrl() {
+	public String getAssetUrl () {
 		return preloader.baseUrl + preloader.assetNames.get(file, file);
 	}
 
@@ -155,11 +156,7 @@ public class GwtFileHandle extends FileHandle {
 	 * @throws GdxRuntimeException if the file handle represents a directory, doesn't exist, or could not be read. */
 	public String readString (String charset) {
 		if (preloader.isText(file)) return preloader.texts.get(file);
-		try {
-			return new String(readBytes(), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			return null;
-		}
+		return new String(readBytes(), StandardCharsets.UTF_8);
 	}
 
 	/** Reads the entire file into a byte array.
@@ -169,8 +166,7 @@ public class GwtFileHandle extends FileHandle {
 		if (length == 0) length = 512;
 		byte[] buffer = new byte[length];
 		int position = 0;
-		InputStream input = read();
-		try {
+		try (InputStream input = read()) {
 			while (true) {
 				int count = input.read(buffer, position, buffer.length - position);
 				if (count == -1) break;
@@ -184,11 +180,6 @@ public class GwtFileHandle extends FileHandle {
 			}
 		} catch (IOException ex) {
 			throw new GdxRuntimeException("Error reading file: " + this, ex);
-		} finally {
-			try {
-				if (input != null) input.close();
-			} catch (IOException ignored) {
-			}
 		}
 		if (position < buffer.length) {
 			// Shrink buffer.
@@ -235,7 +226,7 @@ public class GwtFileHandle extends FileHandle {
 	/** Returns a stream for writing to this file. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public OutputStream write (boolean append) {
 		throw new GdxRuntimeException("Cannot write to files in GWT backend");
 	}
@@ -244,7 +235,7 @@ public class GwtFileHandle extends FileHandle {
 	 * will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void write (InputStream input, boolean append) {
 		throw new GdxRuntimeException("Cannot write to files in GWT backend");
 	}
@@ -252,7 +243,7 @@ public class GwtFileHandle extends FileHandle {
 	/** Returns a writer for writing to this file using the default charset. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public Writer writer (boolean append) {
 		return writer(append, null);
 	}
@@ -261,7 +252,7 @@ public class GwtFileHandle extends FileHandle {
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @param charset May be null to use the default charset.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public Writer writer (boolean append, String charset) {
 		throw new GdxRuntimeException("Cannot write to files in GWT backend");
 	}
@@ -269,7 +260,7 @@ public class GwtFileHandle extends FileHandle {
 	/** Writes the specified string to the file using the default charset. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeString (String string, boolean append) {
 		writeString(string, append, null);
 	}
@@ -278,7 +269,7 @@ public class GwtFileHandle extends FileHandle {
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @param charset May be null to use the default charset.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeString (String string, boolean append, String charset) {
 		throw new GdxRuntimeException("Cannot write to files in GWT backend");
 	}
@@ -286,7 +277,7 @@ public class GwtFileHandle extends FileHandle {
 	/** Writes the specified bytes to the file. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeBytes (byte[] bytes, boolean append) {
 		throw new GdxRuntimeException("Cannot write to files in GWT backend");
 	}
@@ -294,7 +285,7 @@ public class GwtFileHandle extends FileHandle {
 	/** Writes the specified bytes to the file. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeBytes (byte[] bytes, int offset, int length, boolean append) {
 		throw new GdxRuntimeException("Cannot write to files in GWT backend");
 	}
@@ -331,16 +322,16 @@ public class GwtFileHandle extends FileHandle {
 		return preloader.list(file, suffix);
 	}
 
-	/** Returns true if this file is a directory. Always returns false for classpath files. On Android, an {@link FileType#Internal}
-	 * handle to an empty directory will return false. On the desktop, an {@link FileType#Internal} handle to a directory on the
-	 * classpath will return false. */
+	/** Returns true if this file is a directory. Always returns false for classpath files. On Android, an
+	 * {@link FileType#Internal} handle to an empty directory will return false. On the desktop, an {@link FileType#Internal}
+	 * handle to a directory on the classpath will return false. */
 	public boolean isDirectory () {
 		return preloader.isDirectory(file);
 	}
 
 	/** Returns a handle to the child with the specified name.
 	 * @throws GdxRuntimeException if this file handle is a {@link FileType#Classpath} or {@link FileType#Internal} and the child
-	 *        doesn't exist. */
+	 *            doesn't exist. */
 	public FileHandle child (String name) {
 		return new GwtFileHandle(preloader, (file.isEmpty() ? "" : (file + (file.endsWith("/") ? "" : "/"))) + name,
 			FileType.Internal);
@@ -362,8 +353,8 @@ public class GwtFileHandle extends FileHandle {
 		throw new GdxRuntimeException("Cannot mkdirs with an internal file: " + file);
 	}
 
-	/** Returns true if the file exists. On Android, a {@link FileType#Classpath} or {@link FileType#Internal} handle to a directory
-	 * will always return false. */
+	/** Returns true if the file exists. On Android, a {@link FileType#Classpath} or {@link FileType#Internal} handle to a
+	 * directory will always return false. */
 	public boolean exists () {
 		return preloader.contains(file);
 	}
@@ -386,15 +377,15 @@ public class GwtFileHandle extends FileHandle {
 	 * this handle is a directory, then 1) if the destination is a file, GdxRuntimeException is thrown, or 2) if the destination is
 	 * a directory, this directory is copied into it recursively, overwriting existing files, or 3) if the destination doesn't
 	 * exist, {@link #mkdirs()} is called on the destination and this directory is copied into it recursively.
-	 * @throws GdxRuntimeException if the destination file handle is a {@link FileType#Classpath} or {@link FileType#Internal} file,
-	 *        or copying failed. */
+	 * @throws GdxRuntimeException if the destination file handle is a {@link FileType#Classpath} or {@link FileType#Internal}
+	 *            file, or copying failed. */
 	public void copyTo (FileHandle dest) {
 		throw new GdxRuntimeException("Cannot copy to an internal file: " + dest);
 	}
 
 	/** Moves this file to the specified file, overwriting the file if it already exists.
 	 * @throws GdxRuntimeException if the source or destination file handle is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file. */
+	 *            {@link FileType#Internal} file. */
 	public void moveTo (FileHandle dest) {
 		throw new GdxRuntimeException("Cannot move an internal file: " + file);
 	}
@@ -416,7 +407,7 @@ public class GwtFileHandle extends FileHandle {
 		return file;
 	}
 
-	private static String fixSlashes(String path) {
+	private static String fixSlashes (String path) {
 		path = path.replace('\\', '/');
 		if (path.endsWith("/")) {
 			path = path.substring(0, path.length() - 1);

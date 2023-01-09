@@ -15,10 +15,13 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.corp.compatibility.Endianness;
 import com.google.gwt.corp.compatibility.Numbers;
+
+import java.nio.BufferUnderflowException;
+import java.nio.ByteBuffer;
 
 /** HeapByteBuffer, ReadWriteHeapByteBuffer and ReadOnlyHeapByteBuffer compose the implementation of array based byte buffers.
  * <p>
@@ -26,7 +29,8 @@ import com.google.gwt.corp.compatibility.Numbers;
  * </p>
  * <p>
  * All methods are marked final for runtime performance.
- * </p> */
+ * </p>
+ */
 abstract class HeapByteBuffer extends BaseByteBuffer {
 
 	protected final byte[] backingArray;

@@ -14,12 +14,15 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.graphics.glutils;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.glutils;
 
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.glutils.VertexBufferObject;
+import com.badlogic.gdx.graphics.glutils.VertexData;
 
-/** <p>
+/**
+ * <p>
  * A {@link VertexData} implementation based on OpenGL vertex buffer objects.
  * </p>
  * 

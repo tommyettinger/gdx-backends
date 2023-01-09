@@ -14,11 +14,14 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBufferView;
 import com.google.gwt.typedarrays.shared.Int32Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
+
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 
 /** This class wraps a byte buffer to be a int buffer.
  * <p>
@@ -29,7 +32,8 @@ import com.google.gwt.typedarrays.shared.TypedArrays;
  * <li>The byte buffer's position and limit are NOT linked with the adapter. The adapter extends Buffer, thus has its own position
  * and limit.</li>
  * </ul>
- * </p> */
+ * </p>
+ */
 final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArrayBufferView {
 
 	static IntBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
@@ -70,7 +74,8 @@ final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArra
 
 	@Override
 	public IntBuffer duplicate () {
-		DirectReadWriteIntBufferAdapter buf = new DirectReadWriteIntBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.duplicate());
+		DirectReadWriteIntBufferAdapter buf = new DirectReadWriteIntBufferAdapter(
+			(DirectReadWriteByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
 		buf.mark = mark;

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.files;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.files;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -139,13 +139,15 @@ public class FileHandle {
 	}
 
 	/** Attempts to memory map this file in READ_ONLY mode. Android files must not be compressed.
-	 * @throws GdxRuntimeException if this file handle represents a directory, doesn't exist, or could not be read, or memory mapping fails, or is a {@link FileType#Classpath} file. */
+	 * @throws GdxRuntimeException if this file handle represents a directory, doesn't exist, or could not be read, or memory
+	 *            mapping fails, or is a {@link FileType#Classpath} file. */
 	public ByteBuffer map () {
 		throw new GdxRuntimeException("Stub");
 	}
 
 	/** Attempts to memory map this file. Android files must not be compressed.
-	 * @throws GdxRuntimeException if this file handle represents a directory, doesn't exist, or could not be read, or memory mapping fails, or is a {@link FileType#Classpath} file. */
+	 * @throws GdxRuntimeException if this file handle represents a directory, doesn't exist, or could not be read, or memory
+	 *            mapping fails, or is a {@link FileType#Classpath} file. */
 	public ByteBuffer map (FileChannel.MapMode mode) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -153,7 +155,7 @@ public class FileHandle {
 	/** Returns a stream for writing to this file. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public OutputStream write (boolean append) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -171,7 +173,7 @@ public class FileHandle {
 	 * will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void write (InputStream input, boolean append) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -179,7 +181,7 @@ public class FileHandle {
 	/** Returns a writer for writing to this file using the default charset. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public Writer writer (boolean append) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -188,7 +190,7 @@ public class FileHandle {
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @param charset May be null to use the default charset.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public Writer writer (boolean append, String charset) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -196,7 +198,7 @@ public class FileHandle {
 	/** Writes the specified string to the file using the default charset. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeString (String string, boolean append) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -205,7 +207,7 @@ public class FileHandle {
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @param charset May be null to use the default charset.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeString (String string, boolean append, String charset) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -213,7 +215,7 @@ public class FileHandle {
 	/** Writes the specified bytes to the file. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeBytes (byte[] bytes, boolean append) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -221,7 +223,7 @@ public class FileHandle {
 	/** Writes the specified bytes to the file. Parent directories will be created if necessary.
 	 * @param append If false, this file will be overwritten if it exists, otherwise it will be appended.
 	 * @throws GdxRuntimeException if this file handle represents a directory, if it is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file, or if it could not be written. */
+	 *            {@link FileType#Internal} file, or if it could not be written. */
 	public void writeBytes (byte[] bytes, int offset, int length, boolean append) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -258,16 +260,16 @@ public class FileHandle {
 		throw new GdxRuntimeException("Stub");
 	}
 
-	/** Returns true if this file is a directory. Always returns false for classpath files. On Android, an {@link FileType#Internal}
-	 * handle to an empty directory will return false. On the desktop, an {@link FileType#Internal} handle to a directory on the
-	 * classpath will return false. */
+	/** Returns true if this file is a directory. Always returns false for classpath files. On Android, an
+	 * {@link FileType#Internal} handle to an empty directory will return false. On the desktop, an {@link FileType#Internal}
+	 * handle to a directory on the classpath will return false. */
 	public boolean isDirectory () {
 		throw new GdxRuntimeException("Stub");
 	}
 
 	/** Returns a handle to the child with the specified name.
 	 * @throws GdxRuntimeException if this file handle is a {@link FileType#Classpath} or {@link FileType#Internal} and the child
-	 *        doesn't exist. */
+	 *            doesn't exist. */
 	public FileHandle child (String name) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -278,7 +280,7 @@ public class FileHandle {
 
 	/** Returns a handle to the sibling with the specified name.
 	 * @throws GdxRuntimeException if this file handle is a {@link FileType#Classpath} or {@link FileType#Internal} and the sibling
-	 *        doesn't exist, or this file is the root. */
+	 *            doesn't exist, or this file is the root. */
 	public FileHandle sibling (String name) {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -288,8 +290,8 @@ public class FileHandle {
 		throw new GdxRuntimeException("Stub");
 	}
 
-	/** Returns true if the file exists. On Android, a {@link FileType#Classpath} or {@link FileType#Internal} handle to a directory
-	 * will always return false. */
+	/** Returns true if the file exists. On Android, a {@link FileType#Classpath} or {@link FileType#Internal} handle to a
+	 * directory will always return false. */
 	public boolean exists () {
 		throw new GdxRuntimeException("Stub");
 	}
@@ -324,15 +326,15 @@ public class FileHandle {
 	 * this handle is a directory, then 1) if the destination is a file, GdxRuntimeException is thrown, or 2) if the destination is
 	 * a directory, this directory is copied into it recursively, overwriting existing files, or 3) if the destination doesn't
 	 * exist, {@link #mkdirs()} is called on the destination and this directory is copied into it recursively.
-	 * @throws GdxRuntimeException if the destination file handle is a {@link FileType#Classpath} or {@link FileType#Internal} file,
-	 *        or copying failed. */
+	 * @throws GdxRuntimeException if the destination file handle is a {@link FileType#Classpath} or {@link FileType#Internal}
+	 *            file, or copying failed. */
 	public void copyTo (FileHandle dest) {
 		throw new GdxRuntimeException("Stub");
 	}
 
 	/** Moves this file to the specified file, overwriting the file if it already exists.
 	 * @throws GdxRuntimeException if the source or destination file handle is a {@link FileType#Classpath} or
-	 *        {@link FileType#Internal} file. */
+	 *            {@link FileType#Internal} file. */
 	public void moveTo (FileHandle dest) {
 		throw new GdxRuntimeException("Stub");
 	}

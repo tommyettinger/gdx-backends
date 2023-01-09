@@ -1,8 +1,10 @@
 
-package com.badlogic.gdx.graphics;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics;
 
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.graphics.glutils.MipMapGenerator;
 
@@ -12,14 +14,14 @@ import com.badlogic.gdx.graphics.glutils.MipMapGenerator;
  * the Texture will invoke the other methods to find out about the size of the image data, the format, whether mipmaps should be
  * generated and whether the TextureData is able to manage the pixel data if the OpenGL ES context is lost.
  * </p>
- *
+ * 
  * In case the TextureData implementation has the type {@link TextureDataType#Custom}, the implementation has to generate the
  * mipmaps itself if necessary. See {@link MipMapGenerator}.
  * </p>
- *
+ * 
  * Before a call to either {@link #consumePixmap()} or {@link #consumeCustomData(int)}, Texture will bind the OpenGL ES texture.
  * </p>
- *
+ * 
  * Look at {@link FileTextureData} for example implementations of this interface.
  * @author mzechner */
 public interface TextureData {
@@ -41,7 +43,7 @@ public interface TextureData {
 
 	/** Returns the {@link Pixmap} for upload by Texture. A call to {@link #prepare()} must precede a call to this method. Any
 	 * internal data structures created in {@link #prepare()} should be disposed of here.
-	 *
+	 * 
 	 * @return the pixmap. */
 	public Pixmap consumePixmap ();
 

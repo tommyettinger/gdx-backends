@@ -14,9 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.graphics.glutils;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.glutils;
 
-/** <p>
+import com.badlogic.gdx.graphics.glutils.IndexBufferObject;
+
+/**
+ * <p>
  * In IndexBufferObject wraps OpenGL's index buffer functionality to be used in conjunction with VBOs. This class can be
  * seamlessly used with OpenGL ES 1.x and 2.0.
  * </p>

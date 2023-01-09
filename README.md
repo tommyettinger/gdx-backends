@@ -177,7 +177,7 @@ This version fixes some GWT-specific bugs in recently-changed files, like Screen
 
 This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
-### 1.100.2-SNAPSHOT
+### 1.110.0-SNAPSHOT
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
@@ -186,12 +186,13 @@ Checkout the `master` branch, or use the following JitPack dependencies for GWT:
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
 ```
 
-This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
+This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still apply).
 
-## GWT 2.9.0 Support
+## GWT 2.9.0/2.10.0 Support
 
 Most of these versions have been updated to use GWT 2.9.0; this benefits from some changes in users' build.gradle files, 
-but should still work without changes as long as no other GWT versions are in use.
+but should still work without changes as long as no other GWT versions are in use. The master version, which will become
+1.110.0, uses GWT 2.10.0 .
 
 However, upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
 it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
@@ -202,9 +203,9 @@ have to use it everywhere; that's why the backend needs to be changed and not ju
   file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer. This isn't done automatically.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested mostly
-  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.1.12` ;
+  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.1.18` ;
   [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-  `gradle.properties`, so you can change it there to `1.1.12` if you use that project generator.
+  `gradle.properties`, so you can change it there to `1.1.18` if you use that project generator.
 
 
 ## Future work

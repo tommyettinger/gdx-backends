@@ -14,8 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.utils.reflect;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.reflect;
 
+import com.badlogic.gdx.utils.reflect.Annotation;
+import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.badlogic.gwtref.client.Type;
 
 /** Provides information about, and access to, a single field of a class or interface.
@@ -114,8 +116,8 @@ public final class Field {
 		return false;
 	}
 
-	/** Returns an array of {@link Annotation} objects reflecting all annotations declared by this field,
-	 * or an empty array if there are none. Does not include inherited annotations. */
+	/** Returns an array of {@link Annotation} objects reflecting all annotations declared by this field, or an empty array if
+	 * there are none. Does not include inherited annotations. */
 	public Annotation[] getDeclaredAnnotations () {
 		java.lang.annotation.Annotation[] annotations = field.getDeclaredAnnotations();
 		Annotation[] result = new Annotation[annotations.length];
@@ -125,9 +127,8 @@ public final class Field {
 		return result;
 	}
 
-	/** Returns an {@link Annotation} object reflecting the annotation provided, or null of this field doesn't
-	 * have such an annotation. This is a convenience function if the caller knows already which annotation
-	 * type he's looking for. */
+	/** Returns an {@link Annotation} object reflecting the annotation provided, or null of this field doesn't have such an
+	 * annotation. This is a convenience function if the caller knows already which annotation type he's looking for. */
 	public Annotation getDeclaredAnnotation (Class<? extends java.lang.annotation.Annotation> annotationType) {
 		java.lang.annotation.Annotation[] annotations = field.getDeclaredAnnotations();
 		for (java.lang.annotation.Annotation annotation : annotations) {

@@ -14,9 +14,13 @@
  * the License.
  */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
 
 import com.google.gwt.corp.compatibility.Numbers;
+
+import java.io.*;
+import java.io.DataInput;
+import java.io.EOFException;
 
 public class DataInputStream extends FilterInputStream implements DataInput {
 
@@ -146,7 +150,7 @@ public class DataInputStream extends FilterInputStream implements DataInput {
 		// note: This is actually a valid implementation of this method, rendering it quite useless...
 		return 0;
 	}
-	
+
 	@Override
 	public void close () throws IOException {
 		is.close();

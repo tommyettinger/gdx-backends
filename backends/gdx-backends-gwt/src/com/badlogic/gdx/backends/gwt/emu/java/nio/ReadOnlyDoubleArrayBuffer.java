@@ -15,7 +15,10 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.DoubleBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** DoubleArrayBuffer, ReadWriteDoubleArrayBuffer and ReadOnlyDoubleArrayBuffer compose the implementation of array based double
  * buffers.
@@ -24,7 +27,8 @@ package java.nio;
  * </p>
  * <p>
  * This class is marked final for runtime performance.
- * </p> */
+ * </p>
+ */
 final class ReadOnlyDoubleArrayBuffer extends DoubleArrayBuffer {
 
 	static ReadOnlyDoubleArrayBuffer copy (DoubleArrayBuffer other, int markOfOther) {

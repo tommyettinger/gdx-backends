@@ -15,7 +15,10 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.CharBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** CharArrayBuffer, ReadWriteCharArrayBuffer and ReadOnlyCharArrayBuffer compose the implementation of array based char buffers.
  * <p>
@@ -23,7 +26,8 @@ package java.nio;
  * </p>
  * <p>
  * This class is marked final for runtime performance.
- * </p> */
+ * </p>
+ */
 final class ReadOnlyCharArrayBuffer extends CharArrayBuffer {
 
 	static ReadOnlyCharArrayBuffer copy (CharArrayBuffer other, int markOfOther) {

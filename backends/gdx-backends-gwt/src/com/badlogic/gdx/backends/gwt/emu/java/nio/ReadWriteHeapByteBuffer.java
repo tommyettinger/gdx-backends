@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.corp.compatibility.Numbers;
+
+import java.nio.BufferOverflowException;
+import java.nio.ByteBuffer;
+import java.nio.HeapByteBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** HeapByteBuffer, ReadWriteHeapByteBuffer and ReadOnlyHeapByteBuffer compose the implementation of array based byte buffers.
  * <p>
@@ -24,10 +29,11 @@ import com.google.gwt.corp.compatibility.Numbers;
  * </p>
  * <p>
  * This class is marked final for runtime performance.
- * </p> */
-final class ReadWriteHeapByteBuffer extends HeapByteBuffer {
+ * </p>
+ */
+final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 
-	static ReadWriteHeapByteBuffer copy (HeapByteBuffer other, int markOfOther) {
+	static ReadWriteHeapByteBuffer copy (java.nio.HeapByteBuffer other, int markOfOther) {
 		ReadWriteHeapByteBuffer buf = new ReadWriteHeapByteBuffer(other.backingArray, other.capacity(), other.offset);
 		buf.limit = other.limit();
 		buf.position = other.position();

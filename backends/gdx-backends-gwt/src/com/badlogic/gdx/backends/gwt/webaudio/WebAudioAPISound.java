@@ -19,7 +19,6 @@ package com.badlogic.gdx.backends.gwt.webaudio;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.IntMap.Keys;
-import com.badlogic.gdx.utils.Pool;
 import com.google.gwt.core.client.JavaScriptObject;
 
 /** Implementation of the {@link Sound} interface for GWT, using the Web Audio API (
@@ -77,8 +76,7 @@ public class WebAudioAPISound implements Sound {
 	protected long play (float volume, float pitch, float pan, boolean loop) {
 		// if the sound system is not yet unlocked, skip playing the sound.
 		// otherwise, it is played when the user makes his first input
-		if (!WebAudioAPIManager.isSoundUnlocked() && WebAudioAPIManager.isAudioContextLocked(audioContext))
-			return -1;
+		if (!WebAudioAPIManager.isSoundUnlocked() && WebAudioAPIManager.isAudioContextLocked(audioContext)) return -1;
 
 		// Get ourselves a fresh audio graph
 		AudioControlGraph audioControlGraph = audioGraphPool.obtain();

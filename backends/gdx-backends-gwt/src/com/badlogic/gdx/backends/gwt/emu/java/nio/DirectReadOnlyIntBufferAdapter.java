@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBufferView;
 import com.google.gwt.typedarrays.shared.Int32Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
+
+import java.nio.ByteOrder;
+import java.nio.DirectByteBuffer;
+import java.nio.IntBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a byte buffer to be a int buffer.
  * <p>
@@ -29,18 +34,19 @@ import com.google.gwt.typedarrays.shared.TypedArrays;
  * <li>The byte buffer's position and limit are NOT linked with the adapter. The adapter extends Buffer, thus has its own position
  * and limit.</li>
  * </ul>
- * </p> */
+ * </p>
+ */
 final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
-	static IntBuffer wrap (DirectByteBuffer byteBuffer) {
-		return new DirectReadOnlyIntBufferAdapter((DirectByteBuffer)byteBuffer.slice());
+	static IntBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
+		return new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
 	}
 
-	private final DirectByteBuffer byteBuffer;
+	private final java.nio.DirectByteBuffer byteBuffer;
 	private final Int32Array intArray;
 
-	DirectReadOnlyIntBufferAdapter (DirectByteBuffer byteBuffer) {
+	DirectReadOnlyIntBufferAdapter (java.nio.DirectByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 2));
 		this.byteBuffer = byteBuffer;
 		this.byteBuffer.clear();
@@ -63,7 +69,7 @@ final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArray
 
 	@Override
 	public IntBuffer duplicate () {
-		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter((DirectByteBuffer)byteBuffer.duplicate());
+		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
 		buf.mark = mark;
@@ -130,7 +136,7 @@ final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArray
 	public IntBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
-		IntBuffer result = new DirectReadOnlyIntBufferAdapter((DirectByteBuffer)byteBuffer.slice());
+		IntBuffer result = new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
 		byteBuffer.clear();
 		return result;
 	}

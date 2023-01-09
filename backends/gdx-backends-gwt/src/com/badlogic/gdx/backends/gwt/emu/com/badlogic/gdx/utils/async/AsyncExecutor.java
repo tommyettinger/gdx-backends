@@ -14,10 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.utils.async;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.async;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.async.AsyncResult;
+import com.badlogic.gdx.utils.async.AsyncTask;
 
 /** GWT emulation of AsynchExecutor, will call tasks immediately :D
  * @author badlogic */

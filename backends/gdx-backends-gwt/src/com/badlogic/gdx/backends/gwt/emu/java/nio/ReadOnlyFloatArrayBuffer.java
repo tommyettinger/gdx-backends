@@ -15,7 +15,10 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.FloatBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** FloatArrayBuffer, ReadWriteFloatArrayBuffer and ReadOnlyFloatArrayBuffer compose the implementation of array based float
  * buffers.
@@ -24,7 +27,8 @@ package java.nio;
  * </p>
  * <p>
  * This class is marked final for runtime performance.
- * </p> */
+ * </p>
+ */
 final class ReadOnlyFloatArrayBuffer extends FloatArrayBuffer {
 
 	static ReadOnlyFloatArrayBuffer copy (FloatArrayBuffer other, int markOfOther) {

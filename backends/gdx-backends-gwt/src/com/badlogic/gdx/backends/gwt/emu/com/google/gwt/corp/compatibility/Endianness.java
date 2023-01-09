@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-package com.google.gwt.corp.compatibility;
+package com.badlogic.gdx.backends.gwt.emu.com.google.gwt.corp.compatibility;
 
 public enum Endianness {
 	BIG_ENDIAN, LITTLE_ENDIAN

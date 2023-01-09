@@ -8,9 +8,14 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
 
 import com.badlogic.gdx.utils.Utf8Decoder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 public class InputStreamReader extends Reader {
 	private final InputStream in;

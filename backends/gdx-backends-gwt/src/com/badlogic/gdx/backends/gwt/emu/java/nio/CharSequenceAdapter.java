@@ -15,7 +15,13 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.BufferOverflowException;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteOrder;
+import java.nio.CharBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a char sequence to be a char buffer.
  * <p>
@@ -23,7 +29,8 @@ package java.nio;
  * <ul>
  * <li>Char sequence based buffer is always readonly.</li>
  * </ul>
- * </p> */
+ * </p>
+ */
 final class CharSequenceAdapter extends CharBuffer {
 
 	static CharSequenceAdapter copy (CharSequenceAdapter other) {

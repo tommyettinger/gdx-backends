@@ -14,14 +14,11 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.utils.async;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.async;
 
-/**
- * GWT emulation of ThreadUtils, does nothing.
- * @author badlogic
- *
- */
+/** GWT emulation of ThreadUtils, does nothing.
+ * @author badlogic */
 public class ThreadUtils {
-	public static void yield() {
+	public static void yield () {
 	}
 }

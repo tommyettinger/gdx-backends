@@ -15,7 +15,10 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.BufferOverflowException;
+import java.nio.LongBuffer;
 
 /** LongArrayBuffer, ReadWriteLongArrayBuffer and ReadOnlyLongArrayBuffer compose the implementation of array based long buffers.
  * <p>
@@ -23,7 +26,8 @@ package java.nio;
  * </p>
  * <p>
  * This class is marked final for runtime performance.
- * </p> */
+ * </p>
+ */
 final class ReadWriteLongArrayBuffer extends LongArrayBuffer {
 
 	static ReadWriteLongArrayBuffer copy (LongArrayBuffer other, int markOfOther) {

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.google.gwt.corp.compatibility;
+package com.badlogic.gdx.backends.gwt.emu.com.google.gwt.corp.compatibility;
 
 import com.google.gwt.typedarrays.client.Float32ArrayNative;
 import com.google.gwt.typedarrays.client.Float64ArrayNative;
@@ -26,7 +26,7 @@ import com.google.gwt.typedarrays.shared.Int32Array;
 import com.google.gwt.typedarrays.shared.Int8Array;
 
 public final class Numbers {
-	
+
 	public static int floatToIntBits (float f) {
 		wfa.set(0, f);
 		return wia.get(0);

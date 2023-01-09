@@ -15,7 +15,11 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.BufferUnderflowException;
+import java.nio.ByteOrder;
+import java.nio.CharBuffer;
 
 /** CharArrayBuffer, ReadWriteCharArrayBuffer and ReadOnlyCharArrayBuffer compose the implementation of array based char buffers.
  * <p>
@@ -23,7 +27,8 @@ package java.nio;
  * </p>
  * <p>
  * All methods are marked final for runtime performance.
- * </p> */
+ * </p>
+ */
 abstract class CharArrayBuffer extends CharBuffer {
 
 	protected final char[] backingArray;

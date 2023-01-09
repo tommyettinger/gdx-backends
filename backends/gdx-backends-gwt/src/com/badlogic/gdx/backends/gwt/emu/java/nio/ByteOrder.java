@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 //import org.apache.harmony.luni.platform.Platform;
 

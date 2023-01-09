@@ -8,7 +8,7 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package avian;
+package com.badlogic.gdx.backends.gwt.emu.avian;
 
 import java.io.ByteArrayOutputStream;
 

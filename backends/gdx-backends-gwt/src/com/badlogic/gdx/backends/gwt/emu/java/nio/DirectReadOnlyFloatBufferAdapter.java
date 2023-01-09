@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBufferView;
 import com.google.gwt.typedarrays.shared.Float32Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
+
+import java.nio.ByteOrder;
+import java.nio.DirectByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a byte buffer to be a float buffer.
  * <p>
@@ -29,22 +34,24 @@ import com.google.gwt.typedarrays.shared.TypedArrays;
  * <li>The byte buffer's position and limit are NOT linked with the adapter. The adapter extends Buffer, thus has its own position
  * and limit.</li>
  * </ul>
- * </p> */
+ * </p>
+ */
 final class DirectReadOnlyFloatBufferAdapter extends FloatBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
-	static FloatBuffer wrap (DirectByteBuffer byteBuffer) {
-		return new DirectReadOnlyFloatBufferAdapter((DirectByteBuffer)byteBuffer.slice());
+	static FloatBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
+		return new DirectReadOnlyFloatBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
 	}
 
-	private final DirectByteBuffer byteBuffer;
+	private final java.nio.DirectByteBuffer byteBuffer;
 	private final Float32Array floatArray;
 
-	DirectReadOnlyFloatBufferAdapter (DirectByteBuffer byteBuffer) {
+	DirectReadOnlyFloatBufferAdapter (java.nio.DirectByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 2));
 		this.byteBuffer = byteBuffer;
 		this.byteBuffer.clear();
-		this.floatArray = TypedArrays.createFloat32Array(byteBuffer.byteArray.buffer(), byteBuffer.byteArray.byteOffset(), capacity);
+		this.floatArray = TypedArrays.createFloat32Array(byteBuffer.byteArray.buffer(), byteBuffer.byteArray.byteOffset(),
+			capacity);
 	}
 
 	@Override
@@ -63,7 +70,7 @@ final class DirectReadOnlyFloatBufferAdapter extends FloatBuffer implements HasA
 
 	@Override
 	public FloatBuffer duplicate () {
-		DirectReadOnlyFloatBufferAdapter buf = new DirectReadOnlyFloatBufferAdapter((DirectByteBuffer)byteBuffer.duplicate());
+		DirectReadOnlyFloatBufferAdapter buf = new DirectReadOnlyFloatBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
 		buf.mark = mark;
@@ -130,7 +137,7 @@ final class DirectReadOnlyFloatBufferAdapter extends FloatBuffer implements HasA
 	public FloatBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
-		FloatBuffer result = new DirectReadOnlyFloatBufferAdapter((DirectByteBuffer)byteBuffer.slice());
+		FloatBuffer result = new DirectReadOnlyFloatBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
 		byteBuffer.clear();
 		return result;
 	}

@@ -63,8 +63,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /** Implementation of an {@link Application} based on GWT. Clients have to override {@link #getConfig()} and
- * {@link #createApplicationListener()}. Clients can override the default loading screen via
- * {@link #getPreloaderCallback()} and implement any loading screen drawing via GWT widgets.
+ * {@link #createApplicationListener()}. Clients can override the default loading screen via {@link #getPreloaderCallback()} and
+ * implement any loading screen drawing via GWT widgets.
  * @author mzechner */
 public abstract class GwtApplication implements EntryPoint, Application {
 	private ApplicationListener listener;
@@ -77,9 +77,9 @@ public abstract class GwtApplication implements EntryPoint, Application {
 	protected TextArea log = null;
 	private int logLevel = LOG_ERROR;
 	private ApplicationLogger applicationLogger;
-	private Array<Runnable> runnables = new Array<Runnable>();
-	private Array<Runnable> runnablesHelper = new Array<Runnable>();
-	private Array<LifecycleListener> lifecycleListeners = new Array<LifecycleListener>();
+	protected final Array<Runnable> runnables = new Array<Runnable>();
+	protected final Array<Runnable> runnablesHelper = new Array<Runnable>();
+	protected final Array<LifecycleListener> lifecycleListeners = new Array<LifecycleListener>();
 	private int lastWidth;
 	private int lastHeight;
 	Preloader preloader;
@@ -91,23 +91,21 @@ public abstract class GwtApplication implements EntryPoint, Application {
 	/** @return the configuration for the {@link GwtApplication}. */
 	public abstract GwtApplicationConfiguration getConfig ();
 
-	
-	public String getPreloaderBaseURL()
-	{
+	public String getPreloaderBaseURL () {
 		String moduleUrl = GWT.getModuleBaseURL();
 		// The assets directory is stored alongside the module, find the base path without the module name
 		// Total Length - len("html") - len("/")
 		int correctLength = moduleUrl.length() - GWT.getModuleName().length() - 1;
 		return moduleUrl.substring(0, correctLength) + "assets/";
 	}
-	
+
 	@Override
-	public ApplicationListener getApplicationListener() {
+	public ApplicationListener getApplicationListener () {
 		return listener;
 	}
-	
-	public abstract ApplicationListener createApplicationListener();
-	
+
+	public abstract ApplicationListener createApplicationListener ();
+
 	@Override
 	public void onModuleLoad () {
 		GwtApplication.agentInfo = computeAgentInfo();
@@ -115,12 +113,11 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		this.config = getConfig();
 		setApplicationLogger(new GwtApplicationLogger(this.config.log));
 
-
 		if (config.rootPanel != null) {
 			this.root = config.rootPanel;
 		} else {
 			Element element = Document.get().getElementById("embed-" + GWT.getModuleName());
-			int width ;
+			int width;
 			int height;
 
 			if (!config.isFixedSizeApplication()) {
@@ -141,8 +138,8 @@ public abstract class GwtApplication implements EntryPoint, Application {
 
 				if (config.usePhysicalPixels) {
 					double density = GwtGraphics.getNativeScreenDensity();
-					width = (int) (width / density);
-					height = (int) (height / density);
+					width = (int)(width / density);
+					height = (int)(height / density);
 				}
 			}
 
@@ -170,7 +167,7 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		preloadAssets();
 	}
 
-	void preloadAssets() {
+	void preloadAssets () {
 		final PreloaderCallback callback = getPreloaderCallback();
 		preloader = createPreloader();
 		preloader.preload("assets.txt", new PreloaderCallback() {
@@ -184,23 +181,19 @@ public abstract class GwtApplication implements EntryPoint, Application {
 				callback.update(state);
 				if (state.hasEnded()) {
 					getRootPanel().clear();
-					if(loadingListener != null)
-						loadingListener.beforeSetup();
+					if (loadingListener != null) loadingListener.beforeSetup();
 					setupLoop();
 					addEventListeners();
-					if(loadingListener != null)
-						loadingListener.afterSetup();
+					if (loadingListener != null) loadingListener.afterSetup();
 				}
 			}
 		});
 	}
 
-	/**
-	 * Override this method to return a custom widget informing the that their browser lacks support of WebGL.
+	/** Override this method to return a custom widget informing the that their browser lacks support of WebGL.
 	 *
-	 * @return Widget to display when WebGL is not supported.
-	 */
-	public Widget getNoWebGLSupportWidget() {
+	 * @return Widget to display when WebGL is not supported. */
+	public Widget getNoWebGLSupportWidget () {
 		return new Label("Sorry, your browser doesn't seem to support WebGL");
 	}
 
@@ -211,6 +204,7 @@ public abstract class GwtApplication implements EntryPoint, Application {
 			graphics = new GwtGraphics(root, config);
 		} catch (Throwable e) {
 			root.clear();
+			error("GwtApplication", "exception: " + e.getMessage(), e);
 			root.add(getNoWebGLSupportWidget());
 			return;
 		}
@@ -219,13 +213,13 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		Gdx.graphics = graphics;
 		Gdx.gl20 = graphics.getGL20();
 		Gdx.gl = Gdx.gl20;
-		if(config.disableAudio) {
+		if (config.disableAudio) {
 			audio = null;
 		} else {
 			audio = createAudio();
 		}
 		Gdx.audio = audio;
-		Gdx.files = new GwtFiles(preloader);
+		Gdx.files = createFiles();
 		this.input = createInput(graphics.canvas, this.config);
 		Gdx.input = this.input;
 		this.net = new GwtNet(config);
@@ -243,6 +237,10 @@ public abstract class GwtApplication implements EntryPoint, Application {
 			throw new RuntimeException(t);
 		}
 
+		setupMainLoop();
+	}
+
+	protected void setupMainLoop () {
 		AnimationScheduler.get().requestAnimationFrame(new AnimationCallback() {
 			@Override
 			public void execute (double timestamp) {
@@ -257,7 +255,7 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		}, graphics.canvas);
 	}
 
-	void mainLoop() {
+	void mainLoop () {
 		graphics.update();
 		if (Gdx.graphics.getWidth() != lastWidth || Gdx.graphics.getHeight() != lastHeight) {
 			lastWidth = graphics.getWidth();
@@ -275,36 +273,34 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		listener.render();
 		input.reset();
 	}
-	
+
 	public Panel getRootPanel () {
 		return root;
 	}
 
 	long loadStart = TimeUtils.nanoTime();
 
-	public Preloader createPreloader() {
+	public Preloader createPreloader () {
 		return new Preloader(getPreloaderBaseURL());
 	}
 
-	/**
-	 * This procedure creates the preloader panel and returns a preloader callback to update it.
-	 * <br />
-	 * You can override it to construct your own preloader animation. You can adjust the progress bar
-	 * colors to your needs by overriding {@link #adjustMeterPanel(Panel, Style)}.
-	 * <br />
+	/** This procedure creates the preloader panel and returns a preloader callback to update it. <br />
+	 * You can override it to construct your own preloader animation. You can adjust the progress bar colors to your needs by
+	 * overriding {@link #adjustMeterPanel(Panel, Style)}. <br />
 	 * Example to use an own image (width should be around 300px) placed in webapp folder:
+	 * 
 	 * <pre>
-	 *  public PreloaderCallback getPreloaderCallback () {
-	 *    return createPreloaderPanel(GWT.getHostPageBaseURL() + "logo_preload.png");
-	 *  }
+	 * public PreloaderCallback getPreloaderCallback () {
+	 * 	return createPreloaderPanel(GWT.getHostPageBaseURL() + "logo_preload.png");
+	 * }
 	 * </pre>
-	 * @return PreloaderCallback to use for preload()
-	 */
+	 * 
+	 * @return PreloaderCallback to use for preload() */
 	public PreloaderCallback getPreloaderCallback () {
 		return createPreloaderPanel(GWT.getModuleBaseURL() + "logo.png");
 	}
 
-	protected PreloaderCallback createPreloaderPanel(String logoUrl) {
+	protected PreloaderCallback createPreloaderPanel (String logoUrl) {
 		final Panel preloaderPanel = new VerticalPanel();
 		preloaderPanel.setStyleName("gdx-preloader");
 		final Image logo = new Image(logoUrl);
@@ -333,21 +329,20 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		};
 	}
 
-	/**
-	 * called by {@link #createPreloaderPanel(String)} for overriding purpose.
-	 * override this method to adjust the styles of the loading progress bar. Example for changing
-	 * the bars padding and color:
+	/** called by {@link #createPreloaderPanel(String)} for overriding purpose. override this method to adjust the styles of the
+	 * loading progress bar. Example for changing the bars padding and color:
+	 * 
 	 * <pre>
-	 *  meterPanel.setStyleName("gdx-meter");
-	 *  meterPanel.addStyleName("nostripes");
-	 *  Style meterPanelStyle = meterPanel.getElement().getStyle();
-	 *  meterPanelStyle.setProperty("backgroundColor", "#ff0000");
-	 *  meterPanelStyle.setProperty("padding", "0px");
-	 *  meterStyle.setProperty("backgroundColor", "#ffffff");
-	 *  meterStyle.setProperty("backgroundImage", "none");
+	 * meterPanel.setStyleName("gdx-meter");
+	 * meterPanel.addStyleName("nostripes");
+	 * Style meterPanelStyle = meterPanel.getElement().getStyle();
+	 * meterPanelStyle.setProperty("backgroundColor", "#ff0000");
+	 * meterPanelStyle.setProperty("padding", "0px");
+	 * meterStyle.setProperty("backgroundColor", "#ffffff");
+	 * meterStyle.setProperty("backgroundImage", "none");
 	 * </pre>
 	 */
-	protected void adjustMeterPanel(Panel meterPanel, Style meterStyle) {
+	protected void adjustMeterPanel (Panel meterPanel, Style meterStyle) {
 		meterPanel.setStyleName("gdx-meter");
 		meterPanel.addStyleName("red");
 
@@ -372,9 +367,9 @@ public abstract class GwtApplication implements EntryPoint, Application {
 	public Files getFiles () {
 		return Gdx.files;
 	}
-	
+
 	@Override
-	public Net getNet() {
+	public Net getNet () {
 		return Gdx.net;
 	}
 
@@ -424,7 +419,7 @@ public abstract class GwtApplication implements EntryPoint, Application {
 	}
 
 	@Override
-	public int getLogLevel() {
+	public int getLogLevel () {
 		return logLevel;
 	}
 
@@ -448,14 +443,21 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		return 0;
 	}
 
+	public native double usedJSHeapSize () /*-{
+		if ("memory" in $wnd.performance) {
+			return $wnd.performance.memory.usedJSHeapSize;
+		}
+		return 0;
+	}-*/;
+
 	@Override
 	public long getJavaHeap () {
-		return 0;
+		return (long)usedJSHeapSize();
 	}
 
 	@Override
 	public long getNativeHeap () {
-		return 0;
+		return getJavaHeap();
 	}
 
 	@Override
@@ -472,7 +474,7 @@ public abstract class GwtApplication implements EntryPoint, Application {
 	public Clipboard getClipboard () {
 		return clipboard;
 	}
-	
+
 	@Override
 	public void postRunnable (Runnable runnable) {
 		runnables.add(runnable);
@@ -486,23 +488,25 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		return new DefaultGwtAudio();
 	}
 
-	protected GwtInput createInput(CanvasElement canvas, GwtApplicationConfiguration config) {
+	protected Files createFiles () {
+		return new GwtFiles(preloader);
+	}
+
+	protected GwtInput createInput (CanvasElement canvas, GwtApplicationConfiguration config) {
 		return new DefaultGwtInput(canvas, config);
 	}
 
-    /**
-     * @return {@code true} if application runs on a mobile device
-     */
-	public static boolean isMobileDevice() {
-	    // RegEx pattern from detectmobilebrowsers.com (public domain)
-        String pattern = "(android|bb\\d+|meego).+mobile|avantgo|bada\\/|blackberry|blazer|compal|elaine|fennec" +
-                "|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)" +
-                "i|palm( os)?|phone|p(ixi|re)\\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\\.(browser|link)" +
-                "|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk";
-        Pattern p = Pattern.compile(pattern);
-        Matcher m = p.matcher(Window.Navigator.getUserAgent().toLowerCase());
-        return m.matches();
-    }
+	/** @return {@code true} if application runs on a mobile device */
+	public static boolean isMobileDevice () {
+		// RegEx pattern from detectmobilebrowsers.com (public domain)
+		String pattern = "(android|bb\\d+|meego).+mobile|avantgo|bada\\/|blackberry|blazer|compal|elaine|fennec"
+			+ "|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)"
+			+ "i|palm( os)?|phone|p(ixi|re)\\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\\.(browser|link)"
+			+ "|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk";
+		Pattern p = Pattern.compile(pattern);
+		Matcher m = p.matcher(Window.Navigator.getUserAgent().toLowerCase());
+		return m.matches();
+	}
 
 	/** Contains precomputed information on the user-agent. Useful for dealing with browser and OS behavioral differences. Kindly
 	 * borrowed from PlayN */
@@ -572,8 +576,8 @@ public abstract class GwtApplication implements EntryPoint, Application {
 	public Preloader getPreloader () {
 		return preloader;
 	}
-	
-	public CanvasElement getCanvasElement(){
+
+	public CanvasElement getCanvasElement () {
 		return graphics.canvas;
 	}
 
@@ -587,23 +591,23 @@ public abstract class GwtApplication implements EntryPoint, Application {
 
 	@Override
 	public void addLifecycleListener (LifecycleListener listener) {
-		synchronized(lifecycleListeners) {
+		synchronized (lifecycleListeners) {
 			lifecycleListeners.add(listener);
 		}
 	}
 
 	@Override
 	public void removeLifecycleListener (LifecycleListener listener) {
-		synchronized(lifecycleListeners) {
+		synchronized (lifecycleListeners) {
 			lifecycleListeners.removeValue(listener, true);
-		}		
+		}
 	}
-	
-	native static public void consoleLog(String message) /*-{
+
+	native static public void consoleLog (String message) /*-{
 		console.log( "GWT: " + message );
 	}-*/;
-	
-	private native void addEventListeners() /*-{
+
+	private native void addEventListeners () /*-{
 		var self = this;
 
 		var eventName = null;
@@ -637,28 +641,20 @@ public abstract class GwtApplication implements EntryPoint, Application {
 			listener.pause();
 		}
 	}
-	
-	/**
-	 * LoadingListener interface main purpose is to do some things before or after {@link GwtApplication#setupLoop()}
-	 */
-	public interface LoadingListener{
-		/**
-		 * Method called before the setup
-		 */
-		public void beforeSetup();
-		
-		/**
-		 * Method called after the setup
-		 */
-		public void afterSetup();
+
+	/** LoadingListener interface main purpose is to do some things before or after {@link GwtApplication#setupLoop()} */
+	public interface LoadingListener {
+		/** Method called before the setup */
+		public void beforeSetup ();
+
+		/** Method called after the setup */
+		public void afterSetup ();
 	}
 
-	/**
-	 * ResizeListener called when browser window is resized
-	 */
+	/** ResizeListener called when browser window is resized */
 	class ResizeListener implements ResizeHandler {
 		@Override
-		public void onResize(ResizeEvent event) {
+		public void onResize (ResizeEvent event) {
 
 			int width = event.getWidth() - config.padHorizontal;
 			int height = event.getHeight() - config.padVertical;
@@ -677,8 +673,8 @@ public abstract class GwtApplication implements EntryPoint, Application {
 				// we need to convert them
 				if (config.usePhysicalPixels) {
 					double density = GwtGraphics.getNativeScreenDensity();
-					width = (int) (width * density);
-					height = (int) (height * density);
+					width = (int)(width * density);
+					height = (int)(height * density);
 				}
 				graphics.setCanvasSize(width, height);
 

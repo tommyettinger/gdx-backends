@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 /** A <code>BufferUnderflowException</code> is thrown when elements are read from a buffer but there are not enough remaining
  * elements in the buffer.
