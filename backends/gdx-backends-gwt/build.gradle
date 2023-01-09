@@ -28,3 +28,4 @@ javadoc {
 sourceSets.main.java.exclude "**/System.java"
 
 jar.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+sourceSets.main.resources.srcDirs += [ file('res').path ]
