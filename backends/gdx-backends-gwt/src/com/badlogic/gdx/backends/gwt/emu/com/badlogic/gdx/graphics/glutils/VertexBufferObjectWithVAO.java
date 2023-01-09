@@ -1,5 +1,5 @@
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.glutils;
+package com.badlogic.gdx.graphics.glutils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -9,9 +9,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.VertexBufferObject;
-import com.badlogic.gdx.graphics.glutils.VertexData;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.IntArray;
 
@@ -50,7 +47,7 @@ public class VertexBufferObjectWithVAO implements VertexData {
 	 *
 	 * @param isStatic whether the vertex data is static.
 	 * @param numVertices the maximum number of vertices
-	 * @param attributes the {@link VertexAttribute}s. */
+	 * @param attributes the {@link com.badlogic.gdx.graphics.VertexAttribute}s. */
 	public VertexBufferObjectWithVAO (boolean isStatic, int numVertices, VertexAttribute... attributes) {
 		this(isStatic, numVertices, new VertexAttributes(attributes));
 	}

@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.CharBuffer;
-import java.nio.ReadOnlyBufferException;
+package java.nio;
 
 /** CharArrayBuffer, ReadWriteCharArrayBuffer and ReadOnlyCharArrayBuffer compose the implementation of array based char buffers.
  * <p>
@@ -42,15 +39,15 @@ final class ReadOnlyCharArrayBuffer extends CharArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.CharBuffer asReadOnlyBuffer () {
+	public CharBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public java.nio.CharBuffer compact () {
-		throw new java.nio.ReadOnlyBufferException();
+	public CharBuffer compact () {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.CharBuffer duplicate () {
+	public CharBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -59,34 +56,34 @@ final class ReadOnlyCharArrayBuffer extends CharArrayBuffer {
 	}
 
 	protected char[] protectedArray () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public java.nio.CharBuffer put (char c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public CharBuffer put (char c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.CharBuffer put (int index, char c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public CharBuffer put (int index, char c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.CharBuffer put (char[] src, int off, int len) {
-		throw new java.nio.ReadOnlyBufferException();
+	public final CharBuffer put (char[] src, int off, int len) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.CharBuffer put (java.nio.CharBuffer src) {
-		throw new java.nio.ReadOnlyBufferException();
+	public final CharBuffer put (CharBuffer src) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.CharBuffer put (String src, int start, int end) {
+	public CharBuffer put (String src, int start, int end) {
 		if ((start < 0) || (end < 0) || (long)start + (long)end > src.length()) {
 			throw new IndexOutOfBoundsException();
 		}

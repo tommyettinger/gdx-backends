@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.DoubleBuffer;
-import java.nio.ReadOnlyBufferException;
+package java.nio;
 
 /** DoubleArrayBuffer, ReadWriteDoubleArrayBuffer and ReadOnlyDoubleArrayBuffer compose the implementation of array based double
  * buffers.
@@ -43,15 +40,15 @@ final class ReadOnlyDoubleArrayBuffer extends DoubleArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.DoubleBuffer asReadOnlyBuffer () {
+	public DoubleBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public java.nio.DoubleBuffer compact () {
-		throw new java.nio.ReadOnlyBufferException();
+	public DoubleBuffer compact () {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.DoubleBuffer duplicate () {
+	public DoubleBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -60,30 +57,30 @@ final class ReadOnlyDoubleArrayBuffer extends DoubleArrayBuffer {
 	}
 
 	protected double[] protectedArray () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public java.nio.DoubleBuffer put (double c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public DoubleBuffer put (double c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.DoubleBuffer put (int index, double c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public DoubleBuffer put (int index, double c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.DoubleBuffer put (double[] src, int off, int len) {
-		throw new java.nio.ReadOnlyBufferException();
+	public final DoubleBuffer put (double[] src, int off, int len) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.DoubleBuffer put (java.nio.DoubleBuffer buf) {
+	public final DoubleBuffer put (DoubleBuffer buf) {
 		throw new ReadOnlyBufferException();
 	}
 

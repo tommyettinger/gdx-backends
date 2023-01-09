@@ -44,6 +44,8 @@ versions.androidFragment = "1.2.3"
 versions.javaparser = "2.3.0"
 versions.spotless = "6.7.1"
 
+libraries.compileOnly = [:]
+
 libraries.lwjgl = [
         "org.lwjgl.lwjgl:lwjgl:${versions.lwjgl}",
         "com.badlogicgames.jlayer:jlayer:${versions.jlayer}",
@@ -127,9 +129,13 @@ libraries.android = [
 
 libraries.gwt = [
         "com.google.gwt:gwt-user:${versions.gwt}",
-        "com.google.gwt:gwt-dev:${versions.gwt}",
         "com.google.jsinterop:jsinterop-annotations:${versions.jsinteropAnnotations}:sources"
 ]
+
+libraries.compileOnly.gwt = [
+        "com.google.gwt:gwt-dev:${versions.gwt}"
+]
+
 
 libraries.junit = [
         "junit:junit:${versions.junit}"

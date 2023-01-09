@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.IntBuffer;
-import java.nio.ReadOnlyBufferException;
+package java.nio;
 
 /** IntArrayBuffer, ReadWriteIntArrayBuffer and ReadOnlyIntArrayBuffer compose the implementation of array based int buffers.
  * <p>
@@ -42,15 +39,15 @@ final class ReadOnlyIntArrayBuffer extends IntArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.IntBuffer asReadOnlyBuffer () {
+	public IntBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public java.nio.IntBuffer compact () {
+	public IntBuffer compact () {
 		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.IntBuffer duplicate () {
+	public IntBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -70,19 +67,19 @@ final class ReadOnlyIntArrayBuffer extends IntArrayBuffer {
 		return false;
 	}
 
-	public java.nio.IntBuffer put (int c) {
+	public IntBuffer put (int c) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.IntBuffer put (int index, int c) {
+	public IntBuffer put (int index, int c) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.IntBuffer put (java.nio.IntBuffer buf) {
+	public IntBuffer put (IntBuffer buf) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.IntBuffer put (int[] src, int off, int len) {
+	public final IntBuffer put (int[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

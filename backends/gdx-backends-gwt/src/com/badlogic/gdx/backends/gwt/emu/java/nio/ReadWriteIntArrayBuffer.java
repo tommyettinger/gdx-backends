@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferOverflowException;
-import java.nio.IntBuffer;
+package java.nio;
 
 /** IntArrayBuffer, ReadWriteIntArrayBuffer and ReadOnlyIntArrayBuffer compose the implementation of array based int buffers.
  * <p>
@@ -50,11 +47,11 @@ final class ReadWriteIntArrayBuffer extends IntArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.IntBuffer asReadOnlyBuffer () {
+	public IntBuffer asReadOnlyBuffer () {
 		return ReadOnlyIntArrayBuffer.copy(this, mark);
 	}
 
-	public java.nio.IntBuffer compact () {
+	public IntBuffer compact () {
 		System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		position = limit - position;
 		limit = capacity;
@@ -62,7 +59,7 @@ final class ReadWriteIntArrayBuffer extends IntArrayBuffer {
 		return this;
 	}
 
-	public java.nio.IntBuffer duplicate () {
+	public IntBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -82,15 +79,15 @@ final class ReadWriteIntArrayBuffer extends IntArrayBuffer {
 		return true;
 	}
 
-	public java.nio.IntBuffer put (int c) {
+	public IntBuffer put (int c) {
 		if (position == limit) {
-			throw new java.nio.BufferOverflowException();
+			throw new BufferOverflowException();
 		}
 		backingArray[offset + position++] = c;
 		return this;
 	}
 
-	public java.nio.IntBuffer put (int index, int c) {
+	public IntBuffer put (int index, int c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -98,7 +95,7 @@ final class ReadWriteIntArrayBuffer extends IntArrayBuffer {
 		return this;
 	}
 
-	public java.nio.IntBuffer put (int[] src, int off, int len) {
+	public IntBuffer put (int[] src, int off, int len) {
 		int length = src.length;
 		if (off < 0 || len < 0 || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();

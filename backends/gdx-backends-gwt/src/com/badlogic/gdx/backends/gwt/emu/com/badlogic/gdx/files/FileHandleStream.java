@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.files;
+package com.badlogic.gdx.files;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -23,7 +23,6 @@ import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtFileHandle;
-import com.badlogic.gdx.files.FileHandle;
 
 /** A FileHandle intended to be subclassed for the purpose of implementing {@link #read()} and/or {@link #write(boolean)}. Methods
  * that would manipulate the file instead throw UnsupportedOperationException.
@@ -45,11 +44,11 @@ public abstract class FileHandleStream extends GwtFileHandle {
 		return true;
 	}
 
-	public com.badlogic.gdx.files.FileHandle child (String name) {
+	public FileHandle child (String name) {
 		throw new UnsupportedOperationException();
 	}
 
-	public com.badlogic.gdx.files.FileHandle parent () {
+	public FileHandle parent () {
 		throw new UnsupportedOperationException();
 	}
 
@@ -61,7 +60,7 @@ public abstract class FileHandleStream extends GwtFileHandle {
 		throw new UnsupportedOperationException();
 	}
 
-	public com.badlogic.gdx.files.FileHandle[] list () {
+	public FileHandle[] list () {
 		throw new UnsupportedOperationException();
 	}
 
@@ -77,7 +76,7 @@ public abstract class FileHandleStream extends GwtFileHandle {
 		throw new UnsupportedOperationException();
 	}
 
-	public void copyTo (com.badlogic.gdx.files.FileHandle dest) {
+	public void copyTo (FileHandle dest) {
 		throw new UnsupportedOperationException();
 	}
 

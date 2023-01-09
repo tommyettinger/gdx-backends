@@ -15,11 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferUnderflowException;
-import java.nio.ByteOrder;
-import java.nio.DoubleBuffer;
+package java.nio;
 
 /** DoubleArrayBuffer, ReadWriteDoubleArrayBuffer and ReadOnlyDoubleArrayBuffer compose the implementation of array based double
  * buffers.
@@ -30,7 +26,7 @@ import java.nio.DoubleBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class DoubleArrayBuffer extends java.nio.DoubleBuffer {
+abstract class DoubleArrayBuffer extends DoubleBuffer {
 
 	protected final double[] backingArray;
 
@@ -81,7 +77,7 @@ abstract class DoubleArrayBuffer extends java.nio.DoubleBuffer {
 		return false;
 	}
 
-	public final java.nio.ByteOrder order () {
+	public final ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

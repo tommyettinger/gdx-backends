@@ -15,11 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferUnderflowException;
-import java.nio.ByteOrder;
-import java.nio.LongBuffer;
+package java.nio;
 
 /** LongArrayBuffer, ReadWriteLongArrayBuffer and ReadOnlyLongArrayBuffer compose the implementation of array based long buffers.
  * <p>
@@ -29,7 +25,7 @@ import java.nio.LongBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class LongArrayBuffer extends java.nio.LongBuffer {
+abstract class LongArrayBuffer extends LongBuffer {
 
 	protected final long[] backingArray;
 
@@ -80,7 +76,7 @@ abstract class LongArrayBuffer extends java.nio.LongBuffer {
 		return false;
 	}
 
-	public final java.nio.ByteOrder order () {
+	public final ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 import com.google.gwt.corp.compatibility.Numbers;
-
-import java.nio.BufferOverflowException;
-import java.nio.ByteBuffer;
-import java.nio.HeapByteBuffer;
-import java.nio.ReadOnlyBufferException;
 
 /** HeapByteBuffer, ReadWriteHeapByteBuffer and ReadOnlyHeapByteBuffer compose the implementation of array based byte buffers.
  * <p>
@@ -31,9 +26,9 @@ import java.nio.ReadOnlyBufferException;
  * This class is marked final for runtime performance.
  * </p>
  */
-final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
+final class ReadWriteHeapByteBuffer extends HeapByteBuffer {
 
-	static ReadWriteHeapByteBuffer copy (java.nio.HeapByteBuffer other, int markOfOther) {
+	static ReadWriteHeapByteBuffer copy (HeapByteBuffer other, int markOfOther) {
 		ReadWriteHeapByteBuffer buf = new ReadWriteHeapByteBuffer(other.backingArray, other.capacity(), other.offset);
 		buf.limit = other.limit();
 		buf.position = other.position();
@@ -54,11 +49,11 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 		super(backingArray, capacity, arrayOffset);
 	}
 
-	public java.nio.ByteBuffer asReadOnlyBuffer () {
+	public ByteBuffer asReadOnlyBuffer () {
 		return ReadOnlyHeapByteBuffer.copy(this, mark);
 	}
 
-	public java.nio.ByteBuffer compact () {
+	public ByteBuffer compact () {
 		System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		position = limit - position;
 		limit = capacity;
@@ -66,7 +61,7 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 		return this;
 	}
 
-	public java.nio.ByteBuffer duplicate () {
+	public ByteBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -86,15 +81,15 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 		return true;
 	}
 
-	public java.nio.ByteBuffer put (byte b) {
+	public ByteBuffer put (byte b) {
 		if (position == limit) {
-			throw new java.nio.BufferOverflowException();
+			throw new BufferOverflowException();
 		}
 		backingArray[offset + position++] = b;
 		return this;
 	}
 
-	public java.nio.ByteBuffer put (int index, byte b) {
+	public ByteBuffer put (int index, byte b) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -109,12 +104,12 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 	 * 
 	 * @see java.nio.ByteBuffer#put(byte[], int, int)
 	 */
-	public java.nio.ByteBuffer put (byte[] src, int off, int len) {
+	public ByteBuffer put (byte[] src, int off, int len) {
 		if (off < 0 || len < 0 || (long)off + (long)len > src.length) {
 			throw new IndexOutOfBoundsException();
 		}
 		if (len > remaining()) {
-			throw new java.nio.BufferOverflowException();
+			throw new BufferOverflowException();
 		}
 		if (isReadOnly()) {
 			throw new ReadOnlyBufferException();
@@ -124,33 +119,33 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 		return this;
 	}
 
-	public java.nio.ByteBuffer putDouble (double value) {
+	public ByteBuffer putDouble (double value) {
 		return putLong(Numbers.doubleToRawLongBits(value));
 	}
 
-	public java.nio.ByteBuffer putDouble (int index, double value) {
+	public ByteBuffer putDouble (int index, double value) {
 		return putLong(index, Numbers.doubleToRawLongBits(value));
 	}
 
-	public java.nio.ByteBuffer putFloat (float value) {
+	public ByteBuffer putFloat (float value) {
 		return putInt(Numbers.floatToIntBits(value));
 	}
 
-	public java.nio.ByteBuffer putFloat (int index, float value) {
+	public ByteBuffer putFloat (int index, float value) {
 		return putInt(index, Numbers.floatToIntBits(value));
 	}
 
-	public java.nio.ByteBuffer putInt (int value) {
+	public ByteBuffer putInt (int value) {
 		int newPosition = position + 4;
 		if (newPosition > limit) {
-			throw new java.nio.BufferOverflowException();
+			throw new BufferOverflowException();
 		}
 		store(position, value);
 		position = newPosition;
 		return this;
 	}
 
-	public java.nio.ByteBuffer putInt (int index, int value) {
+	public ByteBuffer putInt (int index, int value) {
 		if (index < 0 || (long)index + 4 > limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -158,7 +153,7 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 		return this;
 	}
 
-	public java.nio.ByteBuffer putLong (int index, long value) {
+	public ByteBuffer putLong (int index, long value) {
 		if (index < 0 || (long)index + 8 > limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -166,17 +161,17 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 		return this;
 	}
 
-	public java.nio.ByteBuffer putLong (long value) {
+	public ByteBuffer putLong (long value) {
 		int newPosition = position + 8;
 		if (newPosition > limit) {
-			throw new java.nio.BufferOverflowException();
+			throw new BufferOverflowException();
 		}
 		store(position, value);
 		position = newPosition;
 		return this;
 	}
 
-	public java.nio.ByteBuffer putShort (int index, short value) {
+	public ByteBuffer putShort (int index, short value) {
 		if (index < 0 || (long)index + 2 > limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -184,7 +179,7 @@ final class ReadWriteHeapByteBuffer extends java.nio.HeapByteBuffer {
 		return this;
 	}
 
-	public java.nio.ByteBuffer putShort (short value) {
+	public ByteBuffer putShort (short value) {
 		int newPosition = position + 2;
 		if (newPosition > limit) {
 			throw new BufferOverflowException();

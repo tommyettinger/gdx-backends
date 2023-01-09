@@ -15,11 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferUnderflowException;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
+package java.nio;
 
 /** IntArrayBuffer, ReadWriteIntArrayBuffer and ReadOnlyIntArrayBuffer compose the implementation of array based int buffers.
  * <p>
@@ -29,7 +25,7 @@ import java.nio.IntBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class IntArrayBuffer extends java.nio.IntBuffer {
+abstract class IntArrayBuffer extends IntBuffer {
 
 	protected final int[] backingArray;
 
@@ -80,7 +76,7 @@ abstract class IntArrayBuffer extends java.nio.IntBuffer {
 		return false;
 	}
 
-	public final java.nio.ByteOrder order () {
+	public final ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

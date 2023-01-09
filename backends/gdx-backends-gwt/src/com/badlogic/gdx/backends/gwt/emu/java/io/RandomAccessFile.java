@@ -14,12 +14,8 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
-import java.io.*;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
 import java.nio.channels.FileChannel;
 
 /** Saves binary data to the local storage; currently using hex encoding. The string is prefixed with "hex:"
@@ -38,14 +34,14 @@ public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */ 
 	int pos;
 	int len;
 
-	java.io.DataInputStream dis = new DataInputStream(new RafInputStream());
-	java.io.DataOutputStream dos = new DataOutputStream(new RafOutputStream());
+	DataInputStream dis = new DataInputStream(new RafInputStream());
+	DataOutputStream dos = new DataOutputStream(new RafOutputStream());
 
 	public RandomAccessFile (String name, String mode) throws FileNotFoundException {
-		this(new java.io.File(name), mode);
+		this(new File(name), mode);
 	}
 
-	public RandomAccessFile (java.io.File file, String mode) throws FileNotFoundException {
+	public RandomAccessFile (File file, String mode) throws FileNotFoundException {
 		name = file.getCanonicalPath();
 
 		mode = mode.toLowerCase();
@@ -54,7 +50,7 @@ public class RandomAccessFile /* implements DataOutput, DataInput, Closeable */ 
 		}
 		writeable = mode.equals("rw");
 		if (file.exists()) {
-			data = atob(java.io.File.LocalStorage.getItem(name));
+			data = atob(File.LocalStorage.getItem(name));
 			len = data.length();
 		} else if (writeable) {
 			data = "";

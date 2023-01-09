@@ -14,9 +14,7 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.ByteBuffer;
+package java.nio;
 
 public interface ByteBufferWrapper {
 	ByteBuffer getByteBuffer ();

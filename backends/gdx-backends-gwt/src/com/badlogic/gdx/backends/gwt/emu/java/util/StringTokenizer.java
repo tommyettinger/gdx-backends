@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.util;
-
-import java.util.Enumeration;
-import java.util.NoSuchElementException;
+package java.util;
 
 /** Breaks a string into tokens; new code should probably use {@link String#split}.
  *

@@ -1,14 +1,12 @@
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics;
+package com.badlogic.gdx.graphics;
 
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.FileTextureData;
 import com.badlogic.gdx.graphics.glutils.MipMapGenerator;
 
-/** Used by a {@link Texture} to load the pixel data. A TextureData can either return a {@link com.badlogic.gdx.graphics.Pixmap} or upload the pixel data
+/** Used by a {@link Texture} to load the pixel data. A TextureData can either return a {@link Pixmap} or upload the pixel data
  * itself. It signals it's type via {@link #getType()} to the Texture that's using it. The Texture will then either invoke
  * {@link #consumePixmap()} or {@link #consumeCustomData(int)}. These are the first methods to be called by Texture. After that
  * the Texture will invoke the other methods to find out about the size of the image data, the format, whether mipmaps should be
@@ -41,11 +39,11 @@ public interface TextureData {
 	 * called from a non OpenGL thread and should thus not interact with OpenGL. */
 	public void prepare ();
 
-	/** Returns the {@link com.badlogic.gdx.graphics.Pixmap} for upload by Texture. A call to {@link #prepare()} must precede a call to this method. Any
+	/** Returns the {@link Pixmap} for upload by Texture. A call to {@link #prepare()} must precede a call to this method. Any
 	 * internal data structures created in {@link #prepare()} should be disposed of here.
 	 * 
 	 * @return the pixmap. */
-	public com.badlogic.gdx.graphics.Pixmap consumePixmap ();
+	public Pixmap consumePixmap ();
 
 	/** @return whether the caller of {@link #consumePixmap()} should dispose the Pixmap returned by {@link #consumePixmap()} */
 	public boolean disposePixmap ();

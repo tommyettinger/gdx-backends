@@ -16,17 +16,15 @@
 
 dependencies {
     api libraries.gwt
+    compileOnly libraries.compileOnly.gwt
 }
 
-apply plugin: 'idea'
-idea.module.excludeDirs += [file("src/com/badlogic/gdx/backends/gwt/emu/")]
-[compileJava, compileTestJava, javadoc]*.exclude("com/badlogic/gdx/backends/gwt")
+javadoc {
+    exclude "com/badlogic/gdx/backends/gwt/emu/**"
+// see https://stackoverflow.com/questions/52788326/gradle-javadoc-gwt-error-cannot-access-event-in-import-com-google-gwt-user-cli
+    options.addStringOption("sourcepath", "src/")
+}
 
 sourceSets.main.java.exclude "**/System.java"
-sourceSets.main.resources.srcDirs += [ file('res').path ]
 
-// see https://stackoverflow.com/questions/52788326/gradle-javadoc-gwt-error-cannot-access-event-in-import-com-google-gwt-user-cli
-javadoc {
-    options.addStringOption("sourcepath", "")
-}
 jar.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)

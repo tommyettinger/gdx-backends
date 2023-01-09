@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.*;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.DoubleBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.nio.LongBuffer;
-import java.nio.ShortBuffer;
+package java.nio;
 
 /** Serves as the root of other byte buffer impl classes, implements common methods that can be shared by child classes. */
-abstract class BaseByteBuffer extends java.nio.ByteBuffer {
+abstract class BaseByteBuffer extends ByteBuffer {
 
 	protected BaseByteBuffer (int capacity) {
 		super(capacity);
@@ -70,7 +61,7 @@ abstract class BaseByteBuffer extends java.nio.ByteBuffer {
 		return (char)getShort(index);
 	}
 
-	public final java.nio.ByteBuffer putChar (char value) {
+	public final ByteBuffer putChar (char value) {
 		return putShort((short)value);
 	}
 

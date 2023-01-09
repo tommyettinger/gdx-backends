@@ -14,11 +14,8 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 import com.google.gwt.storage.client.Storage;

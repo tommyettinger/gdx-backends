@@ -8,9 +8,7 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.security;
-
-import java.security.Permission;
+package java.security;
 
 public abstract class PermissionCollection {
 	public abstract void add (Permission p);

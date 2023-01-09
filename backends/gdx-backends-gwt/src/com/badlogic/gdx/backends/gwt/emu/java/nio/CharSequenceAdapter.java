@@ -15,13 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferOverflowException;
-import java.nio.BufferUnderflowException;
-import java.nio.ByteOrder;
-import java.nio.CharBuffer;
-import java.nio.ReadOnlyBufferException;
+package java.nio;
 
 /** This class wraps a char sequence to be a char buffer.
  * <p>
@@ -31,7 +25,7 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class CharSequenceAdapter extends java.nio.CharBuffer {
+final class CharSequenceAdapter extends CharBuffer {
 
 	static CharSequenceAdapter copy (CharSequenceAdapter other) {
 		CharSequenceAdapter buf = new CharSequenceAdapter(other.sequence);
@@ -48,15 +42,15 @@ final class CharSequenceAdapter extends java.nio.CharBuffer {
 		sequence = chseq;
 	}
 
-	public java.nio.CharBuffer asReadOnlyBuffer () {
+	public CharBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public java.nio.CharBuffer compact () {
+	public CharBuffer compact () {
 		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.CharBuffer duplicate () {
+	public CharBuffer duplicate () {
 		return copy(this);
 	}
 
@@ -74,7 +68,7 @@ final class CharSequenceAdapter extends java.nio.CharBuffer {
 		return sequence.charAt(index);
 	}
 
-	public final java.nio.CharBuffer get (char[] dest, int off, int len) {
+	public final CharBuffer get (char[] dest, int off, int len) {
 		int length = dest.length;
 		if ((off < 0) || (len < 0) || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();
@@ -96,7 +90,7 @@ final class CharSequenceAdapter extends java.nio.CharBuffer {
 		return true;
 	}
 
-	public java.nio.ByteOrder order () {
+	public ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 
@@ -112,15 +106,15 @@ final class CharSequenceAdapter extends java.nio.CharBuffer {
 		return false;
 	}
 
-	public java.nio.CharBuffer put (char c) {
+	public CharBuffer put (char c) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.CharBuffer put (int index, char c) {
+	public CharBuffer put (int index, char c) {
 		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.CharBuffer put (char[] src, int off, int len) {
+	public final CharBuffer put (char[] src, int off, int len) {
 		if ((off < 0) || (len < 0) || (long)off + (long)len > src.length) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -132,7 +126,7 @@ final class CharSequenceAdapter extends java.nio.CharBuffer {
 		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.CharBuffer put (String src, int start, int end) {
+	public CharBuffer put (String src, int start, int end) {
 		if ((start < 0) || (end < 0) || (long)start + (long)end > src.length()) {
 			throw new IndexOutOfBoundsException();
 		}

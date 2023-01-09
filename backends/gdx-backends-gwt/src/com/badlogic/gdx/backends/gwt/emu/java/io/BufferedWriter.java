@@ -8,17 +8,14 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
-import java.io.IOException;
-import java.io.Writer;
-
-public class BufferedWriter extends java.io.Writer {
-	private final java.io.Writer out;
+public class BufferedWriter extends Writer {
+	private final Writer out;
 	private final char[] buffer;
 	private int position;
 
-	public BufferedWriter (java.io.Writer out, int size) {
+	public BufferedWriter (Writer out, int size) {
 		this.out = out;
 		this.buffer = new char[size];
 	}

@@ -14,13 +14,11 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.assets.loaders;
+package com.badlogic.gdx.assets.loaders;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;

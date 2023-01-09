@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferOverflowException;
-import java.nio.ShortBuffer;
+package java.nio;
 
 /** ShortArrayBuffer, ReadWriteShortArrayBuffer and ReadOnlyShortArrayBuffer compose the implementation of array based short
  * buffers.
@@ -51,11 +48,11 @@ final class ReadWriteShortArrayBuffer extends ShortArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.ShortBuffer asReadOnlyBuffer () {
+	public ShortBuffer asReadOnlyBuffer () {
 		return ReadOnlyShortArrayBuffer.copy(this, mark);
 	}
 
-	public java.nio.ShortBuffer compact () {
+	public ShortBuffer compact () {
 		System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		position = limit - position;
 		limit = capacity;
@@ -63,7 +60,7 @@ final class ReadWriteShortArrayBuffer extends ShortArrayBuffer {
 		return this;
 	}
 
-	public java.nio.ShortBuffer duplicate () {
+	public ShortBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -83,15 +80,15 @@ final class ReadWriteShortArrayBuffer extends ShortArrayBuffer {
 		return true;
 	}
 
-	public java.nio.ShortBuffer put (short c) {
+	public ShortBuffer put (short c) {
 		if (position == limit) {
-			throw new java.nio.BufferOverflowException();
+			throw new BufferOverflowException();
 		}
 		backingArray[offset + position++] = c;
 		return this;
 	}
 
-	public java.nio.ShortBuffer put (int index, short c) {
+	public ShortBuffer put (int index, short c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -99,7 +96,7 @@ final class ReadWriteShortArrayBuffer extends ShortArrayBuffer {
 		return this;
 	}
 
-	public java.nio.ShortBuffer put (short[] src, int off, int len) {
+	public ShortBuffer put (short[] src, int off, int len) {
 		int length = src.length;
 		if (off < 0 || len < 0 || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();

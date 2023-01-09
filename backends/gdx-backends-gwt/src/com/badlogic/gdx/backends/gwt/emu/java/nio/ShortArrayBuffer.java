@@ -15,11 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferUnderflowException;
-import java.nio.ByteOrder;
-import java.nio.ShortBuffer;
+package java.nio;
 
 /** ShortArrayBuffer, ReadWriteShortArrayBuffer and ReadOnlyShortArrayBuffer compose the implementation of array based short
  * buffers.
@@ -30,7 +26,7 @@ import java.nio.ShortBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class ShortArrayBuffer extends java.nio.ShortBuffer {
+abstract class ShortArrayBuffer extends ShortBuffer {
 
 	protected final short[] backingArray;
 
@@ -81,7 +77,7 @@ abstract class ShortArrayBuffer extends java.nio.ShortBuffer {
 		return false;
 	}
 
-	public final java.nio.ByteOrder order () {
+	public final ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

@@ -14,16 +14,11 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBufferView;
 import com.google.gwt.typedarrays.shared.Int32Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
-
-import java.nio.ByteOrder;
-import java.nio.DirectByteBuffer;
-import java.nio.IntBuffer;
-import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a byte buffer to be a int buffer.
  * <p>
@@ -36,17 +31,17 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class DirectReadOnlyIntBufferAdapter extends java.nio.IntBuffer implements HasArrayBufferView {
+final class DirectReadOnlyIntBufferAdapter extends IntBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
-	static java.nio.IntBuffer wrap (java.nio.DirectByteBuffer byteBuffer) {
-		return new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
+	static IntBuffer wrap (DirectByteBuffer byteBuffer) {
+		return new DirectReadOnlyIntBufferAdapter((DirectByteBuffer)byteBuffer.slice());
 	}
 
-	private final java.nio.DirectByteBuffer byteBuffer;
+	private final DirectByteBuffer byteBuffer;
 	private final Int32Array intArray;
 
-	DirectReadOnlyIntBufferAdapter (java.nio.DirectByteBuffer byteBuffer) {
+	DirectReadOnlyIntBufferAdapter (DirectByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 2));
 		this.byteBuffer = byteBuffer;
 		this.byteBuffer.clear();
@@ -54,7 +49,7 @@ final class DirectReadOnlyIntBufferAdapter extends java.nio.IntBuffer implements
 	}
 
 	@Override
-	public java.nio.IntBuffer asReadOnlyBuffer () {
+	public IntBuffer asReadOnlyBuffer () {
 		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -63,13 +58,13 @@ final class DirectReadOnlyIntBufferAdapter extends java.nio.IntBuffer implements
 	}
 
 	@Override
-	public java.nio.IntBuffer compact () {
-		throw new java.nio.ReadOnlyBufferException();
+	public IntBuffer compact () {
+		throw new ReadOnlyBufferException();
 	}
 
 	@Override
-	public java.nio.IntBuffer duplicate () {
-		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.duplicate());
+	public IntBuffer duplicate () {
+		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter((DirectByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
 		buf.mark = mark;
@@ -123,20 +118,20 @@ final class DirectReadOnlyIntBufferAdapter extends java.nio.IntBuffer implements
 	}
 
 	@Override
-	public java.nio.IntBuffer put (int c) {
-		throw new java.nio.ReadOnlyBufferException();
-	}
-
-	@Override
-	public java.nio.IntBuffer put (int index, int c) {
+	public IntBuffer put (int c) {
 		throw new ReadOnlyBufferException();
 	}
 
 	@Override
-	public java.nio.IntBuffer slice () {
+	public IntBuffer put (int index, int c) {
+		throw new ReadOnlyBufferException();
+	}
+
+	@Override
+	public IntBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
-		IntBuffer result = new DirectReadOnlyIntBufferAdapter((java.nio.DirectByteBuffer)byteBuffer.slice());
+		IntBuffer result = new DirectReadOnlyIntBufferAdapter((DirectByteBuffer)byteBuffer.slice());
 		byteBuffer.clear();
 		return result;
 	}

@@ -14,9 +14,7 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
-
-import java.io.File;
+package java.io;
 
 public interface FilenameFilter {
 

@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 //import org.apache.harmony.nio.internal.DirectBuffer;
 //import org.apache.harmony.luni.platform.PlatformAddress;
-
-import java.nio.BufferOverflowException;
-import java.nio.BufferUnderflowException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.CharBuffer;
-import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a byte buffer to be a char buffer.
  * <p>
@@ -37,13 +30,13 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements DirectBuffer {
+final class CharToByteBufferAdapter extends CharBuffer { // implements DirectBuffer {
 
-	static java.nio.CharBuffer wrap (java.nio.ByteBuffer byteBuffer) {
+	static CharBuffer wrap (ByteBuffer byteBuffer) {
 		return new CharToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final java.nio.ByteBuffer byteBuffer;
+	private final ByteBuffer byteBuffer;
 
 	CharToByteBufferAdapter (ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 1));
@@ -100,7 +93,7 @@ final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements 
 // }
 
 	@Override
-	public java.nio.CharBuffer asReadOnlyBuffer () {
+	public CharBuffer asReadOnlyBuffer () {
 		CharToByteBufferAdapter buf = new CharToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -109,7 +102,7 @@ final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements 
 	}
 
 	@Override
-	public java.nio.CharBuffer compact () {
+	public CharBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -124,7 +117,7 @@ final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements 
 	}
 
 	@Override
-	public java.nio.CharBuffer duplicate () {
+	public CharBuffer duplicate () {
 		CharToByteBufferAdapter buf = new CharToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -179,7 +172,7 @@ final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements 
 	}
 
 	@Override
-	public java.nio.CharBuffer put (char c) {
+	public CharBuffer put (char c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -188,7 +181,7 @@ final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements 
 	}
 
 	@Override
-	public java.nio.CharBuffer put (int index, char c) {
+	public CharBuffer put (int index, char c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -197,10 +190,10 @@ final class CharToByteBufferAdapter extends java.nio.CharBuffer { // implements 
 	}
 
 	@Override
-	public java.nio.CharBuffer slice () {
+	public CharBuffer slice () {
 		byteBuffer.limit(limit << 1);
 		byteBuffer.position(position << 1);
-		java.nio.CharBuffer result = new CharToByteBufferAdapter(byteBuffer.slice());
+		CharBuffer result = new CharToByteBufferAdapter(byteBuffer.slice());
 		byteBuffer.clear();
 		return result;
 	}

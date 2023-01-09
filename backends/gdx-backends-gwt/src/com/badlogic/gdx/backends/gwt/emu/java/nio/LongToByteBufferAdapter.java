@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 //import org.apache.harmony.nio.internal.DirectBuffer;
 //import org.apache.harmony.luni.platform.PlatformAddress;
-
-import java.nio.BufferOverflowException;
-import java.nio.BufferUnderflowException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.LongBuffer;
-import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a byte buffer to be a long buffer.
  * <p>
@@ -37,13 +30,13 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class LongToByteBufferAdapter extends java.nio.LongBuffer {// implements DirectBuffer {
+final class LongToByteBufferAdapter extends LongBuffer {// implements DirectBuffer {
 
-	static java.nio.LongBuffer wrap (java.nio.ByteBuffer byteBuffer) {
+	static LongBuffer wrap (ByteBuffer byteBuffer) {
 		return new LongToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final java.nio.ByteBuffer byteBuffer;
+	private final ByteBuffer byteBuffer;
 
 	LongToByteBufferAdapter (ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 3));
@@ -100,7 +93,7 @@ final class LongToByteBufferAdapter extends java.nio.LongBuffer {// implements D
 // }
 
 	@Override
-	public java.nio.LongBuffer asReadOnlyBuffer () {
+	public LongBuffer asReadOnlyBuffer () {
 		LongToByteBufferAdapter buf = new LongToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -109,7 +102,7 @@ final class LongToByteBufferAdapter extends java.nio.LongBuffer {// implements D
 	}
 
 	@Override
-	public java.nio.LongBuffer compact () {
+	public LongBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -124,7 +117,7 @@ final class LongToByteBufferAdapter extends java.nio.LongBuffer {// implements D
 	}
 
 	@Override
-	public java.nio.LongBuffer duplicate () {
+	public LongBuffer duplicate () {
 		LongToByteBufferAdapter buf = new LongToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -179,7 +172,7 @@ final class LongToByteBufferAdapter extends java.nio.LongBuffer {// implements D
 	}
 
 	@Override
-	public java.nio.LongBuffer put (long c) {
+	public LongBuffer put (long c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -188,7 +181,7 @@ final class LongToByteBufferAdapter extends java.nio.LongBuffer {// implements D
 	}
 
 	@Override
-	public java.nio.LongBuffer put (int index, long c) {
+	public LongBuffer put (int index, long c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -197,7 +190,7 @@ final class LongToByteBufferAdapter extends java.nio.LongBuffer {// implements D
 	}
 
 	@Override
-	public java.nio.LongBuffer slice () {
+	public LongBuffer slice () {
 		byteBuffer.limit(limit << 3);
 		byteBuffer.position(position << 3);
 		LongBuffer result = new LongToByteBufferAdapter(byteBuffer.slice());

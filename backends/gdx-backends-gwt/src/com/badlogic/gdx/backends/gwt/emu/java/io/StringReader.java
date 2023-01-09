@@ -8,10 +8,7 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
-
-import java.io.IOException;
-import java.io.Reader;
+package java.io;
 
 public class StringReader extends Reader {
 	private final String in;

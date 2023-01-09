@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.LongBuffer;
-import java.nio.ReadOnlyBufferException;
+package java.nio;
 
 /** LongArrayBuffer, ReadWriteLongArrayBuffer and ReadOnlyLongArrayBuffer compose the implementation of array based long buffers.
  * <p>
@@ -42,15 +39,15 @@ final class ReadOnlyLongArrayBuffer extends LongArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.LongBuffer asReadOnlyBuffer () {
+	public LongBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public java.nio.LongBuffer compact () {
-		throw new java.nio.ReadOnlyBufferException();
+	public LongBuffer compact () {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.LongBuffer duplicate () {
+	public LongBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -59,30 +56,30 @@ final class ReadOnlyLongArrayBuffer extends LongArrayBuffer {
 	}
 
 	protected long[] protectedArray () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public java.nio.LongBuffer put (long c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public LongBuffer put (long c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.LongBuffer put (int index, long c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public LongBuffer put (int index, long c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.LongBuffer put (java.nio.LongBuffer buf) {
-		throw new java.nio.ReadOnlyBufferException();
+	public LongBuffer put (LongBuffer buf) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.LongBuffer put (long[] src, int off, int len) {
+	public final LongBuffer put (long[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

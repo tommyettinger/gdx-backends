@@ -8,18 +8,15 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
-import java.io.IOException;
-import java.io.Reader;
-
-public class BufferedReader extends java.io.Reader {
-	private final java.io.Reader in;
+public class BufferedReader extends Reader {
+	private final Reader in;
 	private final char[] buffer;
 	private int position;
 	private int limit;
 
-	public BufferedReader (java.io.Reader in, int bufferSize) {
+	public BufferedReader (Reader in, int bufferSize) {
 		this.in = in;
 		this.buffer = new char[bufferSize];
 	}

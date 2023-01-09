@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferOverflowException;
-import java.nio.CharBuffer;
+package java.nio;
 
 /** CharArrayBuffer, ReadWriteCharArrayBuffer and ReadOnlyCharArrayBuffer compose the implementation of array based char buffers.
  * <p>
@@ -50,11 +47,11 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.CharBuffer asReadOnlyBuffer () {
+	public CharBuffer asReadOnlyBuffer () {
 		return ReadOnlyCharArrayBuffer.copy(this, mark);
 	}
 
-	public java.nio.CharBuffer compact () {
+	public CharBuffer compact () {
 		System.arraycopy(backingArray, position + offset, backingArray, offset, remaining());
 		position = limit - position;
 		limit = capacity;
@@ -62,7 +59,7 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		return this;
 	}
 
-	public java.nio.CharBuffer duplicate () {
+	public CharBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -82,15 +79,15 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		return true;
 	}
 
-	public java.nio.CharBuffer put (char c) {
+	public CharBuffer put (char c) {
 		if (position == limit) {
-			throw new java.nio.BufferOverflowException();
+			throw new BufferOverflowException();
 		}
 		backingArray[offset + position++] = c;
 		return this;
 	}
 
-	public java.nio.CharBuffer put (int index, char c) {
+	public CharBuffer put (int index, char c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -98,7 +95,7 @@ final class ReadWriteCharArrayBuffer extends CharArrayBuffer {
 		return this;
 	}
 
-	public java.nio.CharBuffer put (char[] src, int off, int len) {
+	public CharBuffer put (char[] src, int off, int len) {
 		int length = src.length;
 		if (off < 0 || len < 0 || (long)len + (long)off > length) {
 			throw new IndexOutOfBoundsException();

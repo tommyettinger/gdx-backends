@@ -15,11 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferUnderflowException;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+package java.nio;
 
 /** FloatArrayBuffer, ReadWriteFloatArrayBuffer and ReadOnlyFloatArrayBuffer compose the implementation of array based float
  * buffers.
@@ -30,7 +26,7 @@ import java.nio.FloatBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class FloatArrayBuffer extends java.nio.FloatBuffer {
+abstract class FloatArrayBuffer extends FloatBuffer {
 
 	protected final float[] backingArray;
 
@@ -81,7 +77,7 @@ abstract class FloatArrayBuffer extends java.nio.FloatBuffer {
 		return false;
 	}
 
-	public final java.nio.ByteOrder order () {
+	public final ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

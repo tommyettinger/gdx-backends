@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.ReadOnlyBufferException;
-import java.nio.ShortBuffer;
+package java.nio;
 
 /** ShortArrayBuffer, ReadWriteShortArrayBuffer and ReadOnlyShortArrayBuffer compose the implementation of array based short
  * buffers.
@@ -43,15 +40,15 @@ final class ReadOnlyShortArrayBuffer extends ShortArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.ShortBuffer asReadOnlyBuffer () {
+	public ShortBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public java.nio.ShortBuffer compact () {
-		throw new java.nio.ReadOnlyBufferException();
+	public ShortBuffer compact () {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.ShortBuffer duplicate () {
+	public ShortBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -60,30 +57,30 @@ final class ReadOnlyShortArrayBuffer extends ShortArrayBuffer {
 	}
 
 	protected short[] protectedArray () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public java.nio.ShortBuffer put (java.nio.ShortBuffer buf) {
-		throw new java.nio.ReadOnlyBufferException();
+	public ShortBuffer put (ShortBuffer buf) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.ShortBuffer put (short c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public ShortBuffer put (short c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.ShortBuffer put (int index, short c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public ShortBuffer put (int index, short c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.ShortBuffer put (short[] src, int off, int len) {
+	public final ShortBuffer put (short[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

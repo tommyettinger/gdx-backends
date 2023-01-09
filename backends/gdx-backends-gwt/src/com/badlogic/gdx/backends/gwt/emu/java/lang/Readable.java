@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.java.lang;
+package java.lang;
 
 import java.io.IOException;
 import java.nio.CharBuffer;

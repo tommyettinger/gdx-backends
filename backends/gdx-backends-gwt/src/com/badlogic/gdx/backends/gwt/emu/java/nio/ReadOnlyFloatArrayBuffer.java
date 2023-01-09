@@ -15,10 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.FloatBuffer;
-import java.nio.ReadOnlyBufferException;
+package java.nio;
 
 /** FloatArrayBuffer, ReadWriteFloatArrayBuffer and ReadOnlyFloatArrayBuffer compose the implementation of array based float
  * buffers.
@@ -43,15 +40,15 @@ final class ReadOnlyFloatArrayBuffer extends FloatArrayBuffer {
 		super(capacity, backingArray, arrayOffset);
 	}
 
-	public java.nio.FloatBuffer asReadOnlyBuffer () {
+	public FloatBuffer asReadOnlyBuffer () {
 		return duplicate();
 	}
 
-	public java.nio.FloatBuffer compact () {
-		throw new java.nio.ReadOnlyBufferException();
+	public FloatBuffer compact () {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.FloatBuffer duplicate () {
+	public FloatBuffer duplicate () {
 		return copy(this, mark);
 	}
 
@@ -60,30 +57,30 @@ final class ReadOnlyFloatArrayBuffer extends FloatArrayBuffer {
 	}
 
 	protected float[] protectedArray () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected int protectedArrayOffset () {
-		throw new java.nio.ReadOnlyBufferException();
+		throw new ReadOnlyBufferException();
 	}
 
 	protected boolean protectedHasArray () {
 		return false;
 	}
 
-	public java.nio.FloatBuffer put (float c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public FloatBuffer put (float c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.FloatBuffer put (int index, float c) {
-		throw new java.nio.ReadOnlyBufferException();
+	public FloatBuffer put (int index, float c) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public java.nio.FloatBuffer put (java.nio.FloatBuffer buf) {
-		throw new java.nio.ReadOnlyBufferException();
+	public FloatBuffer put (FloatBuffer buf) {
+		throw new ReadOnlyBufferException();
 	}
 
-	public final java.nio.FloatBuffer put (float[] src, int off, int len) {
+	public final FloatBuffer put (float[] src, int off, int len) {
 		throw new ReadOnlyBufferException();
 	}
 

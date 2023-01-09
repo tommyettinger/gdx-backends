@@ -15,11 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.*;
-import java.nio.Buffer;
-import java.nio.ByteOrder;
+package java.nio;
 
 /** A buffer of floats.
  * <p>

@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBufferView;
 import com.google.gwt.typedarrays.shared.Int32Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
-
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
 
 /** This class wraps a byte buffer to be a int buffer.
  * <p>
@@ -34,9 +31,9 @@ import java.nio.IntBuffer;
  * </ul>
  * </p>
  */
-final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implements HasArrayBufferView {
+final class DirectReadWriteIntBufferAdapter extends IntBuffer implements HasArrayBufferView {
 
-	static java.nio.IntBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
+	static IntBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
 		return new DirectReadWriteIntBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());
 	}
 
@@ -52,7 +49,7 @@ final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implement
 
 	// TODO(haustein) This will be slow
 	@Override
-	public java.nio.IntBuffer asReadOnlyBuffer () {
+	public IntBuffer asReadOnlyBuffer () {
 		DirectReadOnlyIntBufferAdapter buf = new DirectReadOnlyIntBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -61,7 +58,7 @@ final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implement
 	}
 
 	@Override
-	public java.nio.IntBuffer compact () {
+	public IntBuffer compact () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		byteBuffer.compact();
@@ -73,7 +70,7 @@ final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implement
 	}
 
 	@Override
-	public java.nio.IntBuffer duplicate () {
+	public IntBuffer duplicate () {
 		DirectReadWriteIntBufferAdapter buf = new DirectReadWriteIntBufferAdapter(
 			(DirectReadWriteByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
@@ -129,7 +126,7 @@ final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implement
 	}
 
 	@Override
-	public java.nio.IntBuffer put (int c) {
+	public IntBuffer put (int c) {
 // if (position == limit) {
 // throw new BufferOverflowException();
 // }
@@ -138,7 +135,7 @@ final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implement
 	}
 
 	@Override
-	public java.nio.IntBuffer put (int index, int c) {
+	public IntBuffer put (int index, int c) {
 // if (index < 0 || index >= limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -147,7 +144,7 @@ final class DirectReadWriteIntBufferAdapter extends java.nio.IntBuffer implement
 	}
 
 	@Override
-	public java.nio.IntBuffer slice () {
+	public IntBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		IntBuffer result = new DirectReadWriteIntBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());

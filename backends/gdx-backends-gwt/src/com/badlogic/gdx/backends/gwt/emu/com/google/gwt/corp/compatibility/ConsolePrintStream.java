@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.com.google.gwt.corp.compatibility;
+package com.google.gwt.corp.compatibility;
 
 import java.io.OutputStream;
 import java.io.PrintStream;

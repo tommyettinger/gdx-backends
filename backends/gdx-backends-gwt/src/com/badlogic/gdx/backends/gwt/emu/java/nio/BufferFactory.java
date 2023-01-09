@@ -15,16 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.*;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.DoubleBuffer;
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-import java.nio.LongBuffer;
-import java.nio.ShortBuffer;
+package java.nio;
 
 /** Provide factory service of buffer classes.
  * <p>
@@ -38,7 +29,7 @@ final class BufferFactory {
 	 * 
 	 * @param array The byte array
 	 * @return A new byte buffer based on the specified byte array. */
-	public static java.nio.ByteBuffer newByteBuffer (byte array[]) {
+	public static ByteBuffer newByteBuffer (byte array[]) {
 		return new ReadWriteHeapByteBuffer(array);
 	}
 
@@ -46,7 +37,7 @@ final class BufferFactory {
 	 * 
 	 * @param capacity The capacity of the new buffer
 	 * @return A new array based byte buffer with the specified capacity. */
-	public static java.nio.ByteBuffer newByteBuffer (int capacity) {
+	public static ByteBuffer newByteBuffer (int capacity) {
 		return new ReadWriteHeapByteBuffer(capacity);
 	}
 
@@ -54,7 +45,7 @@ final class BufferFactory {
 	 * 
 	 * @param array The char array
 	 * @return A new char buffer based on the specified char array. */
-	public static java.nio.CharBuffer newCharBuffer (char array[]) {
+	public static CharBuffer newCharBuffer (char array[]) {
 		return new ReadWriteCharArrayBuffer(array);
 	}
 
@@ -62,7 +53,7 @@ final class BufferFactory {
 	 * 
 	 * @param chseq The char sequence
 	 * @return A new readonly char buffer based on the specified char sequence. */
-	public static java.nio.CharBuffer newCharBuffer (CharSequence chseq) {
+	public static CharBuffer newCharBuffer (CharSequence chseq) {
 		return new CharSequenceAdapter(chseq);
 	}
 
@@ -86,7 +77,7 @@ final class BufferFactory {
 	 * 
 	 * @param array The double array
 	 * @return A new double buffer based on the specified double array. */
-	public static java.nio.DoubleBuffer newDoubleBuffer (double array[]) {
+	public static DoubleBuffer newDoubleBuffer (double array[]) {
 		return new ReadWriteDoubleArrayBuffer(array);
 	}
 
@@ -102,7 +93,7 @@ final class BufferFactory {
 	 * 
 	 * @param array The float array
 	 * @return A new float buffer based on the specified float array. */
-	public static java.nio.FloatBuffer newFloatBuffer (float array[]) {
+	public static FloatBuffer newFloatBuffer (float array[]) {
 		return new ReadWriteFloatArrayBuffer(array);
 	}
 
@@ -118,7 +109,7 @@ final class BufferFactory {
 	 * 
 	 * @param capacity The capacity of the new buffer
 	 * @return A new array based int buffer with the specified capacity. */
-	public static java.nio.IntBuffer newIntBuffer (int capacity) {
+	public static IntBuffer newIntBuffer (int capacity) {
 		return new ReadWriteIntArrayBuffer(capacity);
 	}
 
@@ -134,7 +125,7 @@ final class BufferFactory {
 	 * 
 	 * @param capacity The capacity of the new buffer
 	 * @return A new array based long buffer with the specified capacity. */
-	public static java.nio.LongBuffer newLongBuffer (int capacity) {
+	public static LongBuffer newLongBuffer (int capacity) {
 		return new ReadWriteLongArrayBuffer(capacity);
 	}
 
@@ -150,7 +141,7 @@ final class BufferFactory {
 	 * 
 	 * @param capacity The capacity of the new buffer
 	 * @return A new array based short buffer with the specified capacity. */
-	public static java.nio.ShortBuffer newShortBuffer (int capacity) {
+	public static ShortBuffer newShortBuffer (int capacity) {
 		return new ReadWriteShortArrayBuffer(capacity);
 	}
 

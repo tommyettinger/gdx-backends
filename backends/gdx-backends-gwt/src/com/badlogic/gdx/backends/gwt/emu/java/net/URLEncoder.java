@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.net;
+package java.net;
 
 import java.io.UnsupportedEncodingException;
 

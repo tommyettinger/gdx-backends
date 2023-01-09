@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 //import org.apache.harmony.nio.internal.DirectBuffer;
 //import org.apache.harmony.luni.platform.PlatformAddress;
-
-import java.nio.BufferOverflowException;
-import java.nio.BufferUnderflowException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.ReadOnlyBufferException;
-import java.nio.ShortBuffer;
 
 /** This class wraps a byte buffer to be a short buffer.
  * <p>
@@ -37,16 +30,16 @@ import java.nio.ShortBuffer;
  * </ul>
  * </p>
  */
-final class ShortToByteBufferAdapter extends java.nio.ShortBuffer implements ByteBufferWrapper {
+final class ShortToByteBufferAdapter extends ShortBuffer implements ByteBufferWrapper {
 // implements DirectBuffer {
 
-	static java.nio.ShortBuffer wrap (java.nio.ByteBuffer byteBuffer) {
+	static ShortBuffer wrap (ByteBuffer byteBuffer) {
 		return new ShortToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final java.nio.ByteBuffer byteBuffer;
+	private final ByteBuffer byteBuffer;
 
-	ShortToByteBufferAdapter (java.nio.ByteBuffer byteBuffer) {
+	ShortToByteBufferAdapter (ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 1));
 		this.byteBuffer = byteBuffer;
 		this.byteBuffer.clear();
@@ -101,7 +94,7 @@ final class ShortToByteBufferAdapter extends java.nio.ShortBuffer implements Byt
 // }
 
 	@Override
-	public java.nio.ShortBuffer asReadOnlyBuffer () {
+	public ShortBuffer asReadOnlyBuffer () {
 		ShortToByteBufferAdapter buf = new ShortToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -110,7 +103,7 @@ final class ShortToByteBufferAdapter extends java.nio.ShortBuffer implements Byt
 	}
 
 	@Override
-	public java.nio.ShortBuffer compact () {
+	public ShortBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -125,7 +118,7 @@ final class ShortToByteBufferAdapter extends java.nio.ShortBuffer implements Byt
 	}
 
 	@Override
-	public java.nio.ShortBuffer duplicate () {
+	public ShortBuffer duplicate () {
 		ShortToByteBufferAdapter buf = new ShortToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -180,7 +173,7 @@ final class ShortToByteBufferAdapter extends java.nio.ShortBuffer implements Byt
 	}
 
 	@Override
-	public java.nio.ShortBuffer put (short c) {
+	public ShortBuffer put (short c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -189,7 +182,7 @@ final class ShortToByteBufferAdapter extends java.nio.ShortBuffer implements Byt
 	}
 
 	@Override
-	public java.nio.ShortBuffer put (int index, short c) {
+	public ShortBuffer put (int index, short c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -198,7 +191,7 @@ final class ShortToByteBufferAdapter extends java.nio.ShortBuffer implements Byt
 	}
 
 	@Override
-	public java.nio.ShortBuffer slice () {
+	public ShortBuffer slice () {
 		byteBuffer.limit(limit << 1);
 		byteBuffer.position(position << 1);
 		ShortBuffer result = new ShortToByteBufferAdapter(byteBuffer.slice());

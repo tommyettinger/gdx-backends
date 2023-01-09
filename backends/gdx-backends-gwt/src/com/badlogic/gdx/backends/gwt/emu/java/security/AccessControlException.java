@@ -8,18 +8,16 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.security;
-
-import java.security.Permission;
+package java.security;
 
 public class AccessControlException extends SecurityException {
-	private final java.security.Permission permission;
+	private final Permission permission;
 
 	public AccessControlException (String message) {
 		this(message, null);
 	}
 
-	public AccessControlException (String message, java.security.Permission permission) {
+	public AccessControlException (String message, Permission permission) {
 		super(message);
 		this.permission = permission;
 	}

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.java.lang;
+package java.lang;
 
 import com.google.gwt.core.client.GWT;
 
@@ -23,7 +23,7 @@ public class Thread {
 		// noop emu
 	}
 
-	public static void setDefaultUncaughtExceptionHandler (final UncaughtExceptionHandler javaHandler) {
+	public static void setDefaultUncaughtExceptionHandler (final Thread.UncaughtExceptionHandler javaHandler) {
 		GWT.setUncaughtExceptionHandler(new GWT.UncaughtExceptionHandler() {
 			@Override
 			public void onUncaughtException (Throwable e) {

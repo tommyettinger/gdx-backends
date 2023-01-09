@@ -14,15 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.reflect;
+package com.badlogic.gdx.utils.reflect;
 
 import java.lang.annotation.Inherited;
 
-import com.badlogic.gdx.utils.reflect.Annotation;
-import com.badlogic.gdx.utils.reflect.Constructor;
-import com.badlogic.gdx.utils.reflect.Field;
-import com.badlogic.gdx.utils.reflect.Method;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.badlogic.gwtref.client.ReflectionCache;
 import com.badlogic.gwtref.client.Type;
 
@@ -112,22 +107,22 @@ public final class ClassReflection {
 		return ReflectionCache.getType(c).getComponentType();
 	}
 
-	/** Returns an array of {@link com.badlogic.gdx.utils.reflect.Constructor} containing the public constructors of the class represented by the supplied
+	/** Returns an array of {@link Constructor} containing the public constructors of the class represented by the supplied
 	 * Class. */
-	static public com.badlogic.gdx.utils.reflect.Constructor[] getConstructors (Class c) {
+	static public Constructor[] getConstructors (Class c) {
 		com.badlogic.gwtref.client.Constructor[] constructors = ReflectionCache.getType(c).getConstructors();
-		com.badlogic.gdx.utils.reflect.Constructor[] result = new com.badlogic.gdx.utils.reflect.Constructor[constructors.length];
+		Constructor[] result = new Constructor[constructors.length];
 		for (int i = 0, j = constructors.length; i < j; i++) {
-			result[i] = new com.badlogic.gdx.utils.reflect.Constructor(constructors[i]);
+			result[i] = new Constructor(constructors[i]);
 		}
 		return result;
 	}
 
-	/** Returns a {@link com.badlogic.gdx.utils.reflect.Constructor} that represents the public constructor for the supplied class which takes the supplied
+	/** Returns a {@link Constructor} that represents the public constructor for the supplied class which takes the supplied
 	 * parameter types. */
-	static public com.badlogic.gdx.utils.reflect.Constructor getConstructor (Class c, Class... parameterTypes) throws ReflectionException {
+	static public Constructor getConstructor (Class c, Class... parameterTypes) throws ReflectionException {
 		try {
-			return new com.badlogic.gdx.utils.reflect.Constructor(ReflectionCache.getType(c).getConstructor(parameterTypes));
+			return new Constructor(ReflectionCache.getType(c).getConstructor(parameterTypes));
 		} catch (SecurityException e) {
 			throw new ReflectionException("Security violation while getting constructor for class: " + c.getName(), e);
 		} catch (NoSuchMethodException e) {
@@ -135,9 +130,9 @@ public final class ClassReflection {
 		}
 	}
 
-	/** Returns a {@link com.badlogic.gdx.utils.reflect.Constructor} that represents the constructor for the supplied class which takes the supplied parameter
+	/** Returns a {@link Constructor} that represents the constructor for the supplied class which takes the supplied parameter
 	 * types. */
-	static public com.badlogic.gdx.utils.reflect.Constructor getDeclaredConstructor (Class c, Class... parameterTypes) throws ReflectionException {
+	static public Constructor getDeclaredConstructor (Class c, Class... parameterTypes) throws ReflectionException {
 		try {
 			return new Constructor(ReflectionCache.getType(c).getDeclaredConstructor(parameterTypes));
 		} catch (SecurityException e) {
@@ -152,21 +147,21 @@ public final class ClassReflection {
 		return ReflectionCache.getType(c).getEnumConstants();
 	}
 
-	/** Returns an array of {@link com.badlogic.gdx.utils.reflect.Method} containing the public member methods of the class represented by the supplied Class. */
-	static public com.badlogic.gdx.utils.reflect.Method[] getMethods (Class c) {
+	/** Returns an array of {@link Method} containing the public member methods of the class represented by the supplied Class. */
+	static public Method[] getMethods (Class c) {
 		com.badlogic.gwtref.client.Method[] methods = ReflectionCache.getType(c).getMethods();
-		com.badlogic.gdx.utils.reflect.Method[] result = new com.badlogic.gdx.utils.reflect.Method[methods.length];
+		Method[] result = new Method[methods.length];
 		for (int i = 0, j = methods.length; i < j; i++) {
-			result[i] = new com.badlogic.gdx.utils.reflect.Method(methods[i]);
+			result[i] = new Method(methods[i]);
 		}
 		return result;
 	}
 
-	/** Returns a {@link com.badlogic.gdx.utils.reflect.Method} that represents the public member method for the supplied class which takes the supplied parameter
+	/** Returns a {@link Method} that represents the public member method for the supplied class which takes the supplied parameter
 	 * types. */
-	static public com.badlogic.gdx.utils.reflect.Method getMethod (Class c, String name, Class... parameterTypes) throws ReflectionException {
+	static public Method getMethod (Class c, String name, Class... parameterTypes) throws ReflectionException {
 		try {
-			return new com.badlogic.gdx.utils.reflect.Method(ReflectionCache.getType(c).getMethod(name, parameterTypes));
+			return new Method(ReflectionCache.getType(c).getMethod(name, parameterTypes));
 		} catch (SecurityException e) {
 			throw new ReflectionException("Security violation while getting method: " + name + ", for class: " + c.getName(), e);
 		} catch (NoSuchMethodException e) {
@@ -174,19 +169,19 @@ public final class ClassReflection {
 		}
 	}
 
-	/** Returns an array of {@link com.badlogic.gdx.utils.reflect.Method} containing the methods declared by the class represented by the supplied Class. */
-	static public com.badlogic.gdx.utils.reflect.Method[] getDeclaredMethods (Class c) {
+	/** Returns an array of {@link Method} containing the methods declared by the class represented by the supplied Class. */
+	static public Method[] getDeclaredMethods (Class c) {
 		com.badlogic.gwtref.client.Method[] methods = ReflectionCache.getType(c).getDeclaredMethods();
-		com.badlogic.gdx.utils.reflect.Method[] result = new com.badlogic.gdx.utils.reflect.Method[methods.length];
+		Method[] result = new Method[methods.length];
 		for (int i = 0, j = methods.length; i < j; i++) {
-			result[i] = new com.badlogic.gdx.utils.reflect.Method(methods[i]);
+			result[i] = new Method(methods[i]);
 		}
 		return result;
 	}
 
-	/** Returns a {@link com.badlogic.gdx.utils.reflect.Method} that represents the method declared by the supplied class which takes the supplied parameter
+	/** Returns a {@link Method} that represents the method declared by the supplied class which takes the supplied parameter
 	 * types. */
-	static public com.badlogic.gdx.utils.reflect.Method getDeclaredMethod (Class c, String name, Class... parameterTypes) throws ReflectionException {
+	static public Method getDeclaredMethod (Class c, String name, Class... parameterTypes) throws ReflectionException {
 		try {
 			return new Method(ReflectionCache.getType(c).getDeclaredMethod(name, parameterTypes));
 		} catch (SecurityException e) {
@@ -196,20 +191,20 @@ public final class ClassReflection {
 		}
 	}
 
-	/** Returns an array of {@link com.badlogic.gdx.utils.reflect.Field} containing the public fields of the class represented by the supplied Class. */
-	static public com.badlogic.gdx.utils.reflect.Field[] getFields (Class c) {
+	/** Returns an array of {@link Field} containing the public fields of the class represented by the supplied Class. */
+	static public Field[] getFields (Class c) {
 		com.badlogic.gwtref.client.Field[] fields = ReflectionCache.getType(c).getFields();
-		com.badlogic.gdx.utils.reflect.Field[] result = new com.badlogic.gdx.utils.reflect.Field[fields.length];
+		Field[] result = new Field[fields.length];
 		for (int i = 0, j = fields.length; i < j; i++) {
-			result[i] = new com.badlogic.gdx.utils.reflect.Field(fields[i]);
+			result[i] = new Field(fields[i]);
 		}
 		return result;
 	}
 
-	/** Returns a {@link com.badlogic.gdx.utils.reflect.Field} that represents the specified public member field for the supplied class. */
-	static public com.badlogic.gdx.utils.reflect.Field getField (Class c, String name) throws ReflectionException {
+	/** Returns a {@link Field} that represents the specified public member field for the supplied class. */
+	static public Field getField (Class c, String name) throws ReflectionException {
 		try {
-			return new com.badlogic.gdx.utils.reflect.Field(ReflectionCache.getType(c).getField(name));
+			return new Field(ReflectionCache.getType(c).getField(name));
 		} catch (SecurityException e) {
 			throw new ReflectionException("Security violation while getting field: " + name + ", for class: " + c.getName(), e);
 		} catch (NoSuchFieldException e) {
@@ -217,18 +212,18 @@ public final class ClassReflection {
 		}
 	}
 
-	/** Returns an array of {@link com.badlogic.gdx.utils.reflect.Field} objects reflecting all the fields declared by the supplied class. */
-	static public com.badlogic.gdx.utils.reflect.Field[] getDeclaredFields (Class c) {
+	/** Returns an array of {@link Field} objects reflecting all the fields declared by the supplied class. */
+	static public Field[] getDeclaredFields (Class c) {
 		com.badlogic.gwtref.client.Field[] fields = ReflectionCache.getType(c).getDeclaredFields();
-		com.badlogic.gdx.utils.reflect.Field[] result = new com.badlogic.gdx.utils.reflect.Field[fields.length];
+		Field[] result = new Field[fields.length];
 		for (int i = 0, j = fields.length; i < j; i++) {
-			result[i] = new com.badlogic.gdx.utils.reflect.Field(fields[i]);
+			result[i] = new Field(fields[i]);
 		}
 		return result;
 	}
 
-	/** Returns a {@link com.badlogic.gdx.utils.reflect.Field} that represents the specified declared field for the supplied class. */
-	static public com.badlogic.gdx.utils.reflect.Field getDeclaredField (Class c, String name) throws ReflectionException {
+	/** Returns a {@link Field} that represents the specified declared field for the supplied class. */
+	static public Field getDeclaredField (Class c, String name) throws ReflectionException {
 		try {
 			return new Field(ReflectionCache.getType(c).getDeclaredField(name));
 		} catch (SecurityException e) {
@@ -241,23 +236,23 @@ public final class ClassReflection {
 
 	/** Returns true if the supplied class has an annotation of the given type. */
 	static public boolean isAnnotationPresent (Class c, Class<? extends java.lang.annotation.Annotation> annotationType) {
-		com.badlogic.gdx.utils.reflect.Annotation[] annotations = getAnnotations(c);
-		for (com.badlogic.gdx.utils.reflect.Annotation annotation : annotations) {
+		Annotation[] annotations = getAnnotations(c);
+		for (Annotation annotation : annotations) {
 			if (annotation.getAnnotationType().equals(annotationType)) return true;
 		}
 		return false;
 	}
 
-	/** Returns an array of {@link com.badlogic.gdx.utils.reflect.Annotation} objects reflecting all annotations declared by the supplied class, and inherited
+	/** Returns an array of {@link Annotation} objects reflecting all annotations declared by the supplied class, and inherited
 	 * from its superclass. Returns an empty array if there are none. */
-	static public com.badlogic.gdx.utils.reflect.Annotation[] getAnnotations (Class c) {
+	static public Annotation[] getAnnotations (Class c) {
 		Type declType = ReflectionCache.getType(c);
 		java.lang.annotation.Annotation[] annotations = declType.getDeclaredAnnotations();
 
 		// annotations of supplied class
-		com.badlogic.gdx.utils.reflect.Annotation[] result = new com.badlogic.gdx.utils.reflect.Annotation[annotations.length];
+		Annotation[] result = new Annotation[annotations.length];
 		for (int i = 0; i < annotations.length; i++) {
-			result[i] = new com.badlogic.gdx.utils.reflect.Annotation(annotations[i]);
+			result[i] = new Annotation(annotations[i]);
 		}
 
 		// search super classes, until Object.class is reached
@@ -271,7 +266,7 @@ public final class ClassReflection {
 				if (annotationType.getDeclaredAnnotation(Inherited.class) != null) {
 					// ignore duplicates
 					boolean duplicate = false;
-					for (com.badlogic.gdx.utils.reflect.Annotation annotation : result) {
+					for (Annotation annotation : result) {
 						if (annotation.getAnnotationType().equals(annotationType)) {
 							duplicate = true;
 							break;
@@ -279,11 +274,11 @@ public final class ClassReflection {
 					}
 					// append to result set
 					if (!duplicate) {
-						com.badlogic.gdx.utils.reflect.Annotation[] copy = new com.badlogic.gdx.utils.reflect.Annotation[result.length + 1];
+						Annotation[] copy = new Annotation[result.length + 1];
 						for (int j = 0; j < result.length; j++) {
 							copy[j] = result[j];
 						}
-						copy[result.length] = new com.badlogic.gdx.utils.reflect.Annotation(superAnnotations[i]);
+						copy[result.length] = new Annotation(superAnnotations[i]);
 						result = copy;
 					}
 				}
@@ -294,31 +289,31 @@ public final class ClassReflection {
 		return result;
 	}
 
-	/** Returns an {@link com.badlogic.gdx.utils.reflect.Annotation} object reflecting the annotation provided, or null of this class doesn't have, or doesn't
+	/** Returns an {@link Annotation} object reflecting the annotation provided, or null of this class doesn't have, or doesn't
 	 * inherit, such an annotation. This is a convenience function if the caller knows already which annotation type he's looking
 	 * for. */
-	static public com.badlogic.gdx.utils.reflect.Annotation getAnnotation (Class c, Class<? extends java.lang.annotation.Annotation> annotationType) {
-		com.badlogic.gdx.utils.reflect.Annotation[] annotations = getAnnotations(c);
-		for (com.badlogic.gdx.utils.reflect.Annotation annotation : annotations) {
+	static public Annotation getAnnotation (Class c, Class<? extends java.lang.annotation.Annotation> annotationType) {
+		Annotation[] annotations = getAnnotations(c);
+		for (Annotation annotation : annotations) {
 			if (annotation.getAnnotationType().equals(annotationType)) return annotation;
 		}
 		return null;
 	}
 
-	/** Returns an array of {@link com.badlogic.gdx.utils.reflect.Annotation} objects reflecting all annotations declared by the supplied class, or an empty array
+	/** Returns an array of {@link Annotation} objects reflecting all annotations declared by the supplied class, or an empty array
 	 * if there are none. Does not include inherited annotations. */
-	static public com.badlogic.gdx.utils.reflect.Annotation[] getDeclaredAnnotations (Class c) {
+	static public Annotation[] getDeclaredAnnotations (Class c) {
 		java.lang.annotation.Annotation[] annotations = ReflectionCache.getType(c).getDeclaredAnnotations();
-		com.badlogic.gdx.utils.reflect.Annotation[] result = new com.badlogic.gdx.utils.reflect.Annotation[annotations.length];
+		Annotation[] result = new Annotation[annotations.length];
 		for (int i = 0; i < annotations.length; i++) {
-			result[i] = new com.badlogic.gdx.utils.reflect.Annotation(annotations[i]);
+			result[i] = new Annotation(annotations[i]);
 		}
 		return result;
 	}
 
-	/** Returns an {@link com.badlogic.gdx.utils.reflect.Annotation} object reflecting the annotation provided, or null of this class doesn't have such an
+	/** Returns an {@link Annotation} object reflecting the annotation provided, or null of this class doesn't have such an
 	 * annotation. This is a convenience function if the caller knows already which annotation type he's looking for. */
-	static public com.badlogic.gdx.utils.reflect.Annotation getDeclaredAnnotation (Class c, Class<? extends java.lang.annotation.Annotation> annotationType) {
+	static public Annotation getDeclaredAnnotation (Class c, Class<? extends java.lang.annotation.Annotation> annotationType) {
 		java.lang.annotation.Annotation annotation = ReflectionCache.getType(c).getDeclaredAnnotation(annotationType);
 		if (annotation != null) return new Annotation(annotation);
 		return null;

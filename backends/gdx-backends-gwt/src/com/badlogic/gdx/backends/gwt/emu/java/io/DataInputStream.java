@@ -14,13 +14,9 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
 import com.google.gwt.corp.compatibility.Numbers;
-
-import java.io.*;
-import java.io.DataInput;
-import java.io.EOFException;
 
 public class DataInputStream extends FilterInputStream implements DataInput {
 
@@ -43,7 +39,7 @@ public class DataInputStream extends FilterInputStream implements DataInput {
 	public byte readByte () throws IOException {
 		int i = read();
 		if (i == -1) {
-			throw new java.io.EOFException();
+			throw new EOFException();
 		}
 		return (byte)i;
 	}
@@ -70,7 +66,7 @@ public class DataInputStream extends FilterInputStream implements DataInput {
 		while (len > 0) {
 			int count = is.read(b, off, len);
 			if (count <= 0) {
-				throw new java.io.EOFException();
+				throw new EOFException();
 			}
 			off += count;
 			len -= count;

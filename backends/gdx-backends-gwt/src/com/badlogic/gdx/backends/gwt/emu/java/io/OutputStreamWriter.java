@@ -8,13 +8,9 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
 import avian.Utf8;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
 
 public class OutputStreamWriter extends Writer {
 	private final OutputStream out;

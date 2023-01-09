@@ -15,11 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
-
-import java.nio.BufferUnderflowException;
-import java.nio.ByteOrder;
-import java.nio.CharBuffer;
+package java.nio;
 
 /** CharArrayBuffer, ReadWriteCharArrayBuffer and ReadOnlyCharArrayBuffer compose the implementation of array based char buffers.
  * <p>
@@ -29,7 +25,7 @@ import java.nio.CharBuffer;
  * All methods are marked final for runtime performance.
  * </p>
  */
-abstract class CharArrayBuffer extends java.nio.CharBuffer {
+abstract class CharArrayBuffer extends CharBuffer {
 
 	protected final char[] backingArray;
 
@@ -63,7 +59,7 @@ abstract class CharArrayBuffer extends java.nio.CharBuffer {
 		return backingArray[offset + index];
 	}
 
-	public final java.nio.CharBuffer get (char[] dest, int off, int len) {
+	public final CharBuffer get (char[] dest, int off, int len) {
 		int length = dest.length;
 		if ((off < 0) || (len < 0) || (long)off + (long)len > length) {
 			throw new IndexOutOfBoundsException();
@@ -80,7 +76,7 @@ abstract class CharArrayBuffer extends java.nio.CharBuffer {
 		return false;
 	}
 
-	public final java.nio.ByteOrder order () {
+	public final ByteOrder order () {
 		return ByteOrder.nativeOrder();
 	}
 

@@ -14,10 +14,8 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.reflect;
+package com.badlogic.gdx.utils.reflect;
 
-import com.badlogic.gdx.utils.reflect.Annotation;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.badlogic.gwtref.client.Parameter;
 
 /** Provides information about, and access to, a single method on a class or interface.

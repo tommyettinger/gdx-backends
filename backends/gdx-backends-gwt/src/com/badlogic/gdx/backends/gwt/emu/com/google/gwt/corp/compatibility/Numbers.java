@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.com.google.gwt.corp.compatibility;
+package com.google.gwt.corp.compatibility;
 
 import com.google.gwt.typedarrays.client.Float32ArrayNative;
 import com.google.gwt.typedarrays.client.Float64ArrayNative;

@@ -14,15 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.glutils;
+package com.badlogic.gdx.graphics.glutils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.glutils.InstanceData;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.graphics.glutils.VertexBufferObject;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
@@ -152,13 +149,13 @@ public class InstanceBufferObject implements InstanceData {
 		bufferChanged();
 	}
 
-	/** @return The GL enum used in the call to {@link GL20#glBufferData(int, int, Buffer, int)}, e.g. GL_STATIC_DRAW or
+	/** @return The GL enum used in the call to {@link GL20#glBufferData(int, int, java.nio.Buffer, int)}, e.g. GL_STATIC_DRAW or
 	 *         GL_DYNAMIC_DRAW */
 	protected int getUsage () {
 		return usage;
 	}
 
-	/** Set the GL enum used in the call to {@link GL20#glBufferData(int, int, Buffer, int)}, can only be called when the
+	/** Set the GL enum used in the call to {@link GL20#glBufferData(int, int, java.nio.Buffer, int)}, can only be called when the
 	 * VBO is not bound. */
 	protected void setUsage (int value) {
 		if (isBound) throw new GdxRuntimeException("Cannot change usage while VBO is bound");

@@ -5,7 +5,7 @@
  * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.lang;
+package java.lang;
 
 /** Thrown when an application tries to load in a class through its string name using:
  * <ul>
@@ -24,9 +24,9 @@ package com.badlogic.gdx.backends.gwt.emu.java.lang;
  * 
  * @author unascribed
  * @version 1.20, 02/19/04
- * @see Class#forName(String)
- * @see ClassLoader#findSystemClass(String)
- * @see ClassLoader#loadClass(String, boolean)
+ * @see java.lang.Class#forName(java.lang.String)
+ * @see java.lang.ClassLoader#findSystemClass(java.lang.String)
+ * @see java.lang.ClassLoader#loadClass(java.lang.String, boolean)
  * @since JDK1.0 */
 public class ClassNotFoundException extends Exception {
 	/** use serialVersionUID from JDK 1.1.X for interoperability */

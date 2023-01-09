@@ -15,12 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
-
-import java.io.Closeable;
-import java.io.Flushable;
-import java.io.IOException;
-import java.io.Reader;
+package java.io;
 
 /*** The base class for all writers. A writer is a means of writing data to a target in a character-wise manner. Most output
  * streams expect the {@link #flush()} method to be called before closing the stream, to ensure all data is actually written out.

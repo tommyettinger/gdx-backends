@@ -15,11 +15,8 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
-import java.io.Closeable;
-import java.io.IOException;
-import java.io.Writer;
 import java.nio.CharBuffer;
 import java.nio.ReadOnlyBufferException;
 

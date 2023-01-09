@@ -14,17 +14,10 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 //import org.apache.harmony.nio.internal.DirectBuffer;
 //import org.apache.harmony.luni.platform.PlatformAddress;
-
-import java.nio.BufferOverflowException;
-import java.nio.BufferUnderflowException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a byte buffer to be a int buffer.
  * <p>
@@ -37,16 +30,16 @@ import java.nio.ReadOnlyBufferException;
  * </ul>
  * </p>
  */
-final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBufferWrapper {
+final class IntToByteBufferAdapter extends IntBuffer implements ByteBufferWrapper {
 // implements DirectBuffer {
 
-	static java.nio.IntBuffer wrap (java.nio.ByteBuffer byteBuffer) {
+	static IntBuffer wrap (ByteBuffer byteBuffer) {
 		return new IntToByteBufferAdapter(byteBuffer.slice());
 	}
 
-	private final java.nio.ByteBuffer byteBuffer;
+	private final ByteBuffer byteBuffer;
 
-	IntToByteBufferAdapter (java.nio.ByteBuffer byteBuffer) {
+	IntToByteBufferAdapter (ByteBuffer byteBuffer) {
 		super((byteBuffer.capacity() >> 2));
 		this.byteBuffer = byteBuffer;
 		this.byteBuffer.clear();
@@ -101,7 +94,7 @@ final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBuf
 // }
 
 	@Override
-	public java.nio.IntBuffer asReadOnlyBuffer () {
+	public IntBuffer asReadOnlyBuffer () {
 		IntToByteBufferAdapter buf = new IntToByteBufferAdapter(byteBuffer.asReadOnlyBuffer());
 		buf.limit = limit;
 		buf.position = position;
@@ -110,7 +103,7 @@ final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBuf
 	}
 
 	@Override
-	public java.nio.IntBuffer compact () {
+	public IntBuffer compact () {
 		if (byteBuffer.isReadOnly()) {
 			throw new ReadOnlyBufferException();
 		}
@@ -125,7 +118,7 @@ final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBuf
 	}
 
 	@Override
-	public java.nio.IntBuffer duplicate () {
+	public IntBuffer duplicate () {
 		IntToByteBufferAdapter buf = new IntToByteBufferAdapter(byteBuffer.duplicate());
 		buf.limit = limit;
 		buf.position = position;
@@ -180,7 +173,7 @@ final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBuf
 	}
 
 	@Override
-	public java.nio.IntBuffer put (int c) {
+	public IntBuffer put (int c) {
 		if (position == limit) {
 			throw new BufferOverflowException();
 		}
@@ -189,7 +182,7 @@ final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBuf
 	}
 
 	@Override
-	public java.nio.IntBuffer put (int index, int c) {
+	public IntBuffer put (int index, int c) {
 		if (index < 0 || index >= limit) {
 			throw new IndexOutOfBoundsException();
 		}
@@ -198,7 +191,7 @@ final class IntToByteBufferAdapter extends java.nio.IntBuffer implements ByteBuf
 	}
 
 	@Override
-	public java.nio.IntBuffer slice () {
+	public IntBuffer slice () {
 		byteBuffer.limit(limit << 2);
 		byteBuffer.position(position << 2);
 		IntBuffer result = new IntToByteBufferAdapter(byteBuffer.slice());

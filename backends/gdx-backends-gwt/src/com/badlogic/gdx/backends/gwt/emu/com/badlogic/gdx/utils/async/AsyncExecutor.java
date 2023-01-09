@@ -14,12 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.async;
+package com.badlogic.gdx.utils.async;
 
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.async.AsyncResult;
-import com.badlogic.gdx.utils.async.AsyncTask;
 
 /** GWT emulation of AsynchExecutor, will call tasks immediately :D
  * @author badlogic */
@@ -37,7 +35,7 @@ public class AsyncExecutor implements Disposable {
 	/** Submits a {@link Runnable} to be executed asynchronously. If maxConcurrent runnables are already running, the runnable will
 	 * be queued.
 	 * @param task the task to execute asynchronously */
-	public <T> com.badlogic.gdx.utils.async.AsyncResult<T> submit (final com.badlogic.gdx.utils.async.AsyncTask<T> task) {
+	public <T> AsyncResult<T> submit (final AsyncTask<T> task) {
 		T result = null;
 		try {
 			result = task.call();

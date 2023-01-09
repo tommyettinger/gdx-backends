@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBufferView;
 import com.google.gwt.typedarrays.shared.Int16Array;
 import com.google.gwt.typedarrays.shared.TypedArrays;
-
-import java.nio.ByteOrder;
-import java.nio.ShortBuffer;
 
 /** This class wraps a byte buffer to be a short buffer.
  * <p>
@@ -34,10 +31,10 @@ import java.nio.ShortBuffer;
  * </ul>
  * </p>
  */
-final class DirectReadWriteShortBufferAdapter extends java.nio.ShortBuffer implements HasArrayBufferView {
+final class DirectReadWriteShortBufferAdapter extends ShortBuffer implements HasArrayBufferView {
 // implements DirectBuffer {
 
-	static java.nio.ShortBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
+	static ShortBuffer wrap (DirectReadWriteByteBuffer byteBuffer) {
 		return new DirectReadWriteShortBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());
 	}
 
@@ -53,7 +50,7 @@ final class DirectReadWriteShortBufferAdapter extends java.nio.ShortBuffer imple
 
 	// TODO(haustein) This will be slow
 	@Override
-	public java.nio.ShortBuffer asReadOnlyBuffer () {
+	public ShortBuffer asReadOnlyBuffer () {
 		DirectReadOnlyShortBufferAdapter buf = new DirectReadOnlyShortBufferAdapter(byteBuffer);
 		buf.limit = limit;
 		buf.position = position;
@@ -62,7 +59,7 @@ final class DirectReadWriteShortBufferAdapter extends java.nio.ShortBuffer imple
 	}
 
 	@Override
-	public java.nio.ShortBuffer compact () {
+	public ShortBuffer compact () {
 		byteBuffer.limit(limit << 1);
 		byteBuffer.position(position << 1);
 		byteBuffer.compact();
@@ -74,7 +71,7 @@ final class DirectReadWriteShortBufferAdapter extends java.nio.ShortBuffer imple
 	}
 
 	@Override
-	public java.nio.ShortBuffer duplicate () {
+	public ShortBuffer duplicate () {
 		DirectReadWriteShortBufferAdapter buf = new DirectReadWriteShortBufferAdapter(
 			(DirectReadWriteByteBuffer)byteBuffer.duplicate());
 		buf.limit = limit;
@@ -130,7 +127,7 @@ final class DirectReadWriteShortBufferAdapter extends java.nio.ShortBuffer imple
 	}
 
 	@Override
-	public java.nio.ShortBuffer put (short c) {
+	public ShortBuffer put (short c) {
 // if (position == limit) {
 // throw new BufferOverflowException();
 // }
@@ -139,7 +136,7 @@ final class DirectReadWriteShortBufferAdapter extends java.nio.ShortBuffer imple
 	}
 
 	@Override
-	public java.nio.ShortBuffer put (int index, short c) {
+	public ShortBuffer put (int index, short c) {
 // if (index < 0 || index >= limit) {
 // throw new IndexOutOfBoundsException();
 // }
@@ -148,7 +145,7 @@ final class DirectReadWriteShortBufferAdapter extends java.nio.ShortBuffer imple
 	}
 
 	@Override
-	public java.nio.ShortBuffer slice () {
+	public ShortBuffer slice () {
 		byteBuffer.limit(limit << 1);
 		byteBuffer.position(position << 1);
 		ShortBuffer result = new DirectReadWriteShortBufferAdapter((DirectReadWriteByteBuffer)byteBuffer.slice());
