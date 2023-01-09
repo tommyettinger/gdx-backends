@@ -128,9 +128,7 @@ libraries.android = [
 ]
 
 libraries.gwt = [
-        "com.google.gwt:gwt-user:${versions.gwt}",
-        "com.google.jsinterop:jsinterop-annotations:${versions.jsinteropAnnotations}",
-        "com.google.jsinterop:jsinterop-annotations:${versions.jsinteropAnnotations}:sources"
+        "com.google.gwt:gwt-user:${versions.gwt}"
 ]
 
 libraries.compileOnly.gwt = [

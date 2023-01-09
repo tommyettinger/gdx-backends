@@ -17,6 +17,8 @@
 dependencies {
     api libraries.gwt
     compileOnly libraries.compileOnly.gwt
+    api "com.google.jsinterop:jsinterop-annotations:${versions.jsinteropAnnotations}:sources"
+
 }
 
 configurations.all {
