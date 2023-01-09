@@ -16,15 +16,20 @@
 
 package com.badlogic.gdx.backends.lwjgl;
 
+import com.badlogic.gdx.AbstractInput;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputEventQueue;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.utils.IntSet;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,35 +42,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.IntSet;
-
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Cursor;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputEventQueue;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.utils.Pool;
-
 /** An implementation of the {@link LwjglInput} interface hooking a LWJGL panel for input.
- * 
  * @author mzechner */
-final public class DefaultLwjglInput implements LwjglInput {
+final public class DefaultLwjglInput extends AbstractInput implements LwjglInput {
 	static public float keyRepeatInitialTime = 0.4f;
 	static public float keyRepeatTime = 0.1f;
-	
+
 	final InputEventQueue eventQueue = new InputEventQueue();
 	int deltaX, deltaY;
-	int pressedKeys = 0;
-	boolean keyJustPressed = false;
-	boolean[] justPressedKeys = new boolean[Keys.MAX_KEYCODE + 1];
 	final boolean[] justPressedButtons = new boolean[5];
 	boolean justTouched;
 	final IntSet pressedButtons = new IntSet();
@@ -79,42 +63,45 @@ final public class DefaultLwjglInput implements LwjglInput {
 		Keyboard.enableRepeatEvents(false);
 		Mouse.setClipMouseCoordinatesToWindow(false);
 	}
-	
+
 	@Override
 	public float getAccelerometerX () {
 		return 0;
 	}
-	
+
 	@Override
 	public float getAccelerometerY () {
 		return 0;
 	}
-	
+
 	@Override
 	public float getAccelerometerZ () {
 		return 0;
 	}
-	
+
 	@Override
 	public float getGyroscopeX () {
 		return 0;
 	}
 
+	@Override
 	public float getGyroscopeY () {
 		return 0;
 	}
 
+	@Override
 	public float getGyroscopeZ () {
 		return 0;
 	}
 
 	@Override
-	public void getTextInput(TextInputListener listener, String title, String text, String hint) {
+	public void getTextInput (TextInputListener listener, String title, String text, String hint) {
 		getTextInput(listener, title, text, hint, OnscreenKeyboardType.Default);
 	}
 
 	@Override
-	public void getTextInput (final TextInputListener listener, final String title, final String text, final String hint, OnscreenKeyboardType type) {
+	public void getTextInput (final TextInputListener listener, final String title, final String text, final String hint,
+		OnscreenKeyboardType type) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run () {
@@ -210,70 +197,39 @@ final public class DefaultLwjglInput implements LwjglInput {
 	public int getMaxPointers () {
 		return 1;
 	}
-	
+
 	@Override
 	public int getX () {
 		return (int)(Mouse.getX() * Display.getPixelScaleFactor());
 	}
-	
+
 	@Override
 	public int getY () {
 		return Gdx.graphics.getHeight() - 1 - (int)(Mouse.getY() * Display.getPixelScaleFactor());
 	}
 
-	public boolean isAccelerometerAvailable () {
-		return false;
-	}
-	
-	public boolean isGyroscopeAvailable () {
-		return false;
-	}
-
-	public boolean isKeyPressed (int key) {
-		if (!Keyboard.isCreated()) return false;
-
-		if (key == Input.Keys.ANY_KEY)
-			return pressedKeys > 0;
-		else
-			return Keyboard.isKeyDown(getLwjglKeyCode(key));
-	}
-
-	@Override
-	public boolean isKeyJustPressed (int key) {
-		if (key == Input.Keys.ANY_KEY) {
-			return keyJustPressed;
-		}
-		if (key < 0 || key >= justPressedKeys.length) {
-			return false;
-		}
-		return justPressedKeys[key];
-	}
-	
 	@Override
 	public boolean isTouched () {
 		boolean button = Mouse.isButtonDown(0) || Mouse.isButtonDown(1) || Mouse.isButtonDown(2);
 		return button;
 	}
 
+	@Override
 	public int getX (int pointer) {
-		if (pointer > 0)
-			return 0;
-		else
-			return getX();
+		if (pointer > 0) return 0;
+		return getX();
 	}
 
+	@Override
 	public int getY (int pointer) {
-		if (pointer > 0)
-			return 0;
-		else
-			return getY();
+		if (pointer > 0) return 0;
+		return getY();
 	}
 
+	@Override
 	public boolean isTouched (int pointer) {
-		if (pointer > 0)
-			return false;
-		else
-			return isTouched();
+		if (pointer > 0) return false;
+		return isTouched();
 	}
 
 	@Override
@@ -286,48 +242,12 @@ final public class DefaultLwjglInput implements LwjglInput {
 		return isTouched(pointer) ? 1 : 0;
 	}
 
-	public boolean supportsMultitouch () {
-		return false;
-	}
-
 	@Override
 	public void setOnscreenKeyboardVisible (boolean visible) {
-
 	}
 
 	@Override
-	public void setOnscreenKeyboardVisible(boolean visible, OnscreenKeyboardType type) {
-
-	}
-
-	@Override
-	public void setCatchBackKey (boolean catchBack) {
-
-	}
-
-	@Override
-	public boolean isCatchBackKey () {
-		return false;
-	}	
-
-	@Override
-	public void setCatchMenuKey (boolean catchMenu) {
-		
-	}
-	
-	@Override
-	public boolean isCatchMenuKey () {
-		return false;
-	}
-
-	@Override
-	public void setCatchKey (int keycode, boolean catchKey) {
-
-	}
-
-	@Override
-	public boolean isCatchKey (int keycode) {
-		return false;
+	public void setOnscreenKeyboardVisible (boolean visible, OnscreenKeyboardType type) {
 	}
 
 	@Override
@@ -335,7 +255,7 @@ final public class DefaultLwjglInput implements LwjglInput {
 		eventQueue.drain(processor);
 	}
 
-	public static int getGdxKeyCode (int lwjglKeyCode) {
+	public int getGdxKeyCode (int lwjglKeyCode) {
 		switch (lwjglKeyCode) {
 		case Keyboard.KEY_LBRACKET:
 			return Input.Keys.LEFT_BRACKET;
@@ -344,27 +264,35 @@ final public class DefaultLwjglInput implements LwjglInput {
 		case Keyboard.KEY_GRAVE:
 			return Input.Keys.GRAVE;
 		case Keyboard.KEY_MULTIPLY:
-			return Input.Keys.STAR;
+			return Keys.NUMPAD_MULTIPLY;
+		case Keyboard.KEY_PAUSE:
+			return Keys.PAUSE;
+		case Keyboard.KEY_CAPITAL:
+			return Keys.CAPS_LOCK;
+		case Keyboard.KEY_SYSRQ:
+			return Keys.PRINT_SCREEN;
+		case Keyboard.KEY_SCROLL:
+			return Keys.SCROLL_LOCK;
 		case Keyboard.KEY_NUMLOCK:
-			return Input.Keys.NUM;
+			return Keys.NUM_LOCK;
 		case Keyboard.KEY_DECIMAL:
-			return Input.Keys.PERIOD;
+			return Keys.NUMPAD_DOT;
 		case Keyboard.KEY_DIVIDE:
-			return Input.Keys.SLASH;
+			return Keys.NUMPAD_DIVIDE;
 		case Keyboard.KEY_LMETA:
 			return Input.Keys.SYM;
 		case Keyboard.KEY_RMETA:
 			return Input.Keys.SYM;
 		case Keyboard.KEY_NUMPADEQUALS:
-			return Input.Keys.EQUALS;
+			return Keys.NUMPAD_EQUALS;
 		case Keyboard.KEY_AT:
 			return Input.Keys.AT;
 		case Keyboard.KEY_EQUALS:
 			return Input.Keys.EQUALS;
 		case Keyboard.KEY_NUMPADCOMMA:
-			return Input.Keys.COMMA;
+			return Keys.NUMPAD_COMMA;
 		case Keyboard.KEY_NUMPADENTER:
-			return Input.Keys.ENTER;
+			return Keys.NUMPAD_ENTER;
 		case Keyboard.KEY_0:
 			return Input.Keys.NUM_0;
 		case Keyboard.KEY_1:
@@ -464,7 +392,7 @@ final public class DefaultLwjglInput implements LwjglInput {
 		case Keyboard.KEY_PERIOD:
 			return Input.Keys.PERIOD;
 		case Keyboard.KEY_ADD:
-			return Input.Keys.PLUS;
+			return Keys.NUMPAD_ADD;
 		case Keyboard.KEY_SEMICOLON:
 			return Input.Keys.SEMICOLON;
 		case Keyboard.KEY_LSHIFT:
@@ -494,7 +422,7 @@ final public class DefaultLwjglInput implements LwjglInput {
 		case Keyboard.KEY_BACK:
 			return Input.Keys.DEL;
 		case Keyboard.KEY_SUBTRACT:
-			return Input.Keys.MINUS;
+			return Keys.NUMPAD_SUBTRACT;
 		case Keyboard.KEY_APOSTROPHE:
 			return Input.Keys.APOSTROPHE;
 		case Keyboard.KEY_F1:
@@ -521,6 +449,18 @@ final public class DefaultLwjglInput implements LwjglInput {
 			return Input.Keys.F11;
 		case Keyboard.KEY_F12:
 			return Input.Keys.F12;
+		case Keyboard.KEY_F13:
+			return Input.Keys.F13;
+		case Keyboard.KEY_F14:
+			return Input.Keys.F14;
+		case Keyboard.KEY_F15:
+			return Input.Keys.F15;
+		case Keyboard.KEY_F16:
+			return Input.Keys.F16;
+		case Keyboard.KEY_F17:
+			return Input.Keys.F17;
+		case Keyboard.KEY_F18:
+			return Input.Keys.F18;
 		case Keyboard.KEY_COLON:
 			return Input.Keys.COLON;
 		case Keyboard.KEY_NUMPAD0:
@@ -545,205 +485,6 @@ final public class DefaultLwjglInput implements LwjglInput {
 			return Input.Keys.NUMPAD_9;
 		default:
 			return Input.Keys.UNKNOWN;
-		}
-	}
-
-	public static int getLwjglKeyCode (int gdxKeyCode) {
-		switch (gdxKeyCode) {
-		case Input.Keys.APOSTROPHE:
-			return Keyboard.KEY_APOSTROPHE;
-		case Input.Keys.LEFT_BRACKET:
-			return Keyboard.KEY_LBRACKET;
-		case Input.Keys.RIGHT_BRACKET:
-			return Keyboard.KEY_RBRACKET;
-		case Input.Keys.GRAVE:
-			return Keyboard.KEY_GRAVE;
-		case Input.Keys.STAR:
-			return Keyboard.KEY_MULTIPLY;
-		case Input.Keys.NUM:
-			return Keyboard.KEY_NUMLOCK;
-		case Input.Keys.AT:
-			return Keyboard.KEY_AT;
-		case Input.Keys.EQUALS:
-			return Keyboard.KEY_EQUALS;
-		case Input.Keys.SYM:
-			return Keyboard.KEY_LMETA;
-		case Input.Keys.NUM_0:
-			return Keyboard.KEY_0;
-		case Input.Keys.NUM_1:
-			return Keyboard.KEY_1;
-		case Input.Keys.NUM_2:
-			return Keyboard.KEY_2;
-		case Input.Keys.NUM_3:
-			return Keyboard.KEY_3;
-		case Input.Keys.NUM_4:
-			return Keyboard.KEY_4;
-		case Input.Keys.NUM_5:
-			return Keyboard.KEY_5;
-		case Input.Keys.NUM_6:
-			return Keyboard.KEY_6;
-		case Input.Keys.NUM_7:
-			return Keyboard.KEY_7;
-		case Input.Keys.NUM_8:
-			return Keyboard.KEY_8;
-		case Input.Keys.NUM_9:
-			return Keyboard.KEY_9;
-		case Input.Keys.A:
-			return Keyboard.KEY_A;
-		case Input.Keys.B:
-			return Keyboard.KEY_B;
-		case Input.Keys.C:
-			return Keyboard.KEY_C;
-		case Input.Keys.D:
-			return Keyboard.KEY_D;
-		case Input.Keys.E:
-			return Keyboard.KEY_E;
-		case Input.Keys.F:
-			return Keyboard.KEY_F;
-		case Input.Keys.G:
-			return Keyboard.KEY_G;
-		case Input.Keys.H:
-			return Keyboard.KEY_H;
-		case Input.Keys.I:
-			return Keyboard.KEY_I;
-		case Input.Keys.J:
-			return Keyboard.KEY_J;
-		case Input.Keys.K:
-			return Keyboard.KEY_K;
-		case Input.Keys.L:
-			return Keyboard.KEY_L;
-		case Input.Keys.M:
-			return Keyboard.KEY_M;
-		case Input.Keys.N:
-			return Keyboard.KEY_N;
-		case Input.Keys.O:
-			return Keyboard.KEY_O;
-		case Input.Keys.P:
-			return Keyboard.KEY_P;
-		case Input.Keys.Q:
-			return Keyboard.KEY_Q;
-		case Input.Keys.R:
-			return Keyboard.KEY_R;
-		case Input.Keys.S:
-			return Keyboard.KEY_S;
-		case Input.Keys.T:
-			return Keyboard.KEY_T;
-		case Input.Keys.U:
-			return Keyboard.KEY_U;
-		case Input.Keys.V:
-			return Keyboard.KEY_V;
-		case Input.Keys.W:
-			return Keyboard.KEY_W;
-		case Input.Keys.X:
-			return Keyboard.KEY_X;
-		case Input.Keys.Y:
-			return Keyboard.KEY_Y;
-		case Input.Keys.Z:
-			return Keyboard.KEY_Z;
-		case Input.Keys.ALT_LEFT:
-			return Keyboard.KEY_LMENU;
-		case Input.Keys.ALT_RIGHT:
-			return Keyboard.KEY_RMENU;
-		case Input.Keys.BACKSLASH:
-			return Keyboard.KEY_BACKSLASH;
-		case Input.Keys.COMMA:
-			return Keyboard.KEY_COMMA;
-		case Input.Keys.FORWARD_DEL:
-			return Keyboard.KEY_DELETE;
-		case Input.Keys.DPAD_LEFT:
-			return Keyboard.KEY_LEFT;
-		case Input.Keys.DPAD_RIGHT:
-			return Keyboard.KEY_RIGHT;
-		case Input.Keys.DPAD_UP:
-			return Keyboard.KEY_UP;
-		case Input.Keys.DPAD_DOWN:
-			return Keyboard.KEY_DOWN;
-		case Input.Keys.ENTER:
-			return Keyboard.KEY_RETURN;
-		case Input.Keys.HOME:
-			return Keyboard.KEY_HOME;
-		case Input.Keys.END:
-			return Keyboard.KEY_END;
-		case Input.Keys.PAGE_DOWN:
-			return Keyboard.KEY_NEXT;
-		case Input.Keys.PAGE_UP:
-			return Keyboard.KEY_PRIOR;
-		case Input.Keys.INSERT:
-			return Keyboard.KEY_INSERT;
-		case Input.Keys.MINUS:
-			return Keyboard.KEY_MINUS;
-		case Input.Keys.PERIOD:
-			return Keyboard.KEY_PERIOD;
-		case Input.Keys.PLUS:
-			return Keyboard.KEY_ADD;
-		case Input.Keys.SEMICOLON:
-			return Keyboard.KEY_SEMICOLON;
-		case Input.Keys.SHIFT_LEFT:
-			return Keyboard.KEY_LSHIFT;
-		case Input.Keys.SHIFT_RIGHT:
-			return Keyboard.KEY_RSHIFT;
-		case Input.Keys.SLASH:
-			return Keyboard.KEY_SLASH;
-		case Input.Keys.SPACE:
-			return Keyboard.KEY_SPACE;
-		case Input.Keys.TAB:
-			return Keyboard.KEY_TAB;
-		case Input.Keys.DEL:
-			return Keyboard.KEY_BACK;
-		case Input.Keys.CONTROL_LEFT:
-			return Keyboard.KEY_LCONTROL;
-		case Input.Keys.CONTROL_RIGHT:
-			return Keyboard.KEY_RCONTROL;
-		case Input.Keys.ESCAPE:
-			return Keyboard.KEY_ESCAPE;
-		case Input.Keys.F1:
-			return Keyboard.KEY_F1;
-		case Input.Keys.F2:
-			return Keyboard.KEY_F2;
-		case Input.Keys.F3:
-			return Keyboard.KEY_F3;
-		case Input.Keys.F4:
-			return Keyboard.KEY_F4;
-		case Input.Keys.F5:
-			return Keyboard.KEY_F5;
-		case Input.Keys.F6:
-			return Keyboard.KEY_F6;
-		case Input.Keys.F7:
-			return Keyboard.KEY_F7;
-		case Input.Keys.F8:
-			return Keyboard.KEY_F8;
-		case Input.Keys.F9:
-			return Keyboard.KEY_F9;
-		case Input.Keys.F10:
-			return Keyboard.KEY_F10;
-		case Input.Keys.F11:
-			return Keyboard.KEY_F11;
-		case Input.Keys.F12:
-			return Keyboard.KEY_F12;
-		case Input.Keys.COLON:
-			return Keyboard.KEY_COLON;
-		case Input.Keys.NUMPAD_0:
-			return Keyboard.KEY_NUMPAD0;
-		case Input.Keys.NUMPAD_1:
-			return Keyboard.KEY_NUMPAD1;
-		case Input.Keys.NUMPAD_2:
-			return Keyboard.KEY_NUMPAD2;
-		case Input.Keys.NUMPAD_3:
-			return Keyboard.KEY_NUMPAD3;
-		case Input.Keys.NUMPAD_4:
-			return Keyboard.KEY_NUMPAD4;
-		case Input.Keys.NUMPAD_5:
-			return Keyboard.KEY_NUMPAD5;
-		case Input.Keys.NUMPAD_6:
-			return Keyboard.KEY_NUMPAD6;
-		case Input.Keys.NUMPAD_7:
-			return Keyboard.KEY_NUMPAD7;
-		case Input.Keys.NUMPAD_8:
-			return Keyboard.KEY_NUMPAD8;
-		case Input.Keys.NUMPAD_9:
-			return Keyboard.KEY_NUMPAD9;
-		default:
-			return Keyboard.KEY_NONE;
 		}
 	}
 
@@ -785,7 +526,6 @@ final public class DefaultLwjglInput implements LwjglInput {
 				int button = Mouse.getEventButton();
 				int gdxButton = toGdxButton(button);
 				if (button != -1 && gdxButton == -1) continue; // Ignore unknown button.
-				
 				long time = Mouse.getEventNanoseconds();
 
 				// could be drag, scroll or move
@@ -841,7 +581,6 @@ final public class DefaultLwjglInput implements LwjglInput {
 				char keyChar = Keyboard.getEventCharacter();
 				long time = Keyboard.getEventNanoseconds();
 				if (Keyboard.getEventKeyState() || (keyCode == 0 && keyChar != 0 && Character.isDefined(keyChar))) {
-
 					switch (keyCode) {
 					case Keys.DEL:
 						keyChar = 8;
@@ -853,17 +592,19 @@ final public class DefaultLwjglInput implements LwjglInput {
 
 					if (keyCode != 0) {
 						eventQueue.keyDown(keyCode, time);
-						pressedKeys++;
+						pressedKeyCount++;
 						keyJustPressed = true;
+						pressedKeys[keyCode] = true;
 						justPressedKeys[keyCode] = true;
 						lastKeyCharPressed = keyChar;
 						keyRepeatTimer = DefaultLwjglInput.keyRepeatInitialTime;
 					}
-					
+
 					eventQueue.keyTyped(keyChar, time);
 				} else {
 					eventQueue.keyUp(keyCode, time);
-					pressedKeys--;
+					pressedKeyCount--;
+					pressedKeys[keyCode] = false;
 					lastKeyCharPressed = 0;
 				}
 				Gdx.graphics.requestRendering();
@@ -912,8 +653,8 @@ final public class DefaultLwjglInput implements LwjglInput {
 	}
 
 	@Override
-	public boolean isButtonJustPressed(int button) {
-		if(button < 0 || button >= justPressedButtons.length) return false;
+	public boolean isButtonJustPressed (int button) {
+		if (button < 0 || button >= justPressedButtons.length) return false;
 		return justPressedButtons[button];
 	}
 
@@ -972,10 +713,8 @@ final public class DefaultLwjglInput implements LwjglInput {
 
 	@Override
 	public int getDeltaX (int pointer) {
-		if (pointer == 0)
-			return deltaX;
-		else
-			return 0;
+		if (pointer == 0) return deltaX;
+		return 0;
 	}
 
 	@Override
@@ -985,10 +724,8 @@ final public class DefaultLwjglInput implements LwjglInput {
 
 	@Override
 	public int getDeltaY (int pointer) {
-		if (pointer == 0)
-			return -deltaY;
-		else
-			return 0;
+		if (pointer == 0) return -deltaY;
+		return 0;
 	}
 
 	@Override
@@ -1003,7 +740,5 @@ final public class DefaultLwjglInput implements LwjglInput {
 
 	@Override
 	public void getRotationMatrix (float[] matrix) {
-	
 	}
-
 }
