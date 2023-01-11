@@ -177,14 +177,21 @@ This version fixes some GWT-specific bugs in recently-changed files, like Screen
 
 This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
-### 1.110.0-SNAPSHOT
+### 1.1100.0-SNAPSHOT
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
 ```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
+      implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
 ```
+
+The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
+needed by GWT 2.10.0 .
+
+The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
+also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
 
 This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still apply).
 
@@ -192,11 +199,12 @@ This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still apply).
 
 Most of these versions have been updated to use GWT 2.9.0; this benefits from some changes in users' build.gradle files, 
 but should still work without changes as long as no other GWT versions are in use. The master version, which will become
-1.110.0, uses GWT 2.10.0 .
+1.1100.0, uses GWT 2.10.0 .
 
-However, upgrading to GWT 2.9.0 needs a few changes if you want to take full advantage of the new Java 11 features
-it permits. **It also requires any dependency on GWT 2.8.2 to be changed to 2.9.0.** If you use GWT 2.9.0 anywhere, you
-have to use it everywhere; that's why the backend needs to be changed and not just your code.
+However, upgrading to GWT 2.9.0 or 2.10.0 needs a few changes if you want to take full advantage of the new Java 11 features
+it permits. **It also requires any dependency on GWT 2.8.2 to be changed to the newer GWT version, 2.9.0 or 2.10.0.** If
+you use GWT 2.9.0 or 2.10.0 anywhere, you have to use it everywhere; that's why the backend needs to be changed and not
+just your code.
 - [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
   like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
