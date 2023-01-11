@@ -1,7 +1,7 @@
 ## Backends for libGDX, easy to build
 
  - Do you need to change the behavior of one or more of the libGDX backends for your own (nefarious?) purposes?
- - Or do you just want **GWT 2.9.0** support before libGDX has it officially?
+ - Or do you just want **GWT 2.10.0** support before libGDX has it officially?
 
 This is where this repo comes in.
 
@@ -9,7 +9,7 @@ If you need to change build-in behaviour, but don't manage to get the complete l
 build your very own version or don't want to use snapshot versions, this repo is what you need. Check my own additions
 to see what else is changed.
 
-... but you're probably here for GWT 2.9.0, which is available with a backend here.
+... but you're probably here for GWT 2.10.0, which is available with a backend here.
 
 Your options for using this repo depend on whether you want to make changes to it:
 
@@ -22,9 +22,10 @@ Your options for using this repo depend on whether you want to make changes to i
 
 ### How to use as a dependency (I want to use a build without making changes)
 
-In case you don't want to change something here yourself, but just want to use some of the additions, you can either use
-the 1.100.1 stable release (featuring GWT 2.9.0) from the standard Maven Central repository, or use a Jitpack
-dependency. If you choose JitPack, you might need to add JitPack as a repo to your project (current gdx-setup and
+In case you don't want to change something here yourself, but just want to use some additions, you can either use the
+1.1100.0 stable release (featuring GWT 2.10.0) from the standard Maven Central repository, or use a Jitpack dependency.
+The latest stable release is documented near the bottom of the README.md file.
+If you choose JitPack, you might need to add JitPack as a repo to your project (current gdx-setup and
 gdx-liftoff both do this step for you already):
 ```groovy
     allprojects {
@@ -224,8 +225,8 @@ This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still apply).
 ## GWT 2.9.0/2.10.0 Support
 
 Most of these versions have been updated to use GWT 2.9.0; this benefits from some changes in users' build.gradle files, 
-but should still work without changes as long as no other GWT versions are in use. The master version, which will become
-1.1100.0, uses GWT 2.10.0 .
+but should still work without changes as long as no other GWT versions are in use. The master version and 1.1100.0 use
+GWT 2.10.0 .
 
 However, upgrading to GWT 2.9.0 or 2.10.0 needs a few changes if you want to take full advantage of the new Java 11 features
 it permits. **It also requires any dependency on GWT 2.8.2 to be changed to the newer GWT version, 2.9.0 or 2.10.0.** If
