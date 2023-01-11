@@ -177,14 +177,40 @@ This version fixes some GWT-specific bugs in recently-changed files, like Screen
 
 This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
 
-### 1.1100.0-SNAPSHOT
+### 1.1100.0
+
+Checkout the tag `v1.1100.0` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0"
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.0'
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.0:sources'
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
+needed by GWT 2.10.0 .
+
+The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
+also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
+
+This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still apply).
+
+### 1.1100.1-SNAPSHOT
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
 ```groovy
-      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
-      implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
-      implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
 ```
 
 The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
