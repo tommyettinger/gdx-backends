@@ -17,7 +17,7 @@
 dependencies {
     api libraries.gwt
     compileOnly libraries.compileOnly.gwt
-    api "com.google.jsinterop:jsinterop-annotations:${versions.jsinteropAnnotations}:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:${versions.jsinteropAnnotations}:sources"
 
 }
 
@@ -25,7 +25,6 @@ configurations.all {
     // gwt-dev pulls in apache-jsp (Tomcat), but we don't need it and it messes with gretty
     exclude group: 'org.eclipse.jetty', module: 'apache-jsp'
 }
-
 javadoc {
     exclude "com/badlogic/gdx/backends/gwt/emu/**"
 // see https://stackoverflow.com/questions/52788326/gradle-javadoc-gwt-error-cannot-access-event-in-import-com-google-gwt-user-cli
@@ -35,4 +34,4 @@ javadoc {
 sourceSets.main.java.exclude "**/System.java"
 
 jar.duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
-sourceSets.main.resources.srcDirs += [ file('res').path ]
+sourceSets.main.resources.srcDirs += [ file('res') ]
