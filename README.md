@@ -202,7 +202,7 @@ needed by GWT 2.10.0 .
 The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
 also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still apply).
+This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 
 ### 1.1100.1-SNAPSHOT
 
@@ -220,7 +220,7 @@ needed by GWT 2.10.0 .
 The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
 also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still apply).
+This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 
 ## GWT 2.9.0/2.10.0 Support
 
