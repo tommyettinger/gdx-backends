@@ -16,11 +16,11 @@
 
 package com.badlogic.gdx.backends.lwjgl3.audio;
 
-import com.badlogic.gdx.audio.Sound;
-
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+
+import com.badlogic.gdx.audio.Sound;
 
 import static org.lwjgl.openal.AL10.*;
 

@@ -16,11 +16,18 @@
 
 package com.badlogic.gdx.backends.lwjgl3;
 
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCharCallback;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.glfw.GLFWScrollCallback;
+
 import com.badlogic.gdx.AbstractInput;
+import com.badlogic.gdx.graphics.glutils.HdpiMode;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputEventQueue;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.glutils.HdpiMode;
-import org.lwjgl.glfw.*;
 
 public class DefaultLwjgl3Input extends AbstractInput implements Lwjgl3Input {
 	final Lwjgl3Window window;

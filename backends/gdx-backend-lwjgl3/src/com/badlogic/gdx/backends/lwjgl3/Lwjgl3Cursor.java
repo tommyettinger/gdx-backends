@@ -16,16 +16,17 @@
 
 package com.badlogic.gdx.backends.lwjgl3;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWImage;
+
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWImage;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Lwjgl3Cursor implements Cursor {
 	static final Array<Lwjgl3Cursor> cursors = new Array<Lwjgl3Cursor>();

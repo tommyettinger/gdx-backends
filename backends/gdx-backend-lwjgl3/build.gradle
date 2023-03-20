@@ -14,11 +14,18 @@
  * limitations under the License.
  ******************************************************************************/
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+if(JavaVersion.current().isJava9Compatible()) {
+    compileJava {
+        options.release.set(8)
+    }
+} else {
+    sourceCompatibility = 8
+    targetCompatibility = 8
+}
 
 dependencies {
     api libraries.lwjgl3
+    api gdxnatives.desktop
 }
 
 

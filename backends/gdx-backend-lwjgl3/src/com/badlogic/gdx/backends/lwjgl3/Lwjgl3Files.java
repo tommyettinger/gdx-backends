@@ -16,10 +16,10 @@
 
 package com.badlogic.gdx.backends.lwjgl3;
 
+import java.io.File;
+
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.files.FileHandle;
-
-import java.io.File;
 
 /** @author mzechner
  * @author Nathan Sweet */

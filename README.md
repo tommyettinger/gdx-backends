@@ -5,7 +5,7 @@
 
 This is where this repo comes in.
 
-If you need to change build-in behaviour, but don't manage to get the complete libGDX repo to build, don't want to 
+If you need to change built-in behaviour, but don't manage to get the complete libGDX repo to build, don't want to 
 build your very own version or don't want to use snapshot versions, this repo is what you need. Check my own additions
 to see what else is changed.
 
@@ -30,7 +30,7 @@ gdx-liftoff both do this step for you already):
 ```groovy
     allprojects {
 	    repositories {
-		    ...
+		    //...
 		    maven { url 'https://jitpack.io' }
 	    }
     }
@@ -204,7 +204,33 @@ also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed
 
 This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 
-### 1.1100.1-SNAPSHOT
+### 1.1100.1
+
+Checkout the tag `v1.1100.1` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.1"
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.1:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.1'
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.1:sources'
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
+needed by GWT 2.10.0 .
+
+The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
+also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
+
+This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+
+### 1.1100.2-SNAPSHOT
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
@@ -216,9 +242,6 @@ Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
 The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
 needed by GWT 2.10.0 .
-
-The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
-also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
 
 This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 

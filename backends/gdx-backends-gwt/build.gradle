@@ -26,7 +26,7 @@ configurations.all {
     exclude group: 'org.eclipse.jetty', module: 'apache-jsp'
 }
 javadoc {
-    exclude "com/badlogic/gdx/backends/gwt/emu/**"
+    exclude "com/badlogic/gdx/backends/gwt/**"
 // see https://stackoverflow.com/questions/52788326/gradle-javadoc-gwt-error-cannot-access-event-in-import-com-google-gwt-user-cli
     options.addStringOption("sourcepath", "src/")
 }

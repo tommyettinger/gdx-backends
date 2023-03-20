@@ -16,13 +16,13 @@
 
 package com.badlogic.gdx.backends.lwjgl3.audio;
 
-import com.badlogic.gdx.audio.AudioRecorder;
-import com.badlogic.gdx.utils.GdxRuntimeException;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.TargetDataLine;
+
+import com.badlogic.gdx.audio.AudioRecorder;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 /** @author mzechner */
 public class JavaSoundAudioRecorder implements AudioRecorder {

@@ -16,17 +16,18 @@
 
 package com.badlogic.gdx.backends.lwjgl3.audio;
 
+import java.nio.Buffer;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.openal.AL11;
+
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.FloatArray;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.openal.AL11;
-
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 
 import static org.lwjgl.openal.AL10.*;
 

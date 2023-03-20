@@ -16,10 +16,10 @@
 
 package com.badlogic.gdx.backends.lwjgl3.audio;
 
+import java.io.ByteArrayOutputStream;
+
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.StreamUtils;
-
-import java.io.ByteArrayOutputStream;
 
 /** @author Nathan Sweet */
 public class Ogg {

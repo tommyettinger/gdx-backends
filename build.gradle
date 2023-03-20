@@ -36,10 +36,14 @@ apply plugin: 'java-library'
 apply plugin: 'com.vanniktech.maven.publish'
 
 if (JavaVersion.current().isJava8Compatible()) {
-    allprojects {
-        tasks.withType(Javadoc) {
-            options.addStringOption('Xdoclint:none', '-quiet')
-        }
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none,-missing', '-quiet')
+    }
+}
+
+if (JavaVersion.current().isJava9Compatible()) {
+    tasks.withType(Javadoc) {
+        options.addStringOption("-release", "8");
     }
 }
 
@@ -62,6 +66,33 @@ configure(subprojects - project(":backends:gdx-backend-android")) {
     }
 }
 
+configure(allprojects - project(":backends:gdx-backend-lwjgl3") - project(":backends:gdx-backend-gwt")){
+    compileJava {
+        sourceCompatibility = 7
+        targetCompatibility = 7
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.release.set(7)
+        }
+    }
+}
+configure(project(":backends:gdx-backend-lwjgl3")){
+    compileJava {
+        sourceCompatibility = 8
+        targetCompatibility = 8
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.release.set(8)
+        }
+    }
+}
+configure(project(":backends:gdx-backend-gwt")){
+    compileJava {
+        sourceCompatibility = 8
+        targetCompatibility = 8
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.release.set(8)
+        }
+    }
+}
 allprojects {
     buildscript {
         repositories {
@@ -106,14 +137,6 @@ allprojects {
         }
     }
 
-	compileJava {
-		sourceCompatibility = 7
-		targetCompatibility = 7
-		if (JavaVersion.current().isJava9Compatible()) {
-			options.release.set(7)
-		}
-	}
-	
 	compileTestJava {
 		sourceCompatibility = 8
 		targetCompatibility = 8
