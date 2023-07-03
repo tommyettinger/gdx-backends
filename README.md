@@ -230,7 +230,33 @@ also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed
 
 This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 
-### 1.1100.2-SNAPSHOT
+### 1.1200.0
+
+Checkout the tag `v1.1200.0` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1200.0"
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1200.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1200.0'
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1200.0:sources'
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
+needed by GWT 2.10.0 .
+
+The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.120.0`, and
+also because `1.120.0` could refer to libGDX 1.1.20, subversion 0, if it existed.
+
+This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+
+### 1.1200.1-SNAPSHOT
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
@@ -261,9 +287,9 @@ just your code.
   file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer. This isn't done automatically.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested mostly
-  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.1.18` ;
+  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.1.19` ;
   [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-  `gradle.properties`, so you can change it there to `1.1.18` if you use that project generator.
+  `gradle.properties`, so you can change it there to `1.1.19` if you use that project generator.
 
 
 ## Future work
