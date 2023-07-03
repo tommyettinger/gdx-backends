@@ -15,7 +15,11 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.BufferUnderflowException;
+import java.nio.ByteOrder;
+import java.nio.FloatBuffer;
 
 /** FloatArrayBuffer, ReadWriteFloatArrayBuffer and ReadOnlyFloatArrayBuffer compose the implementation of array based float
  * buffers.

@@ -1,5 +1,5 @@
 
-package com.badlogic.gdx.graphics.glutils;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.glutils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.VertexBufferObject;
+import com.badlogic.gdx.graphics.glutils.VertexData;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.IntArray;
 
@@ -47,7 +50,7 @@ public class VertexBufferObjectWithVAO implements VertexData {
 	 *
 	 * @param isStatic whether the vertex data is static.
 	 * @param numVertices the maximum number of vertices
-	 * @param attributes the {@link com.badlogic.gdx.graphics.VertexAttribute}s. */
+	 * @param attributes the {@link VertexAttribute}s. */
 	public VertexBufferObjectWithVAO (boolean isStatic, int numVertices, VertexAttribute... attributes) {
 		this(isStatic, numVertices, new VertexAttributes(attributes));
 	}
@@ -83,9 +86,17 @@ public class VertexBufferObjectWithVAO implements VertexData {
 		return buffer.capacity() * 4 / attributes.vertexSize;
 	}
 
+	/** @deprecated use {@link #getBuffer(boolean)} instead */
 	@Override
+	@Deprecated
 	public FloatBuffer getBuffer () {
 		isDirty = true;
+		return buffer;
+	}
+
+	@Override
+	public FloatBuffer getBuffer (boolean forWriting) {
+		isDirty |= forWriting;
 		return buffer;
 	}
 
@@ -182,7 +193,7 @@ public class VertexBufferObjectWithVAO implements VertexData {
 	}
 
 	private void unbindAttributes (ShaderProgram shaderProgram) {
-		if (cachedLocations == null) {
+		if (cachedLocations.size == 0) {
 			return;
 		}
 		int numAttributes = attributes.size();

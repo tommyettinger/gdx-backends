@@ -14,7 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.utils.async;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.async;
+
+import com.badlogic.gdx.utils.async.AsyncExecutor;
 
 /** Task to be submitted to an {@link AsyncExecutor}, returning a result of type T.
  * @author badlogic */

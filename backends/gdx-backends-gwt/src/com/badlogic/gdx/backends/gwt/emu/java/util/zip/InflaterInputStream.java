@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package java.util.zip;
+package com.badlogic.gdx.backends.gwt.emu.java.util.zip;
 
 import java.io.IOException;
 import java.io.InputStream;

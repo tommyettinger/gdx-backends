@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-package java.util;
+package com.badlogic.gdx.backends.gwt.emu.java.util;
 
 import java.io.Serializable;
 

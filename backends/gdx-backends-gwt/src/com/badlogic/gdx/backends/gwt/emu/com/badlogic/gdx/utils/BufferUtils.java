@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.utils;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
@@ -28,6 +28,7 @@ import java.nio.ShortBuffer;
 
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.google.gwt.core.client.GWT;
 
 /** Class with static helper methods to increase the speed of array/direct buffer and direct buffer/direct buffer transfers

@@ -1,5 +1,5 @@
 
-package java.nio.channels;
+package com.badlogic.gdx.backends.gwt.emu.java.nio.channels;
 
 import java.nio.ByteBuffer;
 

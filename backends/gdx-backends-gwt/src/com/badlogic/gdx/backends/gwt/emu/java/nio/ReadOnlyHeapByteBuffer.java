@@ -15,7 +15,11 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.ByteBuffer;
+import java.nio.HeapByteBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** HeapByteBuffer, ReadWriteHeapByteBuffer and ReadOnlyHeapByteBuffer compose the implementation of array based byte buffers.
  * <p>
@@ -25,9 +29,9 @@ package java.nio;
  * This class is marked final for runtime performance.
  * </p>
  */
-final class ReadOnlyHeapByteBuffer extends HeapByteBuffer {
+final class ReadOnlyHeapByteBuffer extends java.nio.HeapByteBuffer {
 
-	static ReadOnlyHeapByteBuffer copy (HeapByteBuffer other, int markOfOther) {
+	static ReadOnlyHeapByteBuffer copy (java.nio.HeapByteBuffer other, int markOfOther) {
 		ReadOnlyHeapByteBuffer buf = new ReadOnlyHeapByteBuffer(other.backingArray, other.capacity(), other.offset);
 		buf.limit = other.limit();
 		buf.position = other.position();

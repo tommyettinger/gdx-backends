@@ -15,7 +15,13 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.BufferOverflowException;
+import java.nio.BufferUnderflowException;
+import java.nio.ByteOrder;
+import java.nio.CharBuffer;
+import java.nio.ReadOnlyBufferException;
 
 /** This class wraps a char sequence to be a char buffer.
  * <p>

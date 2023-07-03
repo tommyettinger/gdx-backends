@@ -14,9 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 
-package java.util.zip;
+package com.badlogic.gdx.backends.gwt.emu.java.util.zip;
 
 import java.io.InputStream;
+import java.util.zip.InflaterInputStream;
 
 /** Dummy emulation. Throws a GdxRuntimeException on first read.
  * @author hneuer */

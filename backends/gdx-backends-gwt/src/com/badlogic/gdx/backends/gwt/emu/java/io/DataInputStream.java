@@ -14,9 +14,13 @@
  * the License.
  */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
 
 import com.google.gwt.corp.compatibility.Numbers;
+
+import java.io.*;
+import java.io.DataInput;
+import java.io.EOFException;
 
 public class DataInputStream extends FilterInputStream implements DataInput {
 

@@ -14,10 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package java.util.regex;
+package com.badlogic.gdx.backends.gwt.emu.java.util.regex;
 
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.regexp.shared.MatchResult;
+
+import java.util.regex.Pattern;
 
 /** Emulation of the {@link Matcher} class, uses {@link RegExp} as internal implementation.
  * @author hneuer */

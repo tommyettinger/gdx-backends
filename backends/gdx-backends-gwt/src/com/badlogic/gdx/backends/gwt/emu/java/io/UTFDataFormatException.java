@@ -14,7 +14,9 @@
  * the License.
  */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
+
+import java.io.IOException;
 
 public class UTFDataFormatException extends IOException {
 

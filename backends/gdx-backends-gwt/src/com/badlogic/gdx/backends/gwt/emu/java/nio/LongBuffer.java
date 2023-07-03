@@ -15,7 +15,11 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
+
+import java.nio.*;
+import java.nio.Buffer;
+import java.nio.ByteOrder;
 
 /** A buffer of longs.
  * <p>

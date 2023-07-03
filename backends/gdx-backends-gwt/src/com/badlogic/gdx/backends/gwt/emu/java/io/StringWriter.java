@@ -8,7 +8,10 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
+
+import java.io.IOException;
+import java.io.Writer;
 
 public class StringWriter extends Writer {
 	private final StringBuffer out;

@@ -15,10 +15,15 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.corp.compatibility.Endianness;
 import com.google.gwt.corp.compatibility.StringToByteBuffer;
+
+import java.nio.*;
+import java.nio.Buffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 
 /** A buffer for bytes.
  * <p>

@@ -14,7 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 
-package java.io;
+package com.badlogic.gdx.backends.gwt.emu.java.io;
+
+import java.io.FilterInputStream;
+import java.io.InputStream;
 
 public class BufferedInputStream extends FilterInputStream {
 	public BufferedInputStream (InputStream in) {

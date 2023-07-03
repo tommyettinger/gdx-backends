@@ -22,7 +22,7 @@
  Copyright 2010 Google Inc.
  */
 
-package com.google.gwt.corp.compatibility;
+package com.badlogic.gdx.backends.gwt.emu.com.google.gwt.corp.compatibility;
 
 import java.nio.ByteBuffer;
 

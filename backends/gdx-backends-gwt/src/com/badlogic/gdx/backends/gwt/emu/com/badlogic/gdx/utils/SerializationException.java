@@ -14,7 +14,9 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.utils;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils;
+
+import com.badlogic.gdx.utils.StringBuilder;
 
 /** Indicates an error during serialization due to misconfiguration or during deserialization due to invalid input data.
  * @author Nathan Sweet */

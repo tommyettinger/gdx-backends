@@ -14,9 +14,12 @@
  * limitations under the License.
  ******************************************************************************/
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.corp.compatibility.Numbers;
+
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 
 class StringByteBuffer extends BaseByteBuffer {
 

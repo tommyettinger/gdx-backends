@@ -15,9 +15,18 @@
  *  limitations under the License.
  */
 
-package java.nio;
+package com.badlogic.gdx.backends.gwt.emu.java.nio;
 
 import com.google.gwt.typedarrays.shared.ArrayBuffer;
+
+import java.nio.*;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.DirectByteBuffer;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
+import java.nio.ReadOnlyBufferException;
+import java.nio.ShortBuffer;
 
 /** HeapByteBuffer, ReadWriteHeapByteBuffer and ReadOnlyHeapByteBuffer compose the implementation of array based byte buffers.
  * <p>
@@ -27,9 +36,9 @@ import com.google.gwt.typedarrays.shared.ArrayBuffer;
  * This class is marked final for runtime performance.
  * </p>
  */
-final class DirectReadOnlyByteBuffer extends DirectByteBuffer {
+final class DirectReadOnlyByteBuffer extends java.nio.DirectByteBuffer {
 
-	static DirectReadOnlyByteBuffer copy (DirectByteBuffer other, int markOfOther) {
+	static DirectReadOnlyByteBuffer copy (java.nio.DirectByteBuffer other, int markOfOther) {
 		DirectReadOnlyByteBuffer buf = new DirectReadOnlyByteBuffer(other.byteArray.buffer(), other.capacity(),
 			other.byteArray.byteOffset());
 		buf.limit = other.limit();

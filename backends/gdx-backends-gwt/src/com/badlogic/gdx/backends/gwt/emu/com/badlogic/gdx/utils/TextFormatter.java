@@ -14,7 +14,10 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.utils;
+package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils;
+
+import com.badlogic.gdx.utils.I18NBundle;
+import com.badlogic.gdx.utils.StringBuilder;
 
 import java.util.Locale;
 
