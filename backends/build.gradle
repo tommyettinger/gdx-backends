@@ -14,16 +14,22 @@
  * limitations under the License.
  ******************************************************************************/
 
-subprojects {
-    apply plugin: "java-library"
+configure(subprojects - project(":backends:gdx-backend-android")) {
+    apply plugin: "java"
+
+    if (JavaVersion.current().isJava9Compatible()) {
+        compileJava {
+            options.release = versions.java
+        }
+    }
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
     sourceSets.main.java.srcDirs = ["src"]
-    sourceSets.main.resources.srcDirs = ["src"]
+    sourceSets.main.resources.srcDirs = ["res"]
 
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx:${versions.gdx}"
+        implementation "com.badlogicgames.gdx:gdx:${versions.gdx}"
     }
 }

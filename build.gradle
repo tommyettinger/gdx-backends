@@ -28,12 +28,23 @@ buildscript {
     }
     dependencies {
         classpath 'com.vanniktech:gradle-maven-publish-plugin:0.22.0'
-        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.3.1"
+        classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.4.1"
     }
 }
 
 apply plugin: 'java-library'
 apply plugin: 'com.vanniktech.maven.publish'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+tasks.withType(Javadoc) {
+    options.encoding = 'UTF-8'
+    options.addBooleanOption('use', true);
+}
+tasks.withType(Test) {
+    systemProperty 'file.encoding', 'UTF-8'
+}
 
 if (JavaVersion.current().isJava8Compatible()) {
     tasks.withType(Javadoc) {
@@ -48,6 +59,8 @@ if (JavaVersion.current().isJava9Compatible()) {
 }
 
 configure(subprojects - project(":backends:gdx-backend-android")) {
+    apply plugin: "idea"
+    apply plugin: "eclipse"
     apply plugin: 'java-library'
     apply plugin: 'com.vanniktech.maven.publish'
 
@@ -144,4 +157,8 @@ allprojects {
 			options.release.set(8)
 		}
 	}
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }

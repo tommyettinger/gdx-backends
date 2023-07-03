@@ -16,18 +16,24 @@
 
 package com.badlogic.gdx.backends.android;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.channels.FileChannel;
+
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.StreamUtils;
-
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.channels.FileChannel;
 
 /** @author mzechner
  * @author Nathan Sweet */

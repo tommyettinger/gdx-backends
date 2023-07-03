@@ -4,6 +4,7 @@ package com.badlogic.gdx.backends.android;
 import android.os.Build;
 import android.view.PointerIcon;
 import android.view.View;
+
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 

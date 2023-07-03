@@ -17,9 +17,8 @@
 package com.badlogic.gdx.backends.iosrobovm.custom;
 
 /*<imports>*/
-
-import org.robovm.apple.foundation.NSObjectProtocol;
-import org.robovm.objc.annotation.Method;
+import org.robovm.objc.annotation.*;
+import org.robovm.apple.foundation.*;
 /*</imports>*/
 
 /*<javadoc>*/

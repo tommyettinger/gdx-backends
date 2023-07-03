@@ -6,5 +6,5 @@ import com.badlogic.gdx.utils.Disposable;
 
 public interface Lwjgl3Audio extends Audio, Disposable {
 
-	void update();
+	void update ();
 }

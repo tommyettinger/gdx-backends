@@ -27,7 +27,7 @@ import com.badlogic.gdx.graphics.glutils.HdpiMode;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Pool;
-import org.robovm.apple.audiotoolbox.AudioServices;
+
 import org.robovm.apple.coregraphics.CGPoint;
 import org.robovm.apple.coregraphics.CGRect;
 import org.robovm.apple.foundation.Foundation;
@@ -35,7 +35,24 @@ import org.robovm.apple.foundation.NSExtensions;
 import org.robovm.apple.foundation.NSObject;
 import org.robovm.apple.foundation.NSRange;
 import org.robovm.apple.gamecontroller.GCKeyboard;
-import org.robovm.apple.uikit.*;
+import org.robovm.apple.uikit.UIAlertAction;
+import org.robovm.apple.uikit.UIAlertActionStyle;
+import org.robovm.apple.uikit.UIAlertController;
+import org.robovm.apple.uikit.UIAlertControllerStyle;
+import org.robovm.apple.uikit.UIForceTouchCapability;
+import org.robovm.apple.uikit.UIKey;
+import org.robovm.apple.uikit.UIKeyboardHIDUsage;
+import org.robovm.apple.uikit.UIKeyboardType;
+import org.robovm.apple.uikit.UIReturnKeyType;
+import org.robovm.apple.uikit.UIScreen;
+import org.robovm.apple.uikit.UITextAutocapitalizationType;
+import org.robovm.apple.uikit.UITextAutocorrectionType;
+import org.robovm.apple.uikit.UITextField;
+import org.robovm.apple.uikit.UITextFieldDelegate;
+import org.robovm.apple.uikit.UITextFieldDelegateAdapter;
+import org.robovm.apple.uikit.UITextSpellCheckingType;
+import org.robovm.apple.uikit.UITouch;
+import org.robovm.apple.uikit.UITouchPhase;
 import org.robovm.objc.annotation.Method;
 import org.robovm.objc.block.VoidBlock1;
 import org.robovm.rt.VM;
@@ -104,7 +121,7 @@ public class DefaultIOSInput extends AbstractInput implements IOSInput {
 	float[] R = new float[9];
 	InputProcessor inputProcessor = null;
 
-	boolean hasVibrator;
+	private IOSHaptics haptics;
 	// CMMotionManager motionManager;
 	protected UIAccelerometerDelegate accelerometerDelegate;
 	boolean compassSupported;
@@ -124,13 +141,8 @@ public class DefaultIOSInput extends AbstractInput implements IOSInput {
 		// motionManager = new CMMotionManager();
 		setupAccelerometer();
 		setupCompass();
-		UIDevice device = UIDevice.getCurrentDevice();
-		if (device.getModel().equalsIgnoreCase("iphone")) hasVibrator = true;
-
-		if (app.getVersion() >= 9) {
-			UIForceTouchCapability forceTouchCapability = UIScreen.getMainScreen().getTraitCollection().getForceTouchCapability();
-			pressureSupported = forceTouchCapability == UIForceTouchCapability.Available;
-		}
+		setupHaptics();
+		setupPressure();
 	}
 
 	protected void setupCompass () {
@@ -158,6 +170,15 @@ public class DefaultIOSInput extends AbstractInput implements IOSInput {
 			UIAccelerometer.getSharedAccelerometer().setDelegate(accelerometerDelegate);
 			UIAccelerometer.getSharedAccelerometer().setUpdateInterval(config.accelerometerUpdate);
 		}
+	}
+
+	protected void setupHaptics () {
+		haptics = new IOSHaptics(config.useHaptics);
+	}
+
+	protected void setupPressure () {
+		UIForceTouchCapability forceTouchCapability = UIScreen.getMainScreen().getTraitCollection().getForceTouchCapability();
+		pressureSupported = forceTouchCapability == UIForceTouchCapability.Available;
 	}
 
 	// need to retain a reference so GC doesn't get right of the
@@ -428,9 +449,9 @@ public class DefaultIOSInput extends AbstractInput implements IOSInput {
 		if (textfield == null) createDefaultTextField();
 		softkeyboardActive = visible;
 		if (visible) {
-			UIKeyboardType preferredInputType;
 			if (type == null) type = OnscreenKeyboardType.Default;
 			textfield.setKeyboardType(getIosInputType(type));
+			textfield.reloadInputViews();
 			textfield.becomeFirstResponder();
 			textfield.setDelegate(textDelegate);
 		} else {
@@ -528,17 +549,22 @@ public class DefaultIOSInput extends AbstractInput implements IOSInput {
 
 	@Override
 	public void vibrate (int milliseconds) {
-		AudioServices.playSystemSound(4095);
+		haptics.vibrate(milliseconds, true);
 	}
 
 	@Override
-	public void vibrate (long[] pattern, int repeat) {
-		// FIXME implement this
+	public void vibrate (int milliseconds, boolean fallback) {
+		haptics.vibrate(milliseconds, fallback);
 	}
 
 	@Override
-	public void cancelVibrate () {
-		// FIXME implement this
+	public void vibrate (int milliseconds, int amplitude, boolean fallback) {
+		haptics.vibrate(milliseconds, amplitude, fallback);
+	}
+
+	@Override
+	public void vibrate (VibrationType vibrationType) {
+		haptics.vibrate(vibrationType);
 	}
 
 	@Override
@@ -560,7 +586,8 @@ public class DefaultIOSInput extends AbstractInput implements IOSInput {
 	public boolean isPeripheralAvailable (Peripheral peripheral) {
 		if (peripheral == Peripheral.Accelerometer && config.useAccelerometer) return true;
 		if (peripheral == Peripheral.MultitouchScreen) return true;
-		if (peripheral == Peripheral.Vibrator) return hasVibrator;
+		if (peripheral == Peripheral.Vibrator) return haptics.isVibratorSupported();
+		if (peripheral == Peripheral.HapticFeedback) return haptics.isHapticsSupported();
 		if (peripheral == Peripheral.Compass) return compassSupported;
 		if (peripheral == Peripheral.OnscreenKeyboard) return true;
 		if (peripheral == Peripheral.Pressure) return pressureSupported;
@@ -683,9 +710,11 @@ public class DefaultIOSInput extends AbstractInput implements IOSInput {
 					if (inputProcessor != null) inputProcessor.touchDown(event.x, event.y, event.pointer, Buttons.LEFT);
 					if (numTouched >= 1) justTouched = true;
 					break;
-				case Cancelled:
 				case Ended:
 					if (inputProcessor != null) inputProcessor.touchUp(event.x, event.y, event.pointer, Buttons.LEFT);
+					break;
+				case Cancelled:
+					if (inputProcessor != null) inputProcessor.touchCancelled(event.x, event.y, event.pointer, Buttons.LEFT);
 					break;
 				case Moved:
 				case Stationary:

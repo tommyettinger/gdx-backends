@@ -18,6 +18,7 @@ package com.badlogic.gdx.backends.android;
 
 import android.view.InputDevice;
 import android.view.MotionEvent;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.android.DefaultAndroidInput.TouchEvent;
 

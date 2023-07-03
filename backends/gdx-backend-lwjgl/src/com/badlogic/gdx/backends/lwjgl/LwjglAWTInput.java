@@ -287,7 +287,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 
 	@Override
 	public synchronized boolean isKeyPressed (int key) {
-		if (key == Input.Keys.ANY_KEY) {
+		if (key == Keys.ANY_KEY) {
 			return pressedKeyCount > 0;
 		}
 		if (key < 0 || key > 255) {
@@ -298,7 +298,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 
 	@Override
 	public synchronized boolean isKeyJustPressed (int key) {
-		if (key == Input.Keys.ANY_KEY) {
+		if (key == Keys.ANY_KEY) {
 			return keyJustPressed;
 		}
 		if (key < 0 || key > 255) {
@@ -608,189 +608,189 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 	protected int translateKeyCode (int keyCode) {
 		switch (keyCode) {
 		case java.awt.event.KeyEvent.VK_0:
-			return Input.Keys.NUM_0;
+			return Keys.NUM_0;
 		case java.awt.event.KeyEvent.VK_1:
-			return Input.Keys.NUM_1;
+			return Keys.NUM_1;
 		case java.awt.event.KeyEvent.VK_2:
-			return Input.Keys.NUM_2;
+			return Keys.NUM_2;
 		case java.awt.event.KeyEvent.VK_3:
-			return Input.Keys.NUM_3;
+			return Keys.NUM_3;
 		case java.awt.event.KeyEvent.VK_4:
-			return Input.Keys.NUM_4;
+			return Keys.NUM_4;
 		case java.awt.event.KeyEvent.VK_5:
-			return Input.Keys.NUM_5;
+			return Keys.NUM_5;
 		case java.awt.event.KeyEvent.VK_6:
-			return Input.Keys.NUM_6;
+			return Keys.NUM_6;
 		case java.awt.event.KeyEvent.VK_7:
-			return Input.Keys.NUM_7;
+			return Keys.NUM_7;
 		case java.awt.event.KeyEvent.VK_8:
-			return Input.Keys.NUM_8;
+			return Keys.NUM_8;
 		case java.awt.event.KeyEvent.VK_9:
-			return Input.Keys.NUM_9;
+			return Keys.NUM_9;
 		case java.awt.event.KeyEvent.VK_A:
-			return Input.Keys.A;
+			return Keys.A;
 		case java.awt.event.KeyEvent.VK_B:
-			return Input.Keys.B;
+			return Keys.B;
 		case java.awt.event.KeyEvent.VK_C:
-			return Input.Keys.C;
+			return Keys.C;
 		case java.awt.event.KeyEvent.VK_D:
-			return Input.Keys.D;
+			return Keys.D;
 		case java.awt.event.KeyEvent.VK_E:
-			return Input.Keys.E;
+			return Keys.E;
 		case java.awt.event.KeyEvent.VK_F:
-			return Input.Keys.F;
+			return Keys.F;
 		case java.awt.event.KeyEvent.VK_G:
-			return Input.Keys.G;
+			return Keys.G;
 		case java.awt.event.KeyEvent.VK_H:
-			return Input.Keys.H;
+			return Keys.H;
 		case java.awt.event.KeyEvent.VK_I:
-			return Input.Keys.I;
+			return Keys.I;
 		case java.awt.event.KeyEvent.VK_J:
-			return Input.Keys.J;
+			return Keys.J;
 		case java.awt.event.KeyEvent.VK_K:
-			return Input.Keys.K;
+			return Keys.K;
 		case java.awt.event.KeyEvent.VK_L:
-			return Input.Keys.L;
+			return Keys.L;
 		case java.awt.event.KeyEvent.VK_M:
-			return Input.Keys.M;
+			return Keys.M;
 		case java.awt.event.KeyEvent.VK_N:
-			return Input.Keys.N;
+			return Keys.N;
 		case java.awt.event.KeyEvent.VK_O:
-			return Input.Keys.O;
+			return Keys.O;
 		case java.awt.event.KeyEvent.VK_P:
-			return Input.Keys.P;
+			return Keys.P;
 		case java.awt.event.KeyEvent.VK_Q:
-			return Input.Keys.Q;
+			return Keys.Q;
 		case java.awt.event.KeyEvent.VK_R:
-			return Input.Keys.R;
+			return Keys.R;
 		case java.awt.event.KeyEvent.VK_S:
-			return Input.Keys.S;
+			return Keys.S;
 		case java.awt.event.KeyEvent.VK_T:
-			return Input.Keys.T;
+			return Keys.T;
 		case java.awt.event.KeyEvent.VK_U:
-			return Input.Keys.U;
+			return Keys.U;
 		case java.awt.event.KeyEvent.VK_V:
-			return Input.Keys.V;
+			return Keys.V;
 		case java.awt.event.KeyEvent.VK_W:
-			return Input.Keys.W;
+			return Keys.W;
 		case java.awt.event.KeyEvent.VK_X:
-			return Input.Keys.X;
+			return Keys.X;
 		case java.awt.event.KeyEvent.VK_Y:
-			return Input.Keys.Y;
+			return Keys.Y;
 		case java.awt.event.KeyEvent.VK_Z:
-			return Input.Keys.Z;
+			return Keys.Z;
 		case java.awt.event.KeyEvent.VK_ALT:
-			return Input.Keys.ALT_LEFT;
+			return Keys.ALT_LEFT;
 		case java.awt.event.KeyEvent.VK_ALT_GRAPH:
-			return Input.Keys.ALT_RIGHT;
+			return Keys.ALT_RIGHT;
 		case java.awt.event.KeyEvent.VK_BACK_SLASH:
-			return Input.Keys.BACKSLASH;
+			return Keys.BACKSLASH;
 		case java.awt.event.KeyEvent.VK_COMMA:
-			return Input.Keys.COMMA;
+			return Keys.COMMA;
 		case java.awt.event.KeyEvent.VK_DELETE:
-			return Input.Keys.FORWARD_DEL;
+			return Keys.FORWARD_DEL;
 		case java.awt.event.KeyEvent.VK_LEFT:
-			return Input.Keys.DPAD_LEFT;
+			return Keys.DPAD_LEFT;
 		case java.awt.event.KeyEvent.VK_RIGHT:
-			return Input.Keys.DPAD_RIGHT;
+			return Keys.DPAD_RIGHT;
 		case java.awt.event.KeyEvent.VK_UP:
-			return Input.Keys.DPAD_UP;
+			return Keys.DPAD_UP;
 		case java.awt.event.KeyEvent.VK_DOWN:
-			return Input.Keys.DPAD_DOWN;
+			return Keys.DPAD_DOWN;
 		case java.awt.event.KeyEvent.VK_ENTER:
-			return Input.Keys.ENTER;
+			return Keys.ENTER;
 		case java.awt.event.KeyEvent.VK_HOME:
-			return Input.Keys.HOME;
+			return Keys.HOME;
 		case java.awt.event.KeyEvent.VK_MINUS:
-			return Input.Keys.MINUS;
+			return Keys.MINUS;
 		case java.awt.event.KeyEvent.VK_SUBTRACT:
 			return Keys.NUMPAD_SUBTRACT;
 		case java.awt.event.KeyEvent.VK_PERIOD:
-			return Input.Keys.PERIOD;
+			return Keys.PERIOD;
 		case java.awt.event.KeyEvent.VK_PLUS:
-			return Input.Keys.PLUS;
+			return Keys.PLUS;
 		case java.awt.event.KeyEvent.VK_ADD:
 			return Keys.NUMPAD_ADD;
 		case java.awt.event.KeyEvent.VK_SEMICOLON:
-			return Input.Keys.SEMICOLON;
+			return Keys.SEMICOLON;
 		case java.awt.event.KeyEvent.VK_SHIFT:
-			return Input.Keys.SHIFT_LEFT;
+			return Keys.SHIFT_LEFT;
 		case java.awt.event.KeyEvent.VK_SLASH:
-			return Input.Keys.SLASH;
+			return Keys.SLASH;
 		case java.awt.event.KeyEvent.VK_SPACE:
-			return Input.Keys.SPACE;
+			return Keys.SPACE;
 		case java.awt.event.KeyEvent.VK_TAB:
-			return Input.Keys.TAB;
+			return Keys.TAB;
 		case java.awt.event.KeyEvent.VK_BACK_SPACE:
-			return Input.Keys.DEL;
+			return Keys.DEL;
 		case java.awt.event.KeyEvent.VK_QUOTE:
-			return Input.Keys.APOSTROPHE;
+			return Keys.APOSTROPHE;
 		case java.awt.event.KeyEvent.VK_ASTERISK:
-			return Input.Keys.STAR;
+			return Keys.STAR;
 		case java.awt.event.KeyEvent.VK_MULTIPLY:
 			return Keys.NUMPAD_MULTIPLY;
 		case java.awt.event.KeyEvent.VK_CONTROL:
-			return Input.Keys.CONTROL_LEFT;
+			return Keys.CONTROL_LEFT;
 		case java.awt.event.KeyEvent.VK_ESCAPE:
-			return Input.Keys.ESCAPE;
+			return Keys.ESCAPE;
 		case java.awt.event.KeyEvent.VK_END:
-			return Input.Keys.END;
+			return Keys.END;
 		case java.awt.event.KeyEvent.VK_INSERT:
-			return Input.Keys.INSERT;
+			return Keys.INSERT;
 		case java.awt.event.KeyEvent.VK_PAGE_UP:
-			return Input.Keys.PAGE_UP;
+			return Keys.PAGE_UP;
 		case java.awt.event.KeyEvent.VK_PAGE_DOWN:
-			return Input.Keys.PAGE_DOWN;
+			return Keys.PAGE_DOWN;
 		case java.awt.event.KeyEvent.VK_F1:
-			return Input.Keys.F1;
+			return Keys.F1;
 		case java.awt.event.KeyEvent.VK_F2:
-			return Input.Keys.F2;
+			return Keys.F2;
 		case java.awt.event.KeyEvent.VK_F3:
-			return Input.Keys.F3;
+			return Keys.F3;
 		case java.awt.event.KeyEvent.VK_F4:
-			return Input.Keys.F4;
+			return Keys.F4;
 		case java.awt.event.KeyEvent.VK_F5:
-			return Input.Keys.F5;
+			return Keys.F5;
 		case java.awt.event.KeyEvent.VK_F6:
-			return Input.Keys.F6;
+			return Keys.F6;
 		case java.awt.event.KeyEvent.VK_F7:
-			return Input.Keys.F7;
+			return Keys.F7;
 		case java.awt.event.KeyEvent.VK_F8:
-			return Input.Keys.F8;
+			return Keys.F8;
 		case java.awt.event.KeyEvent.VK_F9:
-			return Input.Keys.F9;
+			return Keys.F9;
 		case java.awt.event.KeyEvent.VK_F10:
-			return Input.Keys.F10;
+			return Keys.F10;
 		case java.awt.event.KeyEvent.VK_F11:
-			return Input.Keys.F11;
+			return Keys.F11;
 		case java.awt.event.KeyEvent.VK_F12:
-			return Input.Keys.F12;
+			return Keys.F12;
 		case java.awt.event.KeyEvent.VK_F13:
-			return Input.Keys.F13;
+			return Keys.F13;
 		case java.awt.event.KeyEvent.VK_F14:
-			return Input.Keys.F14;
+			return Keys.F14;
 		case java.awt.event.KeyEvent.VK_F15:
-			return Input.Keys.F15;
+			return Keys.F15;
 		case java.awt.event.KeyEvent.VK_F16:
-			return Input.Keys.F16;
+			return Keys.F16;
 		case java.awt.event.KeyEvent.VK_F17:
-			return Input.Keys.F17;
+			return Keys.F17;
 		case java.awt.event.KeyEvent.VK_F18:
-			return Input.Keys.F18;
+			return Keys.F18;
 		case java.awt.event.KeyEvent.VK_F19:
-			return Input.Keys.F19;
+			return Keys.F19;
 		case java.awt.event.KeyEvent.VK_F20:
-			return Input.Keys.F20;
+			return Keys.F20;
 		case java.awt.event.KeyEvent.VK_F21:
-			return Input.Keys.F21;
+			return Keys.F21;
 		case java.awt.event.KeyEvent.VK_F22:
-			return Input.Keys.F22;
+			return Keys.F22;
 		case java.awt.event.KeyEvent.VK_F23:
-			return Input.Keys.F23;
+			return Keys.F23;
 		case java.awt.event.KeyEvent.VK_F24:
-			return Input.Keys.F24;
+			return Keys.F24;
 		case java.awt.event.KeyEvent.VK_COLON:
-			return Input.Keys.COLON;
+			return Keys.COLON;
 		case java.awt.event.KeyEvent.VK_NUMPAD0:
 			return Keys.NUMPAD_0;
 		case java.awt.event.KeyEvent.VK_NUMPAD1:
@@ -828,7 +828,7 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 		case java.awt.event.KeyEvent.VK_CAPS_LOCK:
 			return Keys.CAPS_LOCK;
 		}
-		return Input.Keys.UNKNOWN;
+		return Keys.UNKNOWN;
 	}
 
 	@Override
@@ -848,6 +848,18 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 	}
 
 	@Override
+	public void vibrate (int milliseconds, boolean fallback) {
+	}
+
+	@Override
+	public void vibrate (int milliseconds, int amplitude, boolean fallback) {
+	}
+
+	@Override
+	public void vibrate (VibrationType vibrationType) {
+	}
+
+	@Override
 	public boolean justTouched () {
 		return justTouched;
 	}
@@ -861,14 +873,6 @@ public class LwjglAWTInput extends AbstractInput implements MouseMotionListener,
 	public boolean isButtonJustPressed (int button) {
 		if (button < 0 || button >= justPressedButtons.length) return false;
 		return justPressedButtons[button];
-	}
-
-	@Override
-	public void vibrate (long[] pattern, int repeat) {
-	}
-
-	@Override
-	public void cancelVibrate () {
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.utils.Array;

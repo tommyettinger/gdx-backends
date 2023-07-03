@@ -18,6 +18,7 @@ package com.badlogic.gdx.backends.android;
 
 import android.media.AudioManager;
 import android.media.SoundPool;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.IntArray;
 
@@ -101,7 +102,7 @@ final class AndroidSound implements Sound {
 	@Override
 	public long loop (float volume) {
 		if (streamIds.size == 8) streamIds.pop();
-		int streamId = soundPool.play(soundId, volume, volume, 1, -1, 1);
+		int streamId = soundPool.play(soundId, volume, volume, 2, -1, 1);
 		// standardise error code with other backends
 		if (streamId == 0) return -1;
 		streamIds.insert(0, streamId);
@@ -111,9 +112,12 @@ final class AndroidSound implements Sound {
 	@Override
 	public void setLooping (long soundId, boolean looping) {
 		int streamId = (int)soundId;
-
 		soundPool.pause(streamId);
 		soundPool.setLoop(streamId, looping ? -1 : 0);
+		if (looping)
+			soundPool.setPriority(streamId, 2);
+		else
+			soundPool.setPriority(streamId, 1);
 		soundPool.resume(streamId);
 	}
 
@@ -158,7 +162,7 @@ final class AndroidSound implements Sound {
 		} else if (pan > 0) {
 			leftVolume *= (1 - Math.abs(pan));
 		}
-		int streamId = soundPool.play(soundId, leftVolume, rightVolume, 1, -1, pitch);
+		int streamId = soundPool.play(soundId, leftVolume, rightVolume, 2, -1, pitch);
 		// standardise error code with other backends
 		if (streamId == 0) return -1;
 		streamIds.insert(0, streamId);

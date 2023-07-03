@@ -16,6 +16,7 @@
 
 package com.badlogic.gdx.backends.android;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.display.DisplayManager;
 import android.opengl.GLSurfaceView;
@@ -27,10 +28,12 @@ import android.view.Display;
 import android.view.DisplayCutout;
 import android.view.View;
 import android.view.WindowManager.LayoutParams;
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.backends.android.surfaceview.GLSurfaceView20;
-import com.badlogic.gdx.backends.android.surfaceview.GdxEglConfigChooser;
-import com.badlogic.gdx.backends.android.surfaceview.ResolutionStrategy;
+import com.badlogic.gdx.AbstractGraphics;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.LifecycleListener;
+import com.badlogic.gdx.backends.android.surfaceview.*;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Cursor.SystemCursor;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
@@ -215,6 +218,36 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 		}
 	}
 
+	@Override
+	public boolean isGL31Available () {
+		return false;
+	}
+
+	@Override
+	public GL31 getGL31 () {
+		return null;
+	}
+
+	@Override
+	public void setGL31 (GL31 gl31) {
+
+	}
+
+	@Override
+	public boolean isGL32Available () {
+		return false;
+	}
+
+	@Override
+	public GL32 getGL32 () {
+		return null;
+	}
+
+	@Override
+	public void setGL32 (GL32 gl32) {
+
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public int getHeight () {
@@ -242,7 +275,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	 * Motorola CLIQ and the Samsung Behold II.
 	 *
 	 * @param gl */
-	protected void setupGL (GL10 gl) {
+	protected void setupGL (javax.microedition.khronos.opengles.GL10 gl) {
 		String versionString = gl.glGetString(GL10.GL_VERSION);
 		String vendorString = gl.glGetString(GL10.GL_VENDOR);
 		String rendererString = gl.glGetString(GL10.GL_RENDERER);
@@ -269,7 +302,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onSurfaceChanged (GL10 gl, int width, int height) {
+	public void onSurfaceChanged (javax.microedition.khronos.opengles.GL10 gl, int width, int height) {
 		this.width = width;
 		this.height = height;
 		updatePpi();
@@ -286,7 +319,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onSurfaceCreated (GL10 gl, EGLConfig config) {
+	public void onSurfaceCreated (javax.microedition.khronos.opengles.GL10 gl, EGLConfig config) {
 		eglContext = ((EGL10)EGLContext.getEGL()).eglGetCurrentContext();
 		setupGL(gl);
 		logConfig(config);
@@ -404,7 +437,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onDrawFrame (GL10 gl) {
+	public void onDrawFrame (javax.microedition.khronos.opengles.GL10 gl) {
 		long time = System.nanoTime();
 		// After pause deltaTime can have somewhat huge value that destabilizes the mean, so let's cut it off
 		if (!resume) {
@@ -621,6 +654,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 		return new DisplayMode[] {getDisplayMode()};
 	}
 
+	@TargetApi(Build.VERSION_CODES.P)
 	protected void updateSafeAreaInsets () {
 		safeInsetLeft = 0;
 		safeInsetTop = 0;

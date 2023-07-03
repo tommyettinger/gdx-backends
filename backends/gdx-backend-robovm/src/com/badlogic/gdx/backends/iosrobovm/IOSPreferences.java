@@ -16,14 +16,19 @@
 
 package com.badlogic.gdx.backends.iosrobovm;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
-import org.robovm.apple.foundation.*;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+
+import org.robovm.apple.foundation.NSAutoreleasePool;
+import org.robovm.apple.foundation.NSMutableDictionary;
+import org.robovm.apple.foundation.NSNumber;
+import org.robovm.apple.foundation.NSObject;
+import org.robovm.apple.foundation.NSString;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 
 public class IOSPreferences implements Preferences {
 	NSMutableDictionary<NSString, NSObject> nsDictionary;

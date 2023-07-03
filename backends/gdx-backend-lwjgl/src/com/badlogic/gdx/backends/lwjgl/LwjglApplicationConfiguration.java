@@ -100,7 +100,7 @@ public class LwjglApplicationConfiguration {
 	/** Preferences directory on the desktop. Default is ".prefs/". */
 	public String preferencesDirectory = ".prefs/";
 	/** Preferences file type on the desktop. Default is FileType.External */
-	public Files.FileType preferencesFileType = FileType.External;
+	public FileType preferencesFileType = FileType.External;
 	/** Callback used when trying to create a display, can handle failures, default value is null (disabled) */
 	public LwjglGraphics.SetDisplayModeCallback setDisplayModeCallback;
 	/** enable HDPI mode on Mac OS X **/

@@ -20,8 +20,15 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
+
 import com.badlogic.gdx.Net;
-import com.badlogic.gdx.net.*;
+import com.badlogic.gdx.net.NetJavaImpl;
+import com.badlogic.gdx.net.NetJavaServerSocketImpl;
+import com.badlogic.gdx.net.NetJavaSocketImpl;
+import com.badlogic.gdx.net.ServerSocket;
+import com.badlogic.gdx.net.ServerSocketHints;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 
 /** Android implementation of the {@link Net} API.
  * @author acoppes */

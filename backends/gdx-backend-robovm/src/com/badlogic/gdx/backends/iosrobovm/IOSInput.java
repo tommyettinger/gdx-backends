@@ -2,6 +2,7 @@
 package com.badlogic.gdx.backends.iosrobovm;
 
 import com.badlogic.gdx.Input;
+
 import org.robovm.apple.uikit.UIKey;
 
 public interface IOSInput extends Input {

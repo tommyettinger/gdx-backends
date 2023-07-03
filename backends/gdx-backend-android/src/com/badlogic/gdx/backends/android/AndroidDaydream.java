@@ -250,7 +250,7 @@ public class AndroidDaydream extends DreamService implements AndroidApplicationB
 
 	@Override
 	public int getVersion () {
-		return Build.VERSION.SDK_INT;
+		return android.os.Build.VERSION.SDK_INT;
 	}
 
 	@Override

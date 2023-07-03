@@ -24,6 +24,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
+
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.audio.AudioDevice;
@@ -147,6 +148,16 @@ public class DefaultAndroidAudio implements AndroidAudio {
 			}
 		}
 
+	}
+
+	@Override
+	public boolean switchOutputDevice (String deviceIdentifier) {
+		return true;
+	}
+
+	@Override
+	public String[] getAvailableOutputDevices () {
+		return new String[0];
 	}
 
 	/** Creates a new Music instance from the provided FileDescriptor. It is the caller's responsibility to close the file

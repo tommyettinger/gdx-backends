@@ -16,14 +16,15 @@
 
 package com.badlogic.gdx.backends.android;
 
+import java.io.*;
+
 import android.content.res.AssetFileDescriptor;
-import com.badlogic.gdx.Files.FileType;
+
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.android.ZipResourceFile.ZipEntryRO;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-
-import java.io.*;
 
 /** @author sarkanyi */
 public class AndroidZipFileHandle extends AndroidFileHandle {

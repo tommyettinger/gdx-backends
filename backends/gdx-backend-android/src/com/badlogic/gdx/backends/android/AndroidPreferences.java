@@ -16,12 +16,13 @@
 
 package com.badlogic.gdx.backends.android;
 
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import com.badlogic.gdx.Preferences;
-
 import java.util.Map;
 import java.util.Map.Entry;
+
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
+import com.badlogic.gdx.Preferences;
 
 public class AndroidPreferences implements Preferences {
 	SharedPreferences sharedPrefs;

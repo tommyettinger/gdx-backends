@@ -30,7 +30,7 @@ import com.badlogic.gdx.net.ServerSocketHints;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
 
-/** Headless implementation of the {@link com.badlogic.gdx.Net} API, based on LWJGL implementation
+/** Headless implementation of the {@link Net} API, based on LWJGL implementation
  * @author acoppes
  * @author Jon Renner */
 public class HeadlessNet implements Net {

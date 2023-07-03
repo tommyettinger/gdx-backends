@@ -14,7 +14,6 @@
 
 package com.badlogic.gdx.backends.android;
 
-import android.app.WallpaperColors;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,6 +22,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
+import android.app.WallpaperColors;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -140,7 +141,7 @@ public abstract class AndroidLiveWallpaperService extends WallpaperService {
 
 		app.initialize(listener, config);
 
-		if (config.getTouchEventsForLiveWallpaper && Integer.parseInt(Build.VERSION.SDK) >= 7)
+		if (config.getTouchEventsForLiveWallpaper && Integer.parseInt(android.os.Build.VERSION.SDK) >= 7)
 			linkedEngine.setTouchEventsEnabled(true);
 
 		// onResume(); do not call it there

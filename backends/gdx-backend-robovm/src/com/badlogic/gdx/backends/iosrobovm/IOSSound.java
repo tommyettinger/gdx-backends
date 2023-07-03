@@ -16,6 +16,8 @@
 
 package com.badlogic.gdx.backends.iosrobovm;
 
+import org.robovm.apple.foundation.NSArray;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.iosrobovm.objectal.ALBuffer;
 import com.badlogic.gdx.backends.iosrobovm.objectal.ALChannelSource;
@@ -23,7 +25,6 @@ import com.badlogic.gdx.backends.iosrobovm.objectal.ALSource;
 import com.badlogic.gdx.backends.iosrobovm.objectal.OALSimpleAudio;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.IntArray;
-import org.robovm.apple.foundation.NSArray;
 
 /** @author tescott
  * @author Tomski

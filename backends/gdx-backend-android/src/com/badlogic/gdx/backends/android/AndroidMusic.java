@@ -16,11 +16,12 @@
 
 package com.badlogic.gdx.backends.android;
 
+import java.io.IOException;
+
 import android.media.MediaPlayer;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-
-import java.io.IOException;
 
 public class AndroidMusic implements Music, MediaPlayer.OnCompletionListener {
 	private final AndroidAudio audio;

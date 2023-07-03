@@ -142,7 +142,7 @@ public class OggInputStream extends InputStream {
 		readPCM();
 	}
 
-	/** @see java.io.InputStream#available() */
+	/** @see InputStream#available() */
 	public int available () {
 		return endOfStream ? 0 : 1;
 	}

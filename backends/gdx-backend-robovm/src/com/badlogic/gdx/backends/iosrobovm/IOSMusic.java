@@ -16,11 +16,12 @@
 
 package com.badlogic.gdx.backends.iosrobovm;
 
+import org.robovm.apple.foundation.NSObject;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.backends.iosrobovm.objectal.AVAudioPlayerDelegateAdapter;
 import com.badlogic.gdx.backends.iosrobovm.objectal.OALAudioTrack;
-import org.robovm.apple.foundation.NSObject;
 
 /** @author Niklas Therning */
 public class IOSMusic implements Music {

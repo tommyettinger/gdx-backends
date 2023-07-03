@@ -267,7 +267,7 @@ public class AndroidFragmentApplication extends Fragment implements AndroidAppli
 
 	@Override
 	public int getVersion () {
-		return Build.VERSION.SDK_INT;
+		return android.os.Build.VERSION.SDK_INT;
 	}
 
 	@Override

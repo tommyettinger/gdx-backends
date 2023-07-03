@@ -16,12 +16,13 @@
 
 package com.badlogic.gdx.backends.android;
 
-import android.opengl.GLES20;
-import com.badlogic.gdx.graphics.GL20;
-
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+
+import com.badlogic.gdx.graphics.GL20;
+
+import android.opengl.GLES20;
 
 public class AndroidGL20 implements GL20 {
 	private int[] ints = new int[1], ints2 = new int[1], ints3 = new int[1];

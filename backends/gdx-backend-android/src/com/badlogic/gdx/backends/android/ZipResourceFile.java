@@ -20,7 +20,12 @@ import android.content.res.AssetFileDescriptor;
 import android.os.ParcelFileDescriptor;
 import android.util.Log;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
