@@ -1,5 +1,5 @@
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.glutils;
+package com.badlogic.gdx.graphics.glutils;
 
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;

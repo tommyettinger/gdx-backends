@@ -8,7 +8,7 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.lang;
+package java.lang;
 
 public class NoSuchFieldException extends Exception {
 	public NoSuchFieldException (String message) {

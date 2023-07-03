@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.java.lang;
+package java.lang;
 
 import com.google.gwt.core.client.GWT;
 

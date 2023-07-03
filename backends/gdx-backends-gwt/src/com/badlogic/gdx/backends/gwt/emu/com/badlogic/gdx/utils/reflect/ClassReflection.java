@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils.reflect;
+package com.badlogic.gdx.utils.reflect;
 
 import java.lang.annotation.Inherited;
 

@@ -135,7 +135,6 @@ libraries.compileOnly.gwt = [
         "com.google.gwt:gwt-dev:${versions.gwt}"
 ]
 
-
 libraries.junit = [
         "junit:junit:${versions.junit}"
 ]

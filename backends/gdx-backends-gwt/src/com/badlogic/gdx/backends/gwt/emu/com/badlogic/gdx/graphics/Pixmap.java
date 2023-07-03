@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics;
+package com.badlogic.gdx.graphics;
 
 import java.nio.Buffer;
 import java.nio.ByteBuffer;

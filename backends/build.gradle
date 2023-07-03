@@ -19,7 +19,7 @@ configure(subprojects - project(":backends:gdx-backend-android")) {
 
     if (JavaVersion.current().isJava9Compatible()) {
         compileJava {
-            options.release = versions.java
+            options.release.set(8)
         }
     }
 

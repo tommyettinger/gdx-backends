@@ -8,7 +8,7 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.lang;
+package java.lang;
 
 public class InterruptedException extends Exception {
 	public InterruptedException (String message, Throwable cause) {

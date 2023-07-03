@@ -8,7 +8,7 @@
    There is NO WARRANTY for this software.  See license.txt for
    details. */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
 import com.badlogic.gdx.utils.Utf8Decoder;
 

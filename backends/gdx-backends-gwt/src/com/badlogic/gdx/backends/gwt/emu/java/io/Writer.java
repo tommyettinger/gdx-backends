@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
 import java.io.Closeable;
 import java.io.Flushable;

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
 import java.io.File;
 import java.io.FileNotFoundException;

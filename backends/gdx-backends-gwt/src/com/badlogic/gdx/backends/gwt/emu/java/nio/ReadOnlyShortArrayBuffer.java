@@ -15,7 +15,7 @@
  *  limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 import java.nio.ReadOnlyBufferException;
 import java.nio.ShortBuffer;

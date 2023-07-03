@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.java.util.regex;
+package java.util.regex;
 
 import com.google.gwt.regexp.shared.RegExp;
 

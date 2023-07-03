@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.java.io;
+package java.io;
 
 import java.io.FilterInputStream;
 import java.io.InputStream;

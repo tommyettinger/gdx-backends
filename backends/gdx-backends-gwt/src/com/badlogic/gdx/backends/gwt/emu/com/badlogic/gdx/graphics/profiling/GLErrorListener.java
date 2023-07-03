@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.graphics.profiling;
+package com.badlogic.gdx.graphics.profiling;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.profiling.GLInterceptor;

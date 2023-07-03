@@ -5,7 +5,7 @@
  * SUN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.lang;
+package java.lang;
 
 /** Thrown when an application tries to load in a class through its string name using:
  * <ul>

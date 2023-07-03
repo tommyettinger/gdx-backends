@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.badlogic.gdx.backends.gwt.emu.java.nio;
+package java.nio;
 
 /** An {@code InvalidMarkException} is thrown when {@code reset()} is called on a buffer, but no mark has been set previously.
  * 

@@ -14,7 +14,7 @@
  * limitations under the License.
  ******************************************************************************/
 
-package com.badlogic.gdx.backends.gwt.emu.com.badlogic.gdx.utils;
+package com.badlogic.gdx.utils;
 
 import com.google.gwt.corp.compatibility.Numbers;
 
