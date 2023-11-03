@@ -314,7 +314,7 @@ GWT 2.9.0 but is definitely needed by GWT 2.10.0 .
 
 This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 
-### 1.1210.0-SNAPSHOT
+### 1.1210.1-SNAPSHOT
 
 This release is compatible with libGDX `1.12.1`.
 
