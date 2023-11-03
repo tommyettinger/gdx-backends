@@ -289,9 +289,34 @@ also because `1.120.0` could refer to libGDX 1.1.20, subversion 0, if it existed
 
 This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 
-### 1.1200.2-SNAPSHOT
+### 1.1210.0
 
-This release is compatible with libGDX `1.12.0`.
+This release is compatible with libGDX `1.12.1`.
+
+Checkout the tag `v1.1210.0` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1210.0"
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1210.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+JitPack (needs the JitPack repository given above):
+```groovy
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1210.0'
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1210.0:sources'
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+```
+
+The dependency on `jsinterop-annotations` is not in the standard libGDX backends, and was probably sometimes needed by
+GWT 2.9.0 but is definitely needed by GWT 2.10.0 .
+
+This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+
+### 1.1210.0-SNAPSHOT
+
+This release is compatible with libGDX `1.12.1`.
 
 Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 
@@ -301,16 +326,16 @@ Checkout the `master` branch, or use the following JitPack dependencies for GWT:
     implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
 ```
 
-The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
-needed by GWT 2.10.0 .
+The dependency on `jsinterop-annotations` is not in the standard libGDX backends, and was probably sometimes needed by
+GWT 2.9.0 but is definitely needed by GWT 2.10.0 .
 
 This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
 
 ## GWT 2.9.0/2.10.0 Support
 
-Most of these versions have been updated to use GWT 2.9.0; this benefits from some changes in users' build.gradle files, 
-but should still work without changes as long as no other GWT versions are in use. The master version and 1.1100.0 use
-GWT 2.10.0 .
+Most of these versions have been updated to use GWT 2.9.0 or 2.10.0; this benefits from some changes in users'
+build.gradle files, but should still work without changes as long as no other GWT versions are in use. Versions
+from 1.1100.0 onward use GWT 2.10.0 .
 
 However, upgrading to GWT 2.9.0 or 2.10.0 needs a few changes if you want to take full advantage of the new Java 11 features
 it permits. **It also requires any dependency on GWT 2.8.2 to be changed to the newer GWT version, 2.9.0 or 2.10.0.** If
@@ -322,10 +347,9 @@ just your code.
   file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer. This isn't done automatically.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested mostly
-  on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.1.19` ;
+  on the most recent version, `org.docstr:gwt-gradle-plugin:1.1.29` ;
   [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
   `gradle.properties`, so you can change it there to `1.1.29` if you use that project generator.
-
 
 ## Future work
 
