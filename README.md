@@ -324,7 +324,7 @@ just your code.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested mostly
   on the most recent version, `org.wisepersist:gwt-gradle-plugin:1.1.19` ;
   [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-  `gradle.properties`, so you can change it there to `1.1.19` if you use that project generator.
+  `gradle.properties`, so you can change it there to `1.1.29` if you use that project generator.
 
 
 ## Future work

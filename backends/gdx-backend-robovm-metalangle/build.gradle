@@ -104,8 +104,8 @@ task extractMetalANGLESimulator(dependsOn: verifyMetalANGLESimulator, type: Copy
 }
 
 task buildMetalANGLE(dependsOn: [
-	extractMetalANGLE,
-	extractMetalANGLESimulator
+		extractMetalANGLE,
+		extractMetalANGLESimulator
 ], type: Exec) {
 	doFirst {
 		delete("res/META-INF/robovm/ios/libs/MetalANGLE.xcframework")
@@ -137,3 +137,4 @@ if(OperatingSystem.current() == OperatingSystem.MAC_OS) {
 }
 
 processResources.duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+sourcesJar.duplicatesStrategy = DuplicatesStrategy.EXCLUDE

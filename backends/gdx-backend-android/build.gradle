@@ -52,5 +52,5 @@ android {
 
 dependencies {
 	implementation "com.badlogicgames.gdx:gdx:${versions.gdx}"
-	implementation libraries.android
+	compileOnly libraries.compileOnly.android
 }

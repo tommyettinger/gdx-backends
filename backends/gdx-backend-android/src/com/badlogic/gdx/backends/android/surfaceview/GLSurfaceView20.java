@@ -143,7 +143,7 @@ public class GLSurfaceView20 extends GLSurfaceView {
 		/* Set the renderer responsible for frame rendering */
 	}
 
-	static class ContextFactory implements GLSurfaceView.EGLContextFactory {
+	static class ContextFactory implements EGLContextFactory {
 		private static int EGL_CONTEXT_CLIENT_VERSION = 0x3098;
 
 		public EGLContext createContext (EGL10 egl, EGLDisplay display, EGLConfig eglConfig) {
@@ -177,7 +177,7 @@ public class GLSurfaceView20 extends GLSurfaceView {
 		return result;
 	}
 
-	private static class ConfigChooser implements GLSurfaceView.EGLConfigChooser {
+	private static class ConfigChooser implements EGLConfigChooser {
 
 		public ConfigChooser (int r, int g, int b, int a, int depth, int stencil) {
 			mRedSize = r;

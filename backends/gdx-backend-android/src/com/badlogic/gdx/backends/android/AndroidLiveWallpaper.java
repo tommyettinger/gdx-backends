@@ -218,7 +218,7 @@ public class AndroidLiveWallpaper implements AndroidApplicationBase {
 
 	@Override
 	public int getVersion () {
-		return android.os.Build.VERSION.SDK_INT;
+		return Build.VERSION.SDK_INT;
 	}
 
 	@Override

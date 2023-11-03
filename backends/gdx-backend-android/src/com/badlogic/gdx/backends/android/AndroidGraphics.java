@@ -275,7 +275,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	 * Motorola CLIQ and the Samsung Behold II.
 	 *
 	 * @param gl */
-	protected void setupGL (javax.microedition.khronos.opengles.GL10 gl) {
+	protected void setupGL (GL10 gl) {
 		String versionString = gl.glGetString(GL10.GL_VERSION);
 		String vendorString = gl.glGetString(GL10.GL_VENDOR);
 		String rendererString = gl.glGetString(GL10.GL_RENDERER);
@@ -302,7 +302,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onSurfaceChanged (javax.microedition.khronos.opengles.GL10 gl, int width, int height) {
+	public void onSurfaceChanged (GL10 gl, int width, int height) {
 		this.width = width;
 		this.height = height;
 		updatePpi();
@@ -319,7 +319,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onSurfaceCreated (javax.microedition.khronos.opengles.GL10 gl, EGLConfig config) {
+	public void onSurfaceCreated (GL10 gl, EGLConfig config) {
 		eglContext = ((EGL10)EGLContext.getEGL()).eglGetCurrentContext();
 		setupGL(gl);
 		logConfig(config);
@@ -437,7 +437,7 @@ public class AndroidGraphics extends AbstractGraphics implements Renderer {
 	}
 
 	@Override
-	public void onDrawFrame (javax.microedition.khronos.opengles.GL10 gl) {
+	public void onDrawFrame (GL10 gl) {
 		long time = System.nanoTime();
 		// After pause deltaTime can have somewhat huge value that destabilizes the mean, so let's cut it off
 		if (!resume) {

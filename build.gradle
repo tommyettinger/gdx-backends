@@ -16,7 +16,6 @@ allprojects{
         google()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        gradlePluginPortal()
     }
 }
 buildscript {
@@ -27,7 +26,7 @@ buildscript {
         gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.22.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.25.3'
         classpath "com.badlogicgames.gdx:gdx-jnigen-gradle:2.4.1"
     }
 }
@@ -35,25 +34,25 @@ buildscript {
 apply plugin: 'java-library'
 apply plugin: 'com.vanniktech.maven.publish'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
-tasks.withType(Javadoc) {
+tasks.withType(Javadoc).configureEach {
     options.encoding = 'UTF-8'
     options.addBooleanOption('use', true);
 }
-tasks.withType(Test) {
+tasks.withType(Test).configureEach {
     systemProperty 'file.encoding', 'UTF-8'
 }
 
 if (JavaVersion.current().isJava8Compatible()) {
-    tasks.withType(Javadoc) {
+    tasks.withType(Javadoc).configureEach {
         options.addStringOption('Xdoclint:none,-missing', '-quiet')
     }
 }
 
 if (JavaVersion.current().isJava9Compatible()) {
-    tasks.withType(Javadoc) {
+    tasks.withType(Javadoc).configureEach {
         options.addStringOption("-release", "8");
     }
 }
@@ -122,30 +121,29 @@ allprojects {
         google()
         mavenLocal()
         mavenCentral()
-        gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = 'UTF-8'
     }
-    tasks.withType(org.gradle.jvm.tasks.Jar) {
+    tasks.withType(org.gradle.jvm.tasks.Jar).configureEach {
         duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     }
-    tasks.withType(ProcessResources) {
+    tasks.withType(ProcessResources).configureEach {
         duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     }
-    tasks.withType(Javadoc) {
+    tasks.withType(Javadoc).configureEach {
         options.encoding = 'UTF-8'
         options.addBooleanOption('use', true);
     }
-    tasks.withType(Test) {
+    tasks.withType(Test).configureEach {
         systemProperty 'file.encoding', 'UTF-8'
     }
 
     if (JavaVersion.current().isJava8Compatible()) {
-        tasks.withType(Javadoc) {
+        tasks.withType(Javadoc).configureEach {
             options.addStringOption('Xdoclint:none,-missing', '-quiet')
         }
     }
