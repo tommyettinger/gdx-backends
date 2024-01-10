@@ -1,7 +1,7 @@
 ## Backends for libGDX, easy to build
 
  - Do you need to change the behavior of one or more of the libGDX backends for your own (nefarious?) purposes?
- - Or do you just want **GWT 2.10.0** support before libGDX has it officially?
+ - Or do you just want **GWT 2.11.0** support before libGDX has it officially?
 
 This is where this repo comes in.
 
@@ -9,11 +9,13 @@ If you need to change built-in behaviour, but don't manage to get the complete l
 build your very own version or don't want to use snapshot versions, this repo is what you need. Check my own additions
 to see what else is changed.
 
-... but you're probably here for GWT 2.10.0, which is available with a backend here.
+... but you're probably here for GWT 2.11.0, which is available with a backend here.
 
 Your options for using this repo depend on whether you want to make changes to it:
 
 ### How to build (I want to make changes or control the process)
+
+Note, most people do not need to do any of these steps -- you only need these if you want to make changes to a backend.
 
 * Clone this repo
 * Checkout the revision you need (next paragraph)
@@ -23,10 +25,10 @@ Your options for using this repo depend on whether you want to make changes to i
 ### How to use as a dependency (I want to use a build without making changes)
 
 In case you don't want to change something here yourself, but just want to use some additions, you can either use the
-1.1100.0 stable release (featuring GWT 2.10.0) from the standard Maven Central repository, or use a Jitpack dependency.
+1.1210.1 stable release (featuring GWT 2.11.0) from the standard Maven Central repository, or use a Jitpack dependency.
 The latest stable release is documented near the bottom of the README.md file.
-If you choose JitPack, you might need to add JitPack as a repo to your project (current gdx-setup and
-gdx-liftoff both do this step for you already):
+If you choose JitPack, you might need to add JitPack as a repo to your project (current gdx-setup and gdx-liftoff both
+do this step for you already, but older projects might not have it, and hand-made projects might need it, too):
 ```groovy
     allprojects {
 	    repositories {
@@ -77,7 +79,7 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
       implementation 'com.github.tommyettinger:gdx-backend-gwt:1.910.2:sources'
 ```
 
-JitPack (needs the JitPack repository given above):
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
 ```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.910.2'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.910.2:sources'
@@ -99,7 +101,7 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
       implementation 'com.github.tommyettinger:gdx-backend-gwt:1.911.2:sources'
 ```
 
-JitPack (needs the JitPack repository given above):
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
 ```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.2'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.911.2:sources'
@@ -126,7 +128,7 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
       implementation 'com.github.tommyettinger:gdx-backend-gwt:1.912.0:sources'
 ```
 
-JitPack (needs the JitPack repository given above):
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
 ```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.912.0'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.912.0:sources'
@@ -149,13 +151,13 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
       implementation 'com.github.tommyettinger:gdx-backend-gwt:1.100.0:sources'
 ```
 
-JitPack (needs the JitPack repository given above):
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
 ```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.0'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.0:sources'
 ```
 
-This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
+This supports GWT 2.9.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
 ### 1.100.1
 
@@ -167,7 +169,7 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
       implementation 'com.github.tommyettinger:gdx-backend-gwt:1.100.1:sources'
 ```
 
-JitPack (needs the JitPack repository given above):
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
 ```groovy
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.1'
       implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.100.1:sources'
@@ -176,7 +178,7 @@ JitPack (needs the JitPack repository given above):
 This version fixes some GWT-specific bugs in recently-changed files, like ScreenUtils. The now-recommended
 `ScreenUtils.clear()` method didn't work in v1.100.0, for example, but does in v1.100.1 .
 
-This supports GWT 2.9.0 (see the GWT 2.9.0 section below).
+This supports GWT 2.9.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
 ### 1.1100.0
 
@@ -186,15 +188,15 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
 ```groovy
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0"
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.0:sources"
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
-~~JitPack (needs the JitPack repository given above):~~ This release failed to build because of code-signing issues that
+~~JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):~~ This release failed to build because of code-signing issues that
 only show up in releases. Getting the commit before or after this should work.
 ```groovy
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.0'
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.0:sources'
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
 The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
@@ -203,7 +205,7 @@ needed by GWT 2.10.0 .
 The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
 also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+This supports GWT 2.10.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
 ### 1.1100.1
 
@@ -213,15 +215,15 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
 ```groovy
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.1"
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1100.1:sources"
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
-~~JitPack (needs the JitPack repository given above):~~ This release failed to build because of code-signing issues that
+~~JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):~~ This release failed to build because of code-signing issues that
 only show up in releases. Getting the commit before or after this should work.
 ```groovy
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.1'
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1100.1:sources'
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
 The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
@@ -230,7 +232,7 @@ needed by GWT 2.10.0 .
 The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.110.0`, and
 also because `1.110.0` could refer to libGDX 1.1.10, subversion 0, if it existed.
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+This supports GWT 2.10.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
 ### 1.1200.0
 
@@ -242,15 +244,15 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
 ```groovy
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1200.0"
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1200.0:sources"
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
-~~JitPack (needs the JitPack repository given above):~~ This release failed to build because of code-signing issues that
+~~JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):~~ This release failed to build because of code-signing issues that
 only show up in releases. Getting the commit before or after this should work.
 ```groovy
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1200.0'
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1200.0:sources'
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
 The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
@@ -259,7 +261,7 @@ needed by GWT 2.10.0 .
 The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.120.0`, and
 also because `1.120.0` could refer to libGDX 1.1.20, subversion 0, if it existed.
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+This supports GWT 2.10.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
 ### 1.1200.1
 
@@ -271,14 +273,14 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
 ```groovy
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1200.1"
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1200.1:sources"
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
-JitPack (needs the JitPack repository given above):
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
 ```groovy
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1200.1'
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1200.1:sources'
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
 The dependency on `jsinterop-annotations` is new, and was probably sometimes needed by GWT 2.9.0 but is definitely
@@ -287,7 +289,7 @@ needed by GWT 2.10.0 .
 The version here is slightly different because the old `1.912.0` was getting sorted as more recent than `1.120.0`, and
 also because `1.120.0` could refer to libGDX 1.1.20, subversion 0, if it existed.
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+This supports GWT 2.10.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
 ### 1.1210.0
 
@@ -299,22 +301,47 @@ Maven Central (uses the repository `mavenCentral()`, which most projects already
 ```groovy
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1210.0"
     implementation "com.github.tommyettinger:gdx-backend-gwt:1.1210.0:sources"
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
-JitPack (needs the JitPack repository given above):
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
 ```groovy
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1210.0'
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1210.0:sources'
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
 The dependency on `jsinterop-annotations` is not in the standard libGDX backends, and was probably sometimes needed by
 GWT 2.9.0 but is definitely needed by GWT 2.10.0 .
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+This supports GWT 2.10.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
-### 1.1210.1-SNAPSHOT
+### 1.1210.1
+
+This release is compatible with libGDX `1.12.1`.
+
+Checkout the tag `v1.1210.1` of this repo to use this version, or use one of the following sets of dependencies for GWT:
+
+Maven Central (uses the repository `mavenCentral()`, which most projects already have):
+```groovy
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1210.1"
+    implementation "com.github.tommyettinger:gdx-backend-gwt:1.1210.1:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
+```
+
+JitPack (needs the JitPack repository given above, which gdx-setup and gdx-liftoff include by default):
+```groovy
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1210.1'
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:v1.1210.1:sources'
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
+```
+
+The dependency on `jsinterop-annotations` is not in the standard libGDX backends, and was probably sometimes needed by
+GWT 2.9.0 but is definitely needed by GWT 2.10.0 and 2.11.0 .
+
+This supports GWT 2.11.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
+
+### 1.1210.2-SNAPSHOT
 
 This release is compatible with libGDX `1.12.1`.
 
@@ -323,36 +350,35 @@ Checkout the `master` branch, or use the following JitPack dependencies for GWT:
 ```groovy
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT'
     implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:master-SNAPSHOT:sources'
-    implementation "com.google.jsinterop:jsinterop-annotations:2.0.0:sources"
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
 The dependency on `jsinterop-annotations` is not in the standard libGDX backends, and was probably sometimes needed by
-GWT 2.9.0 but is definitely needed by GWT 2.10.0 .
+GWT 2.9.0 but is definitely needed by GWT 2.10.0 and 2.11.0.
 
-This supports GWT 2.10.0 (see the GWT 2.9.0 section below, which still applies).
+This supports GWT 2.11.0 (make sure to see the GWT 2.9.0/2.10.0/2.11.0 section below).
 
-## GWT 2.9.0/2.10.0 Support
+## GWT 2.9.0/2.10.0/2.11.0 Support
 
-Most of these versions have been updated to use GWT 2.9.0 or 2.10.0; this benefits from some changes in users'
-build.gradle files, but should still work without changes as long as no other GWT versions are in use. Versions
-from 1.1100.0 onward use GWT 2.10.0 .
+Most of these versions have been updated to use GWT 2.9.0, 2.10.0, or 2.11.0; this benefits from some changes in users'
+build.gradle files, but should still work without many changes as long as no other GWT versions are in use. Versions
+from 1.1100.0 to 1.1210.0 use GWT 2.10.0, and versions 1.1210.1 onward use 2.11.0 .
 
-However, upgrading to GWT 2.9.0 or 2.10.0 needs a few changes if you want to take full advantage of the new Java 11 features
-it permits. **It also requires any dependency on GWT 2.8.2 to be changed to the newer GWT version, 2.9.0 or 2.10.0.** If
-you use GWT 2.9.0 or 2.10.0 anywhere, you have to use it everywhere; that's why the backend needs to be changed and not
-just your code.
+Any references to a GWT version in Gradle files **MUST** refer to the same version throughout a project.
+**You cannot mix GWT versions**.
+
+Upgrading to GWT 2.9.0 through 2.11.0 needs a few changes if you want to take full advantage of the new Java 11 features
+it permits. **It also requires any dependency on a GWT version to be changed from 2.8.2 (or possibly 2.10.0) to the
+newer GWT version, 2.9.0, 2.10.0, or 2.11.0.** If you use GWT 2.9.0 through 2.11.0 anywhere, you have to use it
+everywhere; that's why the backend needs to be changed and not just your code.
 - [ ] Change language level to 11 in core, html, and anywhere else that you want to use features
-  like `var`: where sourceCompatibility is set in build.gradle files, change it to `sourceCompatibility = 11`
+  like `var`: where sourceCompatibility and targetCompatibility are set in build.gradle files, change them to
+  `sourceCompatibility = 11` and `targetCompatibility = 11` .
 - [ ] Change GWT's source level to 11 as a special requirement: inside the `gwt` block in the html/build.gradle
   file, add this line after the compiler settings: `sourceLevel = 1.11`
 - [ ] Make sure your Gradle and/or IDE settings are configured to use JDK 11 or newer. This isn't done automatically.
 - [ ] The version for your GWT Gradle plugin may or may not matter, but so far this has been tested mostly
   on the most recent version, `org.docstr:gwt-gradle-plugin:1.1.29` ;
   [gdx-liftoff](https://github.com/tommyettinger/gdx-liftoff) stores the plugin version in `gwtPluginVersion` in
-  `gradle.properties`, so you can change it there to `1.1.29` if you use that project generator.
-
-## Future work
-
-### GWT
-- [x] Move resizable browser window support into the backend, no template hassle any more
-- [ ] Electron extensions
+  `gradle.properties`, so you can change it there to `1.1.29` if you use that project generator. The most recent Liftoff
+  version already makes projects that depend on this GWT Gradle Plugin version.
