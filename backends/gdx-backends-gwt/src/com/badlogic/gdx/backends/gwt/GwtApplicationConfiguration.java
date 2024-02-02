@@ -30,7 +30,7 @@ public class GwtApplicationConfiguration {
 	public final int height;
 	/** Padding to use for resizing the game content in the browser window, for resizable applications only. Defaults to 10. The
 	 * padding is necessary to prevent the browser from showing scrollbars. This can happen if the game content is of the same size
-	 * than the browser window. The padding is given in logical pixels, not affected by {@link #usePhysicalPixels}. */
+	 * as the browser window. The padding is given in logical pixels, not affected by {@link #usePhysicalPixels}. */
 	public int padHorizontal = 10, padVertical = 10;
 	/** whether to use a stencil buffer **/
 	public boolean stencil = false;
@@ -49,34 +49,37 @@ public class GwtApplicationConfiguration {
 	 * resolutions. If you target mobiles and desktops, consider using physical device pixels on mobile devices only by using the
 	 * return value of {@link GwtApplication#isMobileDevice()} . */
 	public final boolean usePhysicalPixels;
-	/** a TextArea to log messages to, can be null in which case a TextArea will be added to the body element of the DOM. */
+	/** A TextArea to log messages to. Can be null to only use JS console.log() for logging.
+	 * If {@link #canCreateLog} is true, this setting will be ignored. */
 	public TextArea log;
-	/** whether to use debugging mode for OpenGL calls. Errors will result in a RuntimeException being thrown. */
+	/** Whether to use debugging mode for OpenGL calls. Errors will result in a RuntimeException being thrown. */
 	public boolean useDebugGL = false;
-	/** Whether to enable OpenGL ES 3.0 (aka WebGL2) if supported. If not supported it will fall-back to OpenGL ES 2.0. When GL ES
+	/** Whether to enable OpenGL ES 3.0 (aka WebGL2) if supported. If not supported it will fall back to OpenGL ES 2.0. When GL ES
 	 * 3.0 is enabled, {@link com.badlogic.gdx.Gdx#gl30} can be used to access its functionality. */
 	public boolean useGL30 = false;
-	/** preserve the back buffer, needed if you fetch a screenshot via canvas#toDataUrl, may have performance impact **/
+	/** Preserve the back buffer, needed if you fetch a screenshot via canvas#toDataUrl, may have performance impact. **/
 	public boolean preserveDrawingBuffer = false;
-	/** whether to include an alpha channel in the color buffer to combine the color buffer with the rest of the webpage
+	/** Whether to include an alpha channel in the color buffer to combine the color buffer with the rest of the webpage
 	 * effectively allows transparent backgrounds in GWT, at a performance cost. **/
 	public boolean alpha = false;
-	/** whether to use premultipliedalpha, may have performance impact **/
+	/** Whether to use premultiplied alpha; may have performance impact. **/
 	public boolean premultipliedAlpha = false;
 	/** screen-orientation to attempt locking as the application enters full-screen-mode. Note that on mobile browsers, full-screen
-	 * mode can typically only be entered on a user gesture (click, tap, key-stroke) **/
+	 * mode can typically only be entered on a user gesture (click, tap, keystroke) **/
 	public OrientationLockType fullscreenOrientation;
-	/* Whether openURI will open page in new tab. By default it will, however if may be blocked by popup blocker. */
-	/* To prevent the page from being blocked you can redirect to the new page. However this will exit your game. */
+	/** Whether openURI will open page in new tab. By default, it will, however it may be blocked by popup blockers.
+	 * To prevent the page from being blocked you can redirect to the new page. However, this will exit your game. */
 	public boolean openURLInNewWindow = true;
-	/** whether to use the accelerometer. default: true **/
+	/** Whether to use the accelerometer. Default: true **/
 	public boolean useAccelerometer = true;
-	/** whether to use the gyroscope. default: false **/
+	/** Whether to use the gyroscope. Default: false **/
 	public boolean useGyroscope = false;
-	/** whether to make the webgl context compatible with WebXR, may have positive performance impact **/
+	/** Whether to make the WebGL context compatible with WebXR, may have positive performance impact. **/
 	public boolean xrCompatible = false;
+	/** If true, a TextArea will be added to the body element of the DOM when logging methods are called. **/
+    public boolean canCreateLog = false;
 
-	/** Creates configuration for a resizable application, using available browser window space minus padding (see
+    /** Creates configuration for a resizable application, using available browser window space minus padding (see
 	 * {@link #padVertical}, {@link #padHorizontal}). */
 	public GwtApplicationConfiguration () {
 		this(false);

@@ -111,7 +111,7 @@ public abstract class GwtApplication implements EntryPoint, Application {
 		GwtApplication.agentInfo = computeAgentInfo();
 		this.listener = createApplicationListener();
 		this.config = getConfig();
-		setApplicationLogger(new GwtApplicationLogger(this.config.log));
+		setApplicationLogger(new GwtApplicationLogger(this.config.log, this.config.canCreateLog));
 
 		if (config.rootPanel != null) {
 			this.root = config.rootPanel;

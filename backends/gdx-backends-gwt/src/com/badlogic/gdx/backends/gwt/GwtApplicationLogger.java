@@ -17,15 +17,23 @@
 package com.badlogic.gdx.backends.gwt;
 
 import com.badlogic.gdx.ApplicationLogger;
+import com.badlogic.gdx.Gdx;
 import com.google.gwt.user.client.ui.TextArea;
 
 /** Default implementation of {@link ApplicationLogger} for gwt */
 public class GwtApplicationLogger implements ApplicationLogger {
 
 	private TextArea log;
+	private final boolean canCreateLog;
 
 	public GwtApplicationLogger (TextArea log) {
 		this.log = log;
+		canCreateLog = false;
+	}
+
+	public GwtApplicationLogger (TextArea log, boolean canCreateLog) {
+		this.canCreateLog = canCreateLog;
+		this.log = canCreateLog ? null : log;
 	}
 
 	@Override
@@ -34,6 +42,7 @@ public class GwtApplicationLogger implements ApplicationLogger {
 	}
 
 	private void logText (String message, boolean error) {
+		checkLogLabel();
 		if (log != null) {
 			log.setText(log.getText() + "\n" + message + "\n");
 			log.setCursorPos(log.getText().length() - 1);
@@ -80,10 +89,28 @@ public class GwtApplicationLogger implements ApplicationLogger {
 		logText(getStackTrace(exception), false);
 	}
 
+	private void checkLogLabel () {
+		if (canCreateLog && log == null) {
+			((GwtApplication) Gdx.app).log = log = new TextArea();
+
+			// It's possible that log functions are called
+			// before the app is initialized. E.g. SoundManager can call log functions before the app is initialized.
+			// Since graphics is null, we're getting errors. The log size will be updated later, in case graphics was null
+			if (Gdx.graphics != null) {
+				log.setSize(Gdx.graphics.getWidth() + "px", "300px");
+			} else {
+				log.setSize("600px", "300px"); // Dummy value
+			}
+
+			log.setReadOnly(true);
+			((GwtApplication) Gdx.app).getRootPanel().add(log);
+		}
+	}
+
 	private String getMessages (Throwable e) {
 		StringBuilder sb = new StringBuilder();
 		while (e != null) {
-			sb.append(e.getMessage() + "\n");
+			sb.append(e.getMessage()).append("\n");
 			e = e.getCause();
 		}
 		return sb.toString();
@@ -92,7 +119,7 @@ public class GwtApplicationLogger implements ApplicationLogger {
 	private String getStackTrace (Throwable e) {
 		StringBuilder sb = new StringBuilder();
 		for (StackTraceElement trace : e.getStackTrace()) {
-			sb.append(trace.toString() + "\n");
+			sb.append(trace.toString()).append("\n");
 		}
 		return sb.toString();
 	}
