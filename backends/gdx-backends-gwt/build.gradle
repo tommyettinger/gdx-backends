@@ -29,5 +29,6 @@ javadoc.options.addStringOption("sourcepath", "src/")
 sourceSets.main.java.exclude "**/System.java"
 javadoc.exclude("com/badlogic/gdx/backends/gwt")
 
-//idea.module.excludeDirs += [file("src/com/badlogic/gdx/backends/gwt/emu")]
-//[compileJava, compileTestJava]*.exclude("com/badlogic/gdx/backends/gwt/**")
+apply plugin: 'idea'
+idea.module.excludeDirs += [file("src/com/badlogic/gdx/backends/gwt/emu")]
+//[compileJava, compileTestJava]*.exclude("com/badlogic/gdx/backends/gwt/emu/**")
