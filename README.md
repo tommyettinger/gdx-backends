@@ -353,6 +353,22 @@ Checkout the `master` branch, or use the following JitPack dependencies for GWT:
     implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
 ```
 
+You can (and probably should, for stability reasons) depend on specific commits when you use JitPack. This acts like
+using a stable release in that it won't change unless you edit the version string. Some commits in the 1.1210.2 period
+are a little different:
+
+```groovy
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:e8b4415765'
+    implementation 'com.github.tommyettinger.gdx-backends:gdx-backend-gwt:e8b4415765:sources'
+    implementation "com.google.jsinterop:jsinterop-annotations:2.0.2:sources"
+```
+
+The above version, commit `e8b4415765`, has some experimental code to produce a visible log for the purpose of copying
+and pasting logged output. This was withdrawn in the current version because code that used it wouldn't be fully
+compatible with "standard" libGDX.
+
+For all commits and the -SNAPSHOT version:
+
 The dependency on `jsinterop-annotations` is not in the standard libGDX backends, and was probably sometimes needed by
 GWT 2.9.0 but is definitely needed by GWT 2.10.0 and 2.11.0.
 
